@@ -1,0 +1,10 @@
+<template>
+    <div onclick={handleClick} class={itemClass}>
+        <div class="slds-text-align_center slds-p-around_x-small itemIcon">
+            <lightning-icon icon-name={itemIcon} alternative-text={item.text} title={item.text} size="large"></lightning-icon>
+        </div>
+        <div class="slds-text-align_center slds-truncate itemLabel" title={item.text}>
+            {item.text}
+        </div>
+    </div>
+</template>

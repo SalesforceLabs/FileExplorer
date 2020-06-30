@@ -1,0 +1,35 @@
+<!--
+  @File Name          : qsydFileExplorerBreadcrumbs.html
+  @Description        : 
+  @Author             : Paul Lucas, Jiun Ryu, Elly Zhu, Derrick Vuong
+  @Group              : 
+  @Last Modified By   : Jiun Ryu
+  @Last Modified On   : 4/21/2020, 1:56:16 PM
+  @Modification Log   : 
+  Ver       Date            Author      		    Modification
+  1.0    4/21/2020          Jiun Ryu                Initial Version
+-->
+<template>
+    <lightning-button-group class="slds-float_right">
+        <lightning-button-menu alternative-text="Show menu" variant="border-filled" menu-alignment="right"
+                               value="File and Folder Management" icon-name="utility:settings" onselect={handleMenuItemSelect}>
+
+            <template iterator:it={menuItems}>
+                <lightning-menu-subheader if:true={it.first} key={it.value.key}
+                                          label={it.value.key}></lightning-menu-subheader>
+                <lightning-menu-subheader if:false={it.first} key={it.value.key}
+                                          label={it.value.key}
+                                          class="slds-has-divider_top-space"></lightning-menu-subheader>
+                <template for:each={it.value.value} for:item="menuSubItem">
+                    <lightning-menu-item
+                            key={menuSubItem.id}
+                            value={menuSubItem.value}
+                            label={menuSubItem.label}
+                            disabled={menuSubItem.disabled}
+                            prefix-icon-name={menuSubItem.prefixIconName}>
+                    </lightning-menu-item>
+                </template>
+            </template>
+        </lightning-button-menu>
+    </lightning-button-group>
+</template>

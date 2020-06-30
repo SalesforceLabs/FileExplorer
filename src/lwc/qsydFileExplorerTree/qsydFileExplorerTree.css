@@ -1,0 +1,23 @@
+/******************************************************************
+
+    Author:         Paul Lucas
+    Company:        Salesforce
+    Description:    qsydFileExplorerTree.css
+    Date:           04-May-2020
+
+    TODO:
+    - https://www.lightningdesignsystem.com/design-tokens/
+
+ *******************************************************************/
+.tree-home {
+    width: 90px;
+    height: 30px;
+}
+
+.tree-home:hover,
+.tree-home.item-selected {
+    cursor: pointer;
+    background: #beebff;
+    border-radius: 2px;
+    box-shadow: inset 0 0 1px #999999;
+}
