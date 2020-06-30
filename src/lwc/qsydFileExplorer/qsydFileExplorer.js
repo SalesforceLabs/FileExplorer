@@ -1,4 +1,12 @@
-/**
+/*
+ * Copyright (c) 2020, salesforce.com, inc.
+ * All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause
+ * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ */
+ 
+ 
+ /**
  * @File Name          : qsydFileExplorer.js
  * @Description        :
  * @Author             : Paul Lucas, Jiun Ryu, Elly Zhu, Derrick Vuong
@@ -10,7 +18,9 @@ import {
 	listToTree,
 	clone,
 	item,
-	interpolate
+	showToast,
+	reduceErrors,
+	interpolate,
 } from 'c/qsydFileExplorerCommon';
 import retrieveItemMap
 	from '@salesforce/apex/qsydFileExplorerController.retrieveItemMap';
@@ -81,10 +91,15 @@ export default class QsydFileExplorerCmp extends LightningElement {
 	renderedCallback() {
 	}
 
-	// errorCallback(error, stack) {
-	// 	console.log('>>>>> errorCallback');
-	//  throw error;
-	// }
+	errorCallback(error, stack) {
+		showToast(
+			this,
+			CONSTANTS.TOAST_MESSAGE_TYPES.ERROR,
+			reduceErrors(error).join(', '),
+			'',
+			CONSTANTS.TOAST_THEMES.ERROR,
+			CONSTANTS.TOAST_MODE.DISMISSABLE);
+	}
 
 	@api
 	retrieveFileExplorerItemMap(e) {
@@ -176,6 +191,7 @@ export default class QsydFileExplorerCmp extends LightningElement {
 		}
 	}
 
+	// TODO: Implement keyboard shortcuts
 	handleKeyDown({code}) {
 		let itemType = new item(this.item).getType(),
 			action = `${CONSTANTS.ACTION_TYPES_KEY_MAP[code.charAt(
@@ -207,16 +223,11 @@ export default class QsydFileExplorerCmp extends LightningElement {
 				break;
 
 			default:
-				// if (this._selectedItem.isRoot()) {
-				// 	return 'Add files to Home folder:';
-				// }
-				// return 'Add files to folder "' + this._selectedItem.text + '":';
-debugger;
-				this.explorerManagementHeader = interpolate(CONSTANTS.ACTION_HEADERS[e.detail.toString().
-					toUpperCase()], this.item);
-
-				// this.explorerManagementHeader = CONSTANTS.ACTION_HEADERS[e.detail.toString().
-				// 	toUpperCase()];
+				this.item = new item(this.item);
+				this.item.setHostFolderLabel(this.dataDictionary.folders);
+				this.explorerManagementHeader = interpolate(
+					CONSTANTS.ACTION_HEADERS[e.detail.toString().
+						toUpperCase()], this.item);
 
 				explorerManagement.show(e.detail);
 				break;
@@ -263,21 +274,24 @@ debugger;
 				this.dataDictionary,
 				searchText);
 		} else if (searchText !== null && searchText !== '') {
-				this.results = this.findMatchingResultsToText(
-					this.dataDictionary,
-					searchText);
-        } else {
-            if (this.item.id != 'root') {
-                this.results = this.findTreeItem(this.dataDictionary, 'Contents',
-                    this.folderId);
-                this.breadcrumbs = this.buildBreadcrumbs(this.dataDictionary,
-                    this.item);
-            } else {
-                this.results = this.findTreeItem(this.dataDictionary, 'Contents',
-                    null);
-                this.breadcrumbs = this.buildBreadcrumbs(this.dataDictionary, null);
-            }
-        }
+			this.results = this.findMatchingResultsToText(
+				this.dataDictionary,
+				searchText);
+		} else {
+			if (this.item.id != 'root') {
+				this.results = this.findTreeItem(this.dataDictionary,
+					'Contents',
+					this.folderId);
+				this.breadcrumbs = this.buildBreadcrumbs(this.dataDictionary,
+					this.item);
+			} else {
+				this.results = this.findTreeItem(this.dataDictionary,
+					'Contents',
+					null);
+				this.breadcrumbs = this.buildBreadcrumbs(this.dataDictionary,
+					null);
+			}
+		}
 	}
 
 	// #### SEARCH EVENT END
@@ -338,9 +352,9 @@ debugger;
 				files.forEach(file => {
 					if (file.text.match(searchKey)) {
 						fileTextMatches.push(file);
-                    }
-                    
-                    if (file.tags && file.tags.match(searchKey)) {
+					}
+
+					if (file.tags && file.tags.match(searchKey)) {
 						fileTagMatches.push(file);
 					}
 				});

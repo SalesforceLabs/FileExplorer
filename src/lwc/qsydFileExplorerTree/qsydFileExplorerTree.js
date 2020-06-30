@@ -1,4 +1,12 @@
-/**
+/*
+ * Copyright (c) 2020, salesforce.com, inc.
+ * All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause
+ * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ */
+ 
+ 
+ /**
  Author:         Paul Lucas
  Company:        Salesforce
  Description:    qsydFileExplorerTree
@@ -9,15 +17,11 @@
  */
 
 import {LightningElement, api, wire} from 'lwc';
-import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 import {CONSTANTS, item, listToTree} from 'c/qsydFileExplorerCommon';
 import {loadScript, loadStyle} from 'lightning/platformResourceLoader';
-import qsyd_Common from '@salesforce/resourceUrl/qsyd_Common';
 import jquery from '@salesforce/resourceUrl/jquery_350';
 import jstree from '@salesforce/resourceUrl/jstree_339';
 import jstree339 from '@salesforce/resourceUrl/jstree339';
-import filexplorer from '@salesforce/resourceUrl/filexplorer';
-// import jstree from '@salesforce/resourceUrl/jstree_339_min';
 
 export default class QSydFileExplorerTree extends LightningElement {
 	/**

@@ -1,11 +1,17 @@
+/*
+ * Copyright (c) 2020, salesforce.com, inc.
+ * All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause
+ * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ */
+ 
+ 
 import {LightningElement, api} from 'lwc';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 import {
 	CONSTANTS,
 	item,
 } from 'c/qsydFileExplorerCommon';
-// import setFolder
-// 	from '@salesforce/apex/qsydFileExplorerController.setFolder';
 
 export default class QsydFileExplorerActions extends LightningElement {
 	/**
@@ -20,7 +26,7 @@ export default class QsydFileExplorerActions extends LightningElement {
 				disabled: false,
 				prefixIconName: 'utility:add',
 				isDisabled: function(item, context) {
-					return false; // (!context.isFile() && !context.isRoot());
+					return false;
 				},
 			},
 			{
@@ -165,70 +171,6 @@ export default class QsydFileExplorerActions extends LightningElement {
 	}
 
 	resolveMenuItems() {
-
-		// this.menuItems = [
-		// 	{
-		// 		'key': 'File',
-		// 		'value': [
-		// 			{
-		// 				'id': 'add_file',
-		// 				'label': 'Add',
-		// 				'value': 'add_file',
-		// 				'disabled': false,
-		// 				'prefixIconName': 'utility:add',
-		// 			},
-		// 			{
-		// 				'id': 'move_file',
-		// 				'label': 'Move',
-		// 				'value': 'move_file',
-		// 				'disabled': true,
-		// 				'prefixIconName': 'utility:move',
-		// 			}],
-		// 	},
-		// 	{
-		// 		'key': 'Folder',
-		// 		'value': [
-		// 			{
-		// 				'id': 'add_folder',
-		// 				'label': 'Add',
-		// 				'value': 'add_folder',
-		// 				'disabled': false,
-		// 				'prefixIconName': 'utility:add',
-		// 			},
-		// 			{
-		// 				'id': 'move_folder',
-		// 				'label': 'Move',
-		// 				'value': 'move_folder',
-		// 				'disabled': false,
-		// 				'prefixIconName': 'utility:move',
-		// 			},
-		// 			{
-		// 				'id': 'rename_folder',
-		// 				'label': 'Rename',
-		// 				'value': 'rename_folder',
-		// 				'disabled': false,
-		// 				'prefixIconName': 'utility:edit',
-		// 			},
-		// 			{
-		// 				'id': 'delete_folder',
-		// 				'label': 'Delete',
-		// 				'value': 'delete_folder',
-		// 				'disabled': false,
-		// 				'prefixIconName': 'utility:delete',
-		// 			}],
-		// 	},
-		// 	{
-		// 		'key': 'General',
-		// 		'value': [
-		// 			{
-		// 				'id': 'refresh',
-		// 				'label': 'Refresh',
-		// 				'value': 'refresh',
-		// 				'disabled': false,
-		// 				'prefixIconName': 'utility:refresh',
-		// 			}],
-		// 	}];
-
 		if (this.selectedItem) {
 			this.menuItems = Object.entries(this.ACTION_ITEMS).
 				map(item => {
