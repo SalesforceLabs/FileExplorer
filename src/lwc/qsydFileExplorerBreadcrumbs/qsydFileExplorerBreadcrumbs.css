@@ -1,0 +1,9 @@
+.breadcrumbs .slds-breadcrumb__item a {
+    font-weight: 300;
+    color: #656360;
+}
+
+.breadcrumbs li:last-child a {
+    font-weight: 700;
+    color: #080707;
+}

@@ -1,0 +1,18 @@
+.itemContainer:hover .itemIcon,
+.itemContainer:focus .itemIcon,
+.itemContainer.itemSelected .itemIcon {
+    background-color: rgba(20,137,238,0.1);
+    border-top-left-radius: .5rem;
+    border-top-right-radius: .5rem;
+}
+
+.itemContainer:hover .itemLabel,
+.itemContainer:focus .itemLabel,
+.itemContainer.itemSelected .itemLabel {
+    background-color: rgb(20,137,238);
+    color: #fff;
+}
+
+.itemContainer:hover {
+    cursor: pointer;
+}

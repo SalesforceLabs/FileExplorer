@@ -1,0 +1,34 @@
+.results lightning-accordion-section lightning-layout {
+    max-height: 215px;
+    overflow: auto;
+}
+
+.results lightning-layout-item {
+    width: 125px;
+}
+
+/* #### SCROLLBAR CSS */
+
+.results lightning-accordion-section lightning-layout::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(216, 216, 216);
+    box-shadow: inset 0 0 6px rgba(216, 216, 216);
+    border-radius: 5px;
+    padding: 0 1px;
+}
+
+.results lightning-accordion-section lightning-layout::-webkit-scrollbar {
+    background-color: rgb(240, 240, 240);
+    border-radius: 5px;
+    width: 4px;
+    height: 5px;
+}
+
+.results lightning-accordion-section lightning-layout::-webkit-scrollbar-thumb
+{
+    background-color: rgba(0,0,0,0.2);
+    border-radius: 5px;
+}
+
+.resultsMenu {
+    margin: auto;
+}
