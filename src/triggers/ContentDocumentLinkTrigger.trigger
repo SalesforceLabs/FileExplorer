@@ -5,6 +5,7 @@
  * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
  
+ 
  /**      
     Author:         Paul Lucas
     Company:        Salesforce
@@ -19,7 +20,7 @@
 
 trigger ContentDocumentLinkTrigger on ContentDocumentLink (after undelete) {
 
-    System.debug('ContentDocumentLinkTrigger '.center(80));
+    /*System.debug('ContentDocumentLinkTrigger '.center(80));
     System.debug('---------------------------'.center(80));
 
     System.debug('>>>>> Trigger.operationType: ' + Trigger.operationType);
@@ -30,7 +31,7 @@ trigger ContentDocumentLinkTrigger on ContentDocumentLink (after undelete) {
     System.debug(Trigger.new);
 
     System.debug('>>>>> ContentDocumentLinkTrigger.new keys');
-    System.debug(Trigger.newMap.keySet());
+    System.debug(Trigger.newMap.keySet());*/
 
 
 //    ContentDocument cd = [

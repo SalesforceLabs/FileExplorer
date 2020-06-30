@@ -36,7 +36,7 @@ global with sharing class qsydFileExplorerControllerTest {
         insert cdl;
 
         //Create Folder Record
-        FileExplorerFolder__c qFolder = new FileExplorerFolder__c(LinkedEntityId__c = a.Id, Label__c = 'qFolder');
+        qsyd_FE__FileExplorerFolder__c qFolder = new qsyd_FE__FileExplorerFolder__c(qsyd_FE__LinkedEntityId__c = a.Id, qsyd_FE__Label__c = 'qFolder');
         insert qFolder;
     }
 
@@ -79,16 +79,16 @@ global with sharing class qsydFileExplorerControllerTest {
         List<Id> contentDocumentIds = new List<Id>();
         contentDocumentIds.add(contentDocumentId);
 
-        FileExplorerFile__c penguinsFileBefore = [SELECT Id, Folder__c FROM FileExplorerFile__c WHERE LinkedEntityId__c = :a.Id AND ContentDocumentId__c = :contentDocumentId LIMIT 1];
+        qsyd_FE__FileExplorerFile__c penguinsFileBefore = [SELECT Id, qsyd_FE__Folder__c FROM qsyd_FE__FileExplorerFile__c WHERE qsyd_FE__LinkedEntityId__c = :a.Id AND qsyd_FE__ContentDocumentId__c = :contentDocumentId LIMIT 1];
 
-        FileExplorerFolder__c qFolder = [SELECT Id FROM FileExplorerFolder__c WHERE Label__c = 'qFolder' LIMIT 1];
+        qsyd_FE__FileExplorerFolder__c qFolder = [SELECT Id FROM qsyd_FE__FileExplorerFolder__c WHERE qsyd_FE__Label__c = 'qFolder' LIMIT 1];
 
-        System.assertEquals(null, penguinsFileBefore.Folder__c);
+        System.assertEquals(null, penguinsFileBefore.qsyd_FE__Folder__c);
         qsydFileExplorerController.setFolder(contentDocumentIds, qFolder.Id);
 
-        FileExplorerFile__c penguinsFileAfter = [SELECT Id, Folder__c FROM FileExplorerFile__c WHERE Id = :penguinsFileBefore.Id];
+        qsyd_FE__FileExplorerFile__c penguinsFileAfter = [SELECT Id, qsyd_FE__Folder__c FROM qsyd_FE__FileExplorerFile__c WHERE Id = :penguinsFileBefore.Id];
 
-        System.assertEquals(qFolder.Id, penguinsFileAfter.Folder__c);
+        System.assertEquals(qFolder.Id, penguinsFileAfter.qsyd_FE__Folder__c);
 
         Test.stopTest();
     }
@@ -105,14 +105,14 @@ global with sharing class qsydFileExplorerControllerTest {
         List<Id> contentDocumentIds = new List<Id>();
         contentDocumentIds.add(contentDocumentId);
 
-        FileExplorerFile__c penguinsFileBefore = [SELECT Id, Tags__c FROM FileExplorerFile__c WHERE LinkedEntityId__c = :a.Id AND ContentDocumentId__c = :contentDocumentId LIMIT 1];
+        qsyd_FE__FileExplorerFile__c penguinsFileBefore = [SELECT Id, qsyd_FE__Tags__c FROM qsyd_FE__FileExplorerFile__c WHERE qsyd_FE__LinkedEntityId__c = :a.Id AND qsyd_FE__ContentDocumentId__c = :contentDocumentId LIMIT 1];
 
-        System.assertEquals(null, penguinsFileBefore.Tags__c);
+        System.assertEquals(null, penguinsFileBefore.qsyd_FE__Tags__c);
         qsydFileExplorerController.updateTags(penguinsFileBefore.Id, 'tags;tag');
 
-        FileExplorerFile__c penguinsFileAfter = [SELECT Id, Tags__c FROM FileExplorerFile__c WHERE Id = :penguinsFileBefore.Id];
+        qsyd_FE__FileExplorerFile__c penguinsFileAfter = [SELECT Id, qsyd_FE__Tags__c FROM qsyd_FE__FileExplorerFile__c WHERE Id = :penguinsFileBefore.Id];
 
-        System.assertEquals('tags;tag', penguinsFileAfter.Tags__c);
+        System.assertEquals('tags;tag', penguinsFileAfter.qsyd_FE__Tags__c);
 
         Test.stopTest();
     }
@@ -141,7 +141,7 @@ global with sharing class qsydFileExplorerControllerTest {
         setupTestData();
         Test.startTest();
         Account a = [SELECT Id FROM Account WHERE Name = 'TestAccount' LIMIT 1];
-        FileExplorerFile__c penguinsFile = [SELECT Id FROM FileExplorerFile__c WHERE LinkedEntityId__c = :a.Id AND Label__c = 'Penguins' LIMIT 1];
+        qsyd_FE__FileExplorerFile__c penguinsFile = [SELECT Id FROM qsyd_FE__FileExplorerFile__c WHERE qsyd_FE__LinkedEntityId__c = :a.Id AND qsyd_FE__Label__c = 'Penguins' LIMIT 1];
         delete penguinsFile;
         Boolean actual = qsydFileExplorerController.checkSyncStatus(a.Id);
         System.assertEquals(false, actual);
@@ -157,19 +157,19 @@ global with sharing class qsydFileExplorerControllerTest {
         List<ContentDocumentLink> cdlList = [SELECT Id, ContentDocumentId FROM ContentDocumentLink WHERE LinkedEntityId = :a.Id AND ContentDocument.Title = 'Penguins'];
         String contentDocumentId = cdlList[0].ContentDocumentId;
 
-        FileExplorerFile__c penguinsFile = [SELECT Id FROM FileExplorerFile__c WHERE LinkedEntityId__c = :a.Id AND Label__c = 'Penguins' LIMIT 1];
+        qsyd_FE__FileExplorerFile__c penguinsFile = [SELECT Id FROM qsyd_FE__FileExplorerFile__c WHERE qsyd_FE__LinkedEntityId__c = :a.Id AND qsyd_FE__Label__c = 'Penguins' LIMIT 1];
         delete penguinsFile;
 
-        List<FileExplorerFile__c> beforeSyncFileList = [SELECT Id FROM FileExplorerFile__c WHERE LinkedEntityId__c = :a.Id AND Label__c = 'Penguins'];
+        List<qsyd_FE__FileExplorerFile__c> beforeSyncFileList = [SELECT Id FROM qsyd_FE__FileExplorerFile__c WHERE qsyd_FE__LinkedEntityId__c = :a.Id AND qsyd_FE__Label__c = 'Penguins'];
         System.assertEquals(0, beforeSyncFileList.size());
 
         qsydFileExplorerController.syncFiles(a.Id);
 
-        List<FileExplorerFile__c> afterSyncFileList = [SELECT Id, ContentDocumentId__c, LinkedEntityId__c FROM FileExplorerFile__c WHERE LinkedEntityId__c = :a.Id AND Label__c = 'Penguins'];
+        List<qsyd_FE__FileExplorerFile__c> afterSyncFileList = [SELECT Id, qsyd_FE__ContentDocumentId__c, qsyd_FE__LinkedEntityId__c FROM qsyd_FE__FileExplorerFile__c WHERE qsyd_FE__LinkedEntityId__c = :a.Id AND qsyd_FE__Label__c = 'Penguins'];
 
         System.assertEquals(1, afterSyncFileList.size());
-        System.assertEquals(a.Id, afterSyncFileList[0].LinkedEntityId__c);
-        System.assertEquals(contentDocumentId, afterSyncFileList[0].ContentDocumentId__c);
+        System.assertEquals(a.Id, afterSyncFileList[0].qsyd_FE__LinkedEntityId__c);
+        System.assertEquals(contentDocumentId, afterSyncFileList[0].qsyd_FE__ContentDocumentId__c);
 
         Test.stopTest();
     }
@@ -199,11 +199,11 @@ global with sharing class qsydFileExplorerControllerTest {
         json = '{"documentId":"","entityId":"' + a.Id + '","text":"new_folder","folder":null,"icon":null,"id":null,"owner":null,"size":0,"tags":null,"type":null}';
         String item = qsydFileExplorerController.postItem(json);
 
-        List<FileExplorerFolder__c> folders = [
+        List<qsyd_FE__FileExplorerFolder__c> folders = [
                 SELECT Id,
-                        Label__c
-                FROM FileExplorerFolder__c
-                WHERE Label__c = 'new_folder'
+                        qsyd_FE__Label__c
+                FROM qsyd_FE__FileExplorerFolder__c
+                WHERE qsyd_FE__Label__c = 'new_folder'
         ];
         Test.stopTest();
 
@@ -236,11 +236,11 @@ global with sharing class qsydFileExplorerControllerTest {
         json = '{"documentId":"' + cd.Id + '","entityId":"' + a.Id + '","text":"new_file","folder":null,"icon":null,"id":null,"owner":null,"size":0,"tags":null,"type":null}';
         String item = qsydFileExplorerController.postItem(json);
 
-        List<FileExplorerFile__c> files = [
+        List<qsyd_FE__FileExplorerFile__c> files = [
                 SELECT Id,
-                        Label__c
-                FROM FileExplorerFile__c
-                WHERE Label__c = 'new_file'
+                        qsyd_FE__Label__c
+                FROM qsyd_FE__FileExplorerFile__c
+                WHERE qsyd_FE__Label__c = 'new_file'
         ];
         Test.stopTest();
 
@@ -261,11 +261,11 @@ global with sharing class qsydFileExplorerControllerTest {
         String item = qsydFileExplorerController.postItem(json);
         qsydFileExplorerController.deleteItem(item);
 
-        List<FileExplorerFolder__c> folders = [
+        List<qsyd_FE__FileExplorerFolder__c> folders = [
                 SELECT Id,
-                        Label__c
-                FROM FileExplorerFolder__c
-                WHERE Label__c = 'new_folder'
+                        qsyd_FE__Label__c
+                FROM qsyd_FE__FileExplorerFolder__c
+                WHERE qsyd_FE__Label__c = 'new_folder'
         ];
         Test.stopTest();
 

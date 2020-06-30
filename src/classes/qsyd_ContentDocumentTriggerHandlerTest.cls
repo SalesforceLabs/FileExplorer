@@ -39,9 +39,9 @@ public with sharing class qsyd_ContentDocumentTriggerHandlerTest {
 
         Test.startTest();
 
-        List<FileExplorerFile__c> files = [
+        List<qsyd_FE__FileExplorerFile__c> files = [
                 SELECT Id
-                FROM FileExplorerFile__c
+                FROM qsyd_FE__FileExplorerFile__c
         ];
 
         Test.stopTest();
@@ -63,9 +63,9 @@ public with sharing class qsyd_ContentDocumentTriggerHandlerTest {
 
         DELETE cd;
 
-        List<FileExplorerFile__c> files = [
+        List<qsyd_FE__FileExplorerFile__c> files = [
                 SELECT Id
-                FROM FileExplorerFile__c
+                FROM qsyd_FE__FileExplorerFile__c
         ];
 
         Test.stopTest();
