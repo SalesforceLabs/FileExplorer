@@ -1,0 +1,40 @@
+<!--
+ * Copyright (c) 2020, salesforce.com, inc.
+ * All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause
+ * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ -->
+
+<!--
+   	Author:         Paul Lucas
+    Company:        Salesforce
+    Description:    qsydAlert
+    Date:           01-May-2020
+
+	TODO:
+
+-->
+
+<!-- QSyd Alert -->
+<template>
+    <template if:true={show}>
+        <div class={alertClass} role="alert">
+            <span class="slds-assistive-text">{type}</span>
+            <span class="slds-icon_container slds-icon-utility-user slds-m-right_x-small">
+                <lightning-icon icon-name={messageIcon} variant={variant} alternative-text="close" size="x-small"
+                                title="message-icon">
+                </lightning-icon>
+            </span>
+            <h2 lwc:dom="manual" class="message-container">
+            </h2>
+            <div class="slds-notify__close">
+                <button class="slds-button slds-button_icon slds-button_icon-small" title="Close" onclick={close}>
+                    <lightning-icon icon-name="utility:close" variant={variant} alternative-text="close" size="x-small"
+                                    title="close">
+                    </lightning-icon>
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+            </div>
+        </div>
+    </template>
+</template>

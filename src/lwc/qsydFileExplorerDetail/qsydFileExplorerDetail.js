@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: BSD-3-Clause
  * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
- 
- 
+
+
 import {LightningElement, api, track, wire} from 'lwc';
 import {NavigationMixin} from 'lightning/navigation';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
@@ -17,7 +17,11 @@ import isCommunity
 import getCommunityPrefix
 	from '@salesforce/apex/qsydFileExplorerController.getCommunityPrefix';
 
-import {CONSTANTS} from 'c/qsydFileExplorerCommon';
+import {CONSTANTS, reduceErrors, showToast} from 'c/qsydFileExplorerCommon';
+
+const FILE_PLACEHOLDER = 'https://qsyd-perma-bucket.s3-ap-southeast-2.amazonaws.com/file-explorer/images/file200x200.png';
+const FILE_PREVIEW = '/sfc/servlet.shepherd/version/renditionDownload?rendition=THUMB720BY480&operationContext=CHATTER&versionId=';
+const FILE_DOWNLOAD = '/sfc/servlet.shepherd/document/download/';
 
 export default class QsydFileExplorerDetail extends NavigationMixin(
 	LightningElement) {
@@ -30,6 +34,7 @@ export default class QsydFileExplorerDetail extends NavigationMixin(
 	_modalTags;
 	_newtags;
 
+	CONSTANTS = CONSTANTS;
 	currentPagePrefix = '';
 	redraw = false;
 	showModal = false;
@@ -46,7 +51,7 @@ export default class QsydFileExplorerDetail extends NavigationMixin(
 		} else {
 			let tags = this._item.tags;
 			if (tags) {
-				this._tags = tags.split(';').sort(function(a, b) {
+				this._tags = tags.split(';').sort(function (a, b) {
 					return a.localeCompare(b);
 				});
 			} else {
@@ -74,7 +79,6 @@ export default class QsydFileExplorerDetail extends NavigationMixin(
 	}
 
 	set item(value) {
-		//console.log('--Details item-->' + JSON.stringify(value));
 		this._item = value;
 		this._contentVersion = null;
 		this._tags = null;
@@ -95,19 +99,14 @@ export default class QsydFileExplorerDetail extends NavigationMixin(
 
 	get previewImageSrc() {
 		if (this._contentVersion) {
-
-			return this.currentPagePrefix +
-				'/sfc/servlet.shepherd/version/renditionDownload?rendition=THUMB720BY480&versionId=' +
-				this._contentVersion.Id + '&operationContext=CHATTER';
-		} else {
-			return 'https://qsyd-perma-bucket.s3-ap-southeast-2.amazonaws.com/file-explorer/images/file200x200.png';
+			return this.currentPagePrefix + FILE_PREVIEW + this._contentVersion.Id;
 		}
+
+		return FILE_PLACEHOLDER;
 	}
 
 	get downloadLink() {
-		return this.currentPagePrefix +
-			'/sfc/servlet.shepherd/document/download/' +
-			this._item.documentId;
+		return this.currentPagePrefix + FILE_DOWNLOAD + this._item.documentId;
 	}
 
 	get filetype() {
@@ -165,11 +164,11 @@ export default class QsydFileExplorerDetail extends NavigationMixin(
 	}
 
 	connectedCallback() {
-		// initialize component
 		this.environmentCheck();
 	}
 
-	renderedCallback() {}
+	renderedCallback() {
+	}
 
 	environmentCheck() {
 		isCommunity().then(result => {
@@ -223,7 +222,7 @@ export default class QsydFileExplorerDetail extends NavigationMixin(
 
 	handleImgError(e) {
 		if (e && e.target) {
-			e.target.src = 'https://qsyd-perma-bucket.s3-ap-southeast-2.amazonaws.com/file-explorer/images/file200x200.png';
+			e.target.src = FILE_PLACEHOLDER;
 		}
 	}
 
@@ -274,7 +273,7 @@ export default class QsydFileExplorerDetail extends NavigationMixin(
 	handleTagRemove(event) {
 		this.redraw = false;
 		const name = event.detail.item.name;
-		this._modalTags = this._modalTags.filter(function(value, index, arr) {
+		this._modalTags = this._modalTags.filter(function (value, index, arr) {
 			return (value.name != name);
 		});
 		setTimeout(() => {
@@ -292,7 +291,6 @@ export default class QsydFileExplorerDetail extends NavigationMixin(
 		} else {
 			this.insertTagsServerSide(fileId, tags);
 		}
-
 	}
 
 	insertTagsServerSide(fileId, tags) {
@@ -303,12 +301,15 @@ export default class QsydFileExplorerDetail extends NavigationMixin(
 			let res = JSON.parse(result);
 			if (res) {
 				this._tags = [...this._newtags];
-				this.showToast(
-					'Success',
-					'Record Updated',
+
+				showToast(
+					this,
+					this.CONSTANTS.TOAST_MESSAGE_TYPES.SUCCESS,
+					this.CONSTANTS.ACTION_SUCCESS_MESSAGES.EDIT_TAGS,
 					'',
-					'success',
-					'dismissable');
+					this.CONSTANTS.TOAST_THEMES.SUCCESS,
+					this.CONSTANTS.TOAST_MODE.STICKY);
+
 				this.hide();
 
 				this.dispatchEvent(
@@ -324,12 +325,13 @@ export default class QsydFileExplorerDetail extends NavigationMixin(
 						}),
 				);
 			} else {
-				this.showToast(
-					'Error',
+				showToast(
+					this,
+					this.CONSTANTS.TOAST_MESSAGE_TYPES.ERROR,
 					'Failed to update the record',
 					'',
-					'error',
-					'dismissable');
+					this.CONSTANTS.TOAST_THEMES.ERROR,
+					this.CONSTANTS.TOAST_MODE.STICKY);
 				this.handleTagsCancel();
 			}
 		}).catch(error => {
@@ -338,26 +340,16 @@ export default class QsydFileExplorerDetail extends NavigationMixin(
 	}
 
 	handleTagsCancel() {
+
 		this._tagInput = '';
 		this._newtags = [];
 		this.hide();
 		this.initModalTags();
 	}
 
-	showToast(title, message, messageData, variant, mode) {
-		const event = new ShowToastEvent({
-			'title': title,
-			'message': message,
-			'messageData': messageData,
-			'variant': variant,
-			'mode': mode,
-		});
-		this.dispatchEvent(event);
-	}
-
 	navigateToFilePreviewPage() {
 		this[NavigationMixin.Navigate]({
-			type: 'standard__namedPage',
+			type: this.CONSTANTS.NAVIGATION_TYPES.NAMED_PAGE,
 			attributes: {
 				pageName: 'filePreview',
 			},
@@ -370,10 +362,10 @@ export default class QsydFileExplorerDetail extends NavigationMixin(
 
 	navigateToFileRecordPage() {
 		this[NavigationMixin.Navigate]({
-			type: 'standard__recordPage',
+			type: this.CONSTANTS.NAVIGATION_TYPES.RECORD_PAGE,
 			attributes: {
 				recordId: this._item.documentId,
-				actionName: 'view',
+				actionName: this.CONSTANTS.NAVIGATION_ACTIONS.VIEW,
 			},
 		});
 	}

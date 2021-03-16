@@ -4,11 +4,12 @@
  * SPDX-License-Identifier: BSD-3-Clause
  * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
- 
- 
- :host {}
 
-:host>lightning-layout {
+
+:host {
+}
+
+:host > lightning-layout {
     border-radius: var(--lwc-borderRadiusMedium, 0.25rem);
     border: var(--lwc-borderWidthThin, 1px) solid var(--lwc-colorBorder, rgb(221, 219, 218));
     background: white;
@@ -18,7 +19,7 @@
     border-top: var(--lwc-borderWidthThin, 1px) solid var(--lwc-colorBorder, rgb(221, 219, 218));
 }
 
-.file-explorer-container>lightning-layout>lightning-layout-item:first-of-type {
+.file-explorer-container > lightning-layout > lightning-layout-item:first-of-type {
     min-width: 409px;
 }
 

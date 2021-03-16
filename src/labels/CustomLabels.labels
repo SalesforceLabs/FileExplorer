@@ -1,0 +1,603 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>Action_Error_Messages_Duplicate_folder</fullName>
+        <categories>Action Error Messages</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Error Messages - Duplicate folder</shortDescription>
+        <value>A folder with the same name already exists in this location</value>
+    </labels>
+    <labels>
+        <fullName>Action_Error_Messages_Failed_to_insert_template</fullName>
+        <categories>Action Error Messages</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Error Messages -	Failed to insert template</shortDescription>
+        <value>Failed to insert template</value>
+    </labels>
+    <labels>
+        <fullName>Action_Error_Messages_Failed_to_retrieve_templates</fullName>
+        <categories>Action Error Messages</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Error Messages -	Failed to retrieve templates</shortDescription>
+        <value>There was an error retrieving the templates</value>
+    </labels>
+    <labels>
+        <fullName>Action_Error_Messages_Invalid_template</fullName>
+        <categories>Action Error Messages</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Error Messages - Invalid template</shortDescription>
+        <value>Failed to insert template. It may have been marked as inactive, has since been removed or you no longer have access to it</value>
+    </labels>
+    <labels>
+        <fullName>Action_Error_Messages_Move_file_same_source_and_target</fullName>
+        <categories>Action Error Messages</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Error Messages - Move file same source and target</shortDescription>
+        <value>Source and target folders need to be different</value>
+    </labels>
+    <labels>
+        <fullName>Action_Error_Messages_Move_folder_circular_dependency</fullName>
+        <categories>Action Error Messages</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Error Messages - Move folder circular dependency</shortDescription>
+        <value>You cannot move a folder into itself</value>
+    </labels>
+    <labels>
+        <fullName>Action_Error_Messages_Move_folder_descendant</fullName>
+        <categories>Action Error Messages</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Error Messages - Move folder descendant</shortDescription>
+        <value>You cannot move a folder that is part of its descendant path</value>
+    </labels>
+    <labels>
+        <fullName>Action_Error_Messages_Move_folder_same_source_and_target</fullName>
+        <categories>Action Error Messages</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Error Messages - Move folder same source and target</shortDescription>
+        <value>Source and target folders need to be different</value>
+    </labels>
+    <labels>
+        <fullName>Action_Headers_Add_file</fullName>
+        <categories>Action Headers</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Headers - Add file</shortDescription>
+        <value>Add file(s) to &lt;strong&gt;${hostFolderLabel}&lt;/strong&gt; folder</value>
+    </labels>
+    <labels>
+        <fullName>Action_Headers_Add_folder</fullName>
+        <categories>Action Headers</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Headers - Add folder</shortDescription>
+        <value>Add folder to &lt;strong&gt;${hostFolderLabel}&lt;/strong&gt; folder</value>
+    </labels>
+    <labels>
+        <fullName>Action_Headers_Delete_folder</fullName>
+        <categories>Action Headers</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Headers - Delete folder</shortDescription>
+        <value>Delete &lt;strong&gt;${hostFolderLabel}&lt;/strong&gt; folder</value>
+    </labels>
+    <labels>
+        <fullName>Action_Headers_Edit_tags</fullName>
+        <categories>Action Headers</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Headers - Edit tags</shortDescription>
+        <value>Edit Tags</value>
+    </labels>
+    <labels>
+        <fullName>Action_Headers_Move_file</fullName>
+        <categories>Action Headers</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Headers - Move file</shortDescription>
+        <value>Move file</value>
+    </labels>
+    <labels>
+        <fullName>Action_Headers_Move_folder</fullName>
+        <categories>Action Headers</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Headers - Move folder</shortDescription>
+        <value>Move &lt;strong&gt;${hostFolderLabel}&lt;/strong&gt; folder</value>
+    </labels>
+    <labels>
+        <fullName>Action_Headers_Refresh</fullName>
+        <categories>Action Headers</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Headers - Refresh</shortDescription>
+        <value>Refresh files</value>
+    </labels>
+    <labels>
+        <fullName>Action_Headers_Rename_folder</fullName>
+        <categories>Action Headers</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Headers - Rename folder</shortDescription>
+        <value>Rename folder</value>
+    </labels>
+    <labels>
+        <fullName>Action_Headers_Template_folder</fullName>
+        <categories>Action Headers</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Headers - Template folder</shortDescription>
+        <value>Select a template</value>
+    </labels>
+    <labels>
+        <fullName>Action_Labels_Add_file</fullName>
+        <categories>Action Labels</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Labels - Add file</shortDescription>
+        <value>Add</value>
+    </labels>
+    <labels>
+        <fullName>Action_Labels_Add_folder</fullName>
+        <categories>Action Labels</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Labels - Add folder</shortDescription>
+        <value>Add</value>
+    </labels>
+    <labels>
+        <fullName>Action_Labels_Add_template</fullName>
+        <categories>Action Labels</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Labels - Add template</shortDescription>
+        <value>Create a template</value>
+    </labels>
+    <labels>
+        <fullName>Action_Labels_Cancel</fullName>
+        <categories>Action Labels</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Labels - Cancel</shortDescription>
+        <value>Cancel</value>
+    </labels>
+    <labels>
+        <fullName>Action_Labels_Collapse</fullName>
+        <categories>Action Labels</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Labels - Collapse</shortDescription>
+        <value>Collapse All</value>
+    </labels>
+    <labels>
+        <fullName>Action_Labels_Confirm</fullName>
+        <categories>Action Labels</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Labels - Confirm</shortDescription>
+        <value>Confirm</value>
+    </labels>
+    <labels>
+        <fullName>Action_Labels_Delete_folder</fullName>
+        <categories>Action Labels</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Labels - Delete folder</shortDescription>
+        <value>Delete</value>
+    </labels>
+    <labels>
+        <fullName>Action_Labels_Edit_template</fullName>
+        <categories>Action Labels</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Labels - Edit template</shortDescription>
+        <value>Edit</value>
+    </labels>
+    <labels>
+        <fullName>Action_Labels_Expand</fullName>
+        <categories>Action Labels</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Labels - Expand</shortDescription>
+        <value>Expand All</value>
+    </labels>
+    <labels>
+        <fullName>Action_Labels_File_header</fullName>
+        <categories>Action Labels</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Labels - File header</shortDescription>
+        <value>File</value>
+    </labels>
+    <labels>
+        <fullName>Action_Labels_Folder_header</fullName>
+        <categories>Action Labels</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Labels - Folder header</shortDescription>
+        <value>Folder</value>
+    </labels>
+    <labels>
+        <fullName>Action_Labels_Folder_name</fullName>
+        <categories>Action Labels</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Labels - Folder name</shortDescription>
+        <value>Folder Name</value>
+    </labels>
+    <labels>
+        <fullName>Action_Labels_Folder_name_placeholder</fullName>
+        <categories>Action Labels</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Labels - Folder name placeholder</shortDescription>
+        <value>Enter your folder name...</value>
+    </labels>
+    <labels>
+        <fullName>Action_Labels_General_header</fullName>
+        <categories>Action Labels</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Labels - General header</shortDescription>
+        <value>General</value>
+    </labels>
+    <labels>
+        <fullName>Action_Labels_Move_file</fullName>
+        <categories>Action Labels</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Labels - Move file</shortDescription>
+        <value>Move</value>
+    </labels>
+    <labels>
+        <fullName>Action_Labels_Move_folder</fullName>
+        <categories>Action Labels</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Labels - Move folder</shortDescription>
+        <value>Move</value>
+    </labels>
+    <labels>
+        <fullName>Action_Labels_Refresh</fullName>
+        <categories>Action Labels</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Labels - Refresh</shortDescription>
+        <value>Refresh</value>
+    </labels>
+    <labels>
+        <fullName>Action_Labels_Rename_folder</fullName>
+        <categories>Action Labels</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Labels - Rename folder</shortDescription>
+        <value>Rename</value>
+    </labels>
+    <labels>
+        <fullName>Action_Labels_Tag_name</fullName>
+        <categories>Action Labels</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Labels - Tag name</shortDescription>
+        <value>Please enter the tag name</value>
+    </labels>
+    <labels>
+        <fullName>Action_Labels_Template_description_header</fullName>
+        <categories>Action Labels</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Labels - Template description header</shortDescription>
+        <value>Description</value>
+    </labels>
+    <labels>
+        <fullName>Action_Labels_Template_folder</fullName>
+        <categories>Action Labels</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Labels - Template folder</shortDescription>
+        <value>Use Template</value>
+    </labels>
+    <labels>
+        <fullName>Action_Labels_Template_label_header</fullName>
+        <categories>Action Labels</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Labels - Template label header</shortDescription>
+        <value>Label</value>
+    </labels>
+    <labels>
+        <fullName>Action_Labels_Template_modified_date_header</fullName>
+        <categories>Action Labels</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Labels - Template modified date header</shortDescription>
+        <value>Last Modified</value>
+    </labels>
+    <labels>
+        <fullName>Action_Labels_Template_name_header</fullName>
+        <categories>Action Labels</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Labels - Template name header</shortDescription>
+        <value>Name</value>
+    </labels>
+    <labels>
+        <fullName>Action_Messages_Delete_folder</fullName>
+        <categories>Action Messages</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Messages - Delete folder</shortDescription>
+        <value>Deleting this folder will move all child items to its parent folder. Are you sure you want to do this?</value>
+    </labels>
+    <labels>
+        <fullName>Action_Messages_No_permission_set</fullName>
+        <categories>Action Messages</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Messages - No permission set</shortDescription>
+        <value>In order to access the File Explorer, please ask your Administrator to assign the &lt;a href=&quot;/lightning/setup/PermSets/home&quot;&gt;File Explorer Permission Set&lt;/a&gt; to your user.</value>
+    </labels>
+    <labels>
+        <fullName>Action_Messages_No_templates</fullName>
+        <categories>Action Messages</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Messages - No templates</shortDescription>
+        <value>No templates found</value>
+    </labels>
+    <labels>
+        <fullName>Action_Messages_Select_template_folder</fullName>
+        <categories>Action Messages</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Messages - Select template folder</shortDescription>
+        <value>Select a template to insert</value>
+    </labels>
+    <labels>
+        <fullName>Action_Messages_Synchronisation_required</fullName>
+        <categories>Action Messages</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Messages - Synchronisation required</shortDescription>
+        <value>The File Explorer needs to be synchronised with the list of files associated to this record. Click to synchronise.</value>
+    </labels>
+    <labels>
+        <fullName>Action_Success_Messages_Add_file</fullName>
+        <categories>Action Success Messages</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Success Messages - Add file</shortDescription>
+        <value>A new file has been added</value>
+    </labels>
+    <labels>
+        <fullName>Action_Success_Messages_Add_folder</fullName>
+        <categories>Action Success Messages</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Success Messages - Add folder</shortDescription>
+        <value>A new folder has been added</value>
+    </labels>
+    <labels>
+        <fullName>Action_Success_Messages_Delete_folder</fullName>
+        <categories>Action Success Messages</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Success Messages - Delete folder</shortDescription>
+        <value>The folder has been deleted and any child items have been moved to the parent folder</value>
+    </labels>
+    <labels>
+        <fullName>Action_Success_Messages_Edit_tags</fullName>
+        <categories>Action Success Messages</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Success Messages - Edit tags</shortDescription>
+        <value>Tags saved</value>
+    </labels>
+    <labels>
+        <fullName>Action_Success_Messages_Move_file</fullName>
+        <categories>Action Success Messages</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Success Messages - Move file</shortDescription>
+        <value>The file has been moved</value>
+    </labels>
+    <labels>
+        <fullName>Action_Success_Messages_Move_folder</fullName>
+        <categories>Action Success Messages</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Success Messages - Move folder</shortDescription>
+        <value>The folder has been moved</value>
+    </labels>
+    <labels>
+        <fullName>Action_Success_Messages_Refresh</fullName>
+        <categories>Action Success Messages</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Success Messages - Refresh</shortDescription>
+        <value>File Explorer has been refreshed</value>
+    </labels>
+    <labels>
+        <fullName>Action_Success_Messages_Rename_folder</fullName>
+        <categories>Action Success Messages</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Success Messages - Rename folder</shortDescription>
+        <value>The folder has been renamed</value>
+    </labels>
+    <labels>
+        <fullName>Action_Success_Messages_Synchronise</fullName>
+        <categories>Action Success Messages</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Success Messages - Synchronise</shortDescription>
+        <value>File Explorer has been synchronised</value>
+    </labels>
+    <labels>
+        <fullName>Action_Success_Messages_Template_folder</fullName>
+        <categories>Action Success Messages</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Success Messages - Template folder</shortDescription>
+        <value>Template has been inserted</value>
+    </labels>
+    <labels>
+        <fullName>Action_Validations_Folder_name_validation</fullName>
+        <categories>Action Validations</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Validations - Folder name validation</shortDescription>
+        <value>The folder name must be 50 characters or less</value>
+    </labels>
+    <labels>
+        <fullName>Action_Validations_Tag_name_validation</fullName>
+        <categories>Action Validations</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Validations - Tag name validation</shortDescription>
+        <value>The maximum tag name length is 15 characters</value>
+    </labels>
+    <labels>
+        <fullName>Detail_Labels_Download</fullName>
+        <categories>Detail Labels</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Detail Labels - Download</shortDescription>
+        <value>Download</value>
+    </labels>
+    <labels>
+        <fullName>Detail_Labels_Edit_Tags</fullName>
+        <categories>Detail Labels</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Detail Labels - Edit Tags</shortDescription>
+        <value>Edit Tags</value>
+    </labels>
+    <labels>
+        <fullName>Detail_Labels_Last_modified</fullName>
+        <categories>Detail Labels</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Detail Labels - Last modified</shortDescription>
+        <value>Last Modified</value>
+    </labels>
+    <labels>
+        <fullName>Detail_Labels_Open_file</fullName>
+        <categories>Detail Labels</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Detail Labels - Open file</shortDescription>
+        <value>Open File</value>
+    </labels>
+    <labels>
+        <fullName>Detail_Labels_Owner</fullName>
+        <categories>Detail Labels</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Detail Labels - Owner</shortDescription>
+        <value>Owner</value>
+    </labels>
+    <labels>
+        <fullName>Detail_Labels_Preview</fullName>
+        <categories>Detail Labels</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Detail Labels - Preview</shortDescription>
+        <value>Preview</value>
+    </labels>
+    <labels>
+        <fullName>Detail_Labels_Size</fullName>
+        <categories>Detail Labels</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Detail Labels - Size</shortDescription>
+        <value>Size</value>
+    </labels>
+    <labels>
+        <fullName>Detail_Labels_Tags</fullName>
+        <categories>Detail Labels</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Detail Labels - Tags</shortDescription>
+        <value>Tags</value>
+    </labels>
+    <labels>
+        <fullName>Detail_Labels_Type</fullName>
+        <categories>Detail Labels</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Detail Labels - Type</shortDescription>
+        <value>Type</value>
+    </labels>
+    <labels>
+        <fullName>Detail_Messages_Select_File</fullName>
+        <categories>Detail Messages</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Detail Messages - Select File</shortDescription>
+        <value>File preview</value>
+    </labels>
+    <labels>
+        <fullName>Search_Category_Files</fullName>
+        <categories>Search Category</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Search Category - Files</shortDescription>
+        <value>Files</value>
+    </labels>
+    <labels>
+        <fullName>Search_Category_Folders</fullName>
+        <categories>Search Category</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Search Category - Folders</shortDescription>
+        <value>Folders</value>
+    </labels>
+    <labels>
+        <fullName>Search_Category_Tagged</fullName>
+        <categories>Search Category</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Search Category - Tagged</shortDescription>
+        <value>Tagged</value>
+    </labels>
+    <labels>
+        <fullName>Search_No_results_for_category</fullName>
+        <categories>Search</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Search - No results for category</shortDescription>
+        <value>No results found in this category...</value>
+    </labels>
+    <labels>
+        <fullName>Search_Placeholder</fullName>
+        <categories>Search</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Search - Placeholder</shortDescription>
+        <value>Search...</value>
+    </labels>
+    <labels>
+        <fullName>Search_Results</fullName>
+        <categories>Search</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Search - Results</shortDescription>
+        <value>Search results for</value>
+    </labels>
+    <labels>
+        <fullName>Tree_Labels_Home</fullName>
+        <categories>Tree Labels</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Tree Labels - Home</shortDescription>
+        <value>Home</value>
+    </labels>
+</CustomLabels>

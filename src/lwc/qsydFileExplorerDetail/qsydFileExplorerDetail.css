@@ -4,11 +4,17 @@
  * SPDX-License-Identifier: BSD-3-Clause
  * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
- 
- 
- .details-container .slds-button_icon-container-more,
+
+
+.details-container .slds-button_icon-container-more,
 .details-container .slds-button--icon-container-more {
     line-height: normal !important;
+}
+
+.details-container .no-content {
+    position: relative;
+    top: 50%;
+    transform: translateY(50%);
 }
 
 .details-content span,
@@ -64,7 +70,8 @@
 }
 
 
-@media only screen and (max-width: 1024px) {}
+@media only screen and (max-width: 1024px) {
+}
 
 
 /*
@@ -92,8 +99,7 @@
 }
 
 
-
-@media (min-width: 768px) and (max-width: 1023px) and (max-device-width:1023px) and (orientation: portrait) {
+@media (min-width: 768px) and (max-width: 1023px) and (max-device-width: 1023px) and (orientation: portrait) {
     .details-content .previewImgContainer img {
         max-height: 150px !important;
     }

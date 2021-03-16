@@ -4,30 +4,47 @@
  * SPDX-License-Identifier: BSD-3-Clause
  * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
- 
- 
- /**      
-    Author:         Paul Lucas
-    Company:        Salesforce
-    Description:    qsyd_File
-    Date:           20-Apr-2020
 
-    History:
+
+/**
+    @author         Paul Lucas
+    @company        Salesforce
+    @description    qsyd_File
+    @date           20-Apr-2020
+
+    History
     When           Who                 What
 
     TODO:
  */
-
-global virtual inherited sharing class qsyd_File extends qsyd_Item {
+global virtual inherited sharing class qsyd_File extends qsyd_Item implements qsyd_IItem {
     public static final String FILES_KEY = 'files';
-    public static final String SITE_PATH_PREFIX = !String.IsBlank(Site.getPathPrefix()) ? Site.getPathPrefix() : '';
+    public static final String SITE_PATH_PREFIX = !String.isBlank(Site.getPathPrefix()) ? Site.getPathPrefix() : '';
     public static final String ASSETS_PATH = SITE_PATH_PREFIX.removeEndIgnoreCase('/s') + '/resource/qsyd_FE__filexplorer/assets/';
 
     private qsyd_FE__FileExplorerFile__c fileExplorerFile;
 
+    /**
+     * @description Constructor
+     */
     global qsyd_File() {
     }
 
+    /**
+     * @description Constructor
+     *
+     * @param id
+     * @param folder
+     * @param label
+     * @param documentId
+     * @param entityId
+     * @param type
+     * @param ext
+     * @param owner
+     * @param tags
+     * @param size
+     * @param items
+     */
     global qsyd_File(Id id, Id folder, String label, String documentId, String entityId, String type, String ext, String owner, String tags, Decimal size, List<qsyd_Item> items) {
         super(id, folder, label, entityId, items);
 
@@ -67,6 +84,13 @@ global virtual inherited sharing class qsyd_File extends qsyd_Item {
         }
     }
 
+    /**
+     * @description Populates an instance of qsyd_File
+     *
+     * @param item A qsyd_Item instance
+     *
+     * @return A qsyd_File instance
+     */
     global qsyd_File load(qsyd_Item item) {
         this.id = item.id;
         this.text = item.text;
@@ -82,27 +106,43 @@ global virtual inherited sharing class qsyd_File extends qsyd_Item {
         return this;
     }
 
+    /**
+     * @description Converts from qsyd_File to File Explorer File
+     *
+     * @return A qsyd_File instance
+     */
     global qsyd_File convertToCanonical() {
         this.fileExplorerFile = new qsyd_FE__FileExplorerFile__c(Id = this.id, qsyd_FE__Label__c = this.text, qsyd_FE__Folder__c = this.folder, qsyd_FE__LinkedEntityId__c = this.entityId);
 
         return this;
     }
 
+    /**
+     * @description Saves a File Explorer File record
+     *
+     * @return A qsyd_File instance
+     */
     global qsyd_File save() {
         this.accessDecision = Security.stripInaccessible(AccessType.UPSERTABLE,
                 new List<qsyd_FE__FileExplorerFile__c>{
-                        fileExplorerFile
+                        this.fileExplorerFile
                 });
 
         try {
             UPSERT this.accessDecision.getRecords();
         } catch (Exception e) {
-            System.debug(Logginglevel.ERROR, e.getMessage());
+            System.debug(LoggingLevel.ERROR, e.getMessage());
+            System.debug(LoggingLevel.ERROR, e.getStackTraceString());
         }
 
         return this;
     }
 
+    /**
+     * @description No action
+     *
+     * @return A qsyd_File instance
+     */
     global qsyd_File remove() {
 
         return this;

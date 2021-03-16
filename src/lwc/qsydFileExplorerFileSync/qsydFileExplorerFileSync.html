@@ -4,23 +4,31 @@
  * SPDX-License-Identifier: BSD-3-Clause
  * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  -->
- 
- 
- <template>
+
+
+<template>
     <div class="syncContainer">
         <template if:true={needSync}>
-            <div>
-                <p
-                    class="slds-text-body_regular slds-notify slds-notify--alert slds-theme--warning slds-theme--alert-texture slds-m-top_x-small">
-                    <span>
-                        <lightning-icon icon-name="utility:warning" alternative-text="Warning!" size="xx-small"
-                            title="Warning">
-                        </lightning-icon>
-                    </span>
-                    The File Explorer needs to be synchronised with the latest list of Files. Click <a
-                        class="slds-m-horizontal_xx-small" onclick={handleSync} href="javascript:(0)"> here </a> to
-                    synchronise.
-                </p>
+
+            <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_warning slds-var-m-top_medium"
+                 role="alert">
+                <span class="slds-assistive-text">Warning</span>
+                <span class="slds-icon_container slds-icon-utility-warning slds-m-right_x-small"
+                      title="Warning">
+                            <lightning-icon icon-name="utility:warning" alternative-text="Warning!" size="xx-small"
+                                            title="Warning">
+                            </lightning-icon>
+                        </span>
+                <h2>
+                    <lightning-formatted-rich-text
+                            value={CONSTANTS.ACTION_MESSAGES.SYNCHRONISATION_REQUIRED}></lightning-formatted-rich-text>
+                </h2>
+
+                <span class="slds-icon_container slds-m-left_xx-small" title="Synchronise">
+                            <lightning-button-icon icon-name="utility:sync" alternative-text="Synchronise" size="medium"
+                                                   title="Synchronise" onclick={handleSync} variant="container">
+                            </lightning-button-icon>
+                        </span>
             </div>
         </template>
     </div>
