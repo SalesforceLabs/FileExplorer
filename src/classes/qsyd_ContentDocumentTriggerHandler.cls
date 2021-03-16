@@ -7,10 +7,10 @@
 
 
  /**
-    Author:         Paul Lucas
-    Company:        Salesforce
-    Description:    qsyd_ContentDocumentTriggerHandler
-    Date:           05-May-2020
+    @author         Paul Lucas
+    @company        Salesforce
+    @description    qsyd_ContentDocumentTriggerHandler
+    @date           20-Apr-2020
         
     TODO:
  */
@@ -22,6 +22,9 @@ public with sharing class qsyd_ContentDocumentTriggerHandler extends TriggerHand
     private Map<Id, ContentDocument> contentDocumentNewMap;
     private SObjectAccessDecision accessDecision;
 
+    /**
+     * @description Constructor
+     */
     public qsyd_ContentDocumentTriggerHandler() {
         this.contentDocumentOldList = (List<ContentDocument>) Trigger.old;
         this.contentDocumentOldMap = (Map<Id, ContentDocument>) Trigger.oldMap;
@@ -29,6 +32,9 @@ public with sharing class qsyd_ContentDocumentTriggerHandler extends TriggerHand
         this.contentDocumentNewMap = (Map<Id, ContentDocument>) Trigger.newMap;
     }
 
+    /**
+     * @description After update, associate content document to file explorer
+     */
     public override void afterUpdate() {
         Id linkedEntityId;
 
@@ -105,6 +111,9 @@ public with sharing class qsyd_ContentDocumentTriggerHandler extends TriggerHand
         }
     }
 
+    /**
+     * @description After delete, remove any associated file explorer files
+     */
     public override void afterDelete() {
         Set<Id> contentDocumentIds = (new Map<Id, SObject>(this.contentDocumentOldList)).keySet();
 

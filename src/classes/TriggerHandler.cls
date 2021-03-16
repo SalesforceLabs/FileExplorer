@@ -1,16 +1,8 @@
-/*
- * Copyright (c) 2020, salesforce.com, inc.
- * All rights reserved.
- * SPDX-License-Identifier: BSD-3-Clause
- * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
- */
- 
- 
- /**      
-    Author:         Paul Lucas
-    Company:        Salesforce
-    Description:    TriggerHandler
-    Date:           04-May-2020
+/**      
+    @author         Paul Lucas
+    @company        Salesforce
+    @description    TriggerHandler - https://github.com/kevinohara80/sfdc-trigger-framework
+    @date           26-Apr-2020
         
     TODO:
  */

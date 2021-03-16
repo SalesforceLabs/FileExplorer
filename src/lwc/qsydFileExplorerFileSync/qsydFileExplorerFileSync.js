@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: BSD-3-Clause
  * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
- 
- 
+
+
 import {LightningElement, api} from 'lwc';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 import checkSyncStatus
@@ -19,6 +19,7 @@ export default class QsydSyncReminder extends LightningElement {
 	_needSync;
 	_error;
 
+	CONSTANTS = CONSTANTS;
 	@api recordId;
 	@api objectApiName;
 
@@ -31,11 +32,9 @@ export default class QsydSyncReminder extends LightningElement {
 	}
 
 	renderedCallback() {
-
 	}
 
 	disconnectedCallback() {
-
 	}
 
 	@api
@@ -62,7 +61,6 @@ export default class QsydSyncReminder extends LightningElement {
 		}).then(result => {
 			if (result) {
 				this._addedFilesJSON = result;
-				debugger
 				this.showToast(
 					CONSTANTS.TOAST_MESSAGE_TYPES.SUCCESS,
 					CONSTANTS.ACTION_SUCCESS_MESSAGES.SYNCHRONISE,
@@ -74,12 +72,11 @@ export default class QsydSyncReminder extends LightningElement {
 					new CustomEvent(
 						CONSTANTS.CUSTOM_DOM_EVENT_TYPES.DATA_REFRESH), {},
 				);
-				this.callServerGetSyncStatus();
 
+				this.callServerGetSyncStatus();
 			}
 		}).catch(error => {
 			this._error = error;
-
 			this.showToast(
 				CONSTANTS.TOAST_MESSAGE_TYPES.ERROR,
 				reduceErrors(error).join(', '),
