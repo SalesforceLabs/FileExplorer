@@ -7,7 +7,9 @@
 
 
 import {LightningElement, api} from 'lwc';
-import {item} from 'c/qsydFileExplorerCommon';
+import {
+	CONSTANTS
+} from 'c/qsydFileExplorerCommon';
 
 export default class QsydFileExplorerBreadcrumbs extends LightningElement {
 	/**
