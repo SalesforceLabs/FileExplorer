@@ -1,9 +1,4 @@
 <!--
-<<<<<<< HEAD
-  @File Name          : qsydFileExplorerDetail.html
-  @Description        : 
-  @Author             : Elly Yijun Zhu
-=======
  * Copyright (c) 2020, salesforce.com, inc.
  * All rights reserved.
  * SPDX-License-Identifier: BSD-3-Clause
@@ -14,10 +9,8 @@
  @File Name          : qsydFileExplorerDetail.html
  @Description        :
  @Author             : Elly Yijun Zhu
->>>>>>> Folder-Templates
 -->
 <template>
-    <!-- <img src="https://qsyd-filexplorer-dev-ed--c.visualforce.com/resource/1586317982000/qsyd_Mockups/Detail.png" /> -->
     <div class="details-container">
         <template if:true={isFile}>
             <div class="slds-p-around_x-small">
@@ -52,7 +45,7 @@
                         <div class="slds-col slds-size_1-of-1">
                             <div title="preview" class="slds-p-vertical_x-small slds-text-align_center">
                                 <div class={previewImageClass}>
-                                    <img src={previewImageSrc} onerror={handleImgError} />
+                                    <img src={previewImageSrc} onerror={handleImgError}/>
                                 </div>
                             </div>
                         </div>
@@ -150,7 +143,6 @@
                             </div>
 
                             <div class="slds-p-around_x-small pillcontainer">
-                                <!-- <p>Tags:</p> -->
                                 <div if:true={redraw}>
                                     <lightning-pill-container items={_modalTags} onitemremove={handleTagRemove}>
                                     </lightning-pill-container>

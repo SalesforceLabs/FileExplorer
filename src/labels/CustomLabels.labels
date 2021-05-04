@@ -9,14 +9,6 @@
         <value>A folder with the same name already exists in this location</value>
     </labels>
     <labels>
-        <fullName>Action_Error_Messages_Failed_to_insert_template</fullName>
-        <categories>Action Error Messages</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Action Error Messages -	Failed to insert template</shortDescription>
-        <value>Failed to insert template</value>
-    </labels>
-    <labels>
         <fullName>Action_Error_Messages_Failed_to_retrieve_templates</fullName>
         <categories>Action Error Messages</categories>
         <language>en_US</language>

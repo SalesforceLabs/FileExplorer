@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 /*
  * Copyright (c) 2020, salesforce.com, inc.
  * All rights reserved.
@@ -8,7 +6,6 @@
  */
 
 
->>>>>>> Folder-Templates
 /**
  Author:         Paul Lucas
  Company:        Salesforce
@@ -20,23 +17,12 @@
  */
 
 import {LightningElement, api, wire} from 'lwc';
-<<<<<<< HEAD
-import {ShowToastEvent} from 'lightning/platformShowToastEvent';
-import {CONSTANTS, item, listToTree} from 'c/qsydFileExplorerCommon';
-=======
 import {CONSTANTS, item} from 'c/qsydFileExplorerCommon';
->>>>>>> Folder-Templates
 import {loadScript, loadStyle} from 'lightning/platformResourceLoader';
-import qsyd_Common from '@salesforce/resourceUrl/qsyd_Common';
 import jquery from '@salesforce/resourceUrl/jquery_350';
 import jstree from '@salesforce/resourceUrl/jstree_339';
 import jstree339 from '@salesforce/resourceUrl/jstree339';
-<<<<<<< HEAD
-import filexplorer from '@salesforce/resourceUrl/filexplorer';
-// import jstree from '@salesforce/resourceUrl/jstree_339_min';
-=======
 // import jstree339 from '@salesforce/resourceUrl/jstree_339_min';
->>>>>>> Folder-Templates
 
 export default class QSydFileExplorerTree extends LightningElement {
 	/**

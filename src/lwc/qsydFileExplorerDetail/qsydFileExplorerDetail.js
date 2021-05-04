@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 /*
  * Copyright (c) 2020, salesforce.com, inc.
  * All rights reserved.
@@ -8,7 +6,6 @@
  */
 
 
->>>>>>> Folder-Templates
 import {LightningElement, api, track, wire} from 'lwc';
 import {NavigationMixin} from 'lightning/navigation';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
@@ -92,8 +89,6 @@ export default class QsydFileExplorerDetail extends NavigationMixin(
 
 	}
 
-<<<<<<< HEAD
-=======
 	get isContentVersionReady() {
 		return (this._contentVersion);
 	}
@@ -144,7 +139,6 @@ export default class QsydFileExplorerDetail extends NavigationMixin(
 		return dtString;
 	}
 
->>>>>>> Folder-Templates
 	get tagInput() {
 		return this._tagInput || '';
 	}
@@ -170,20 +164,14 @@ export default class QsydFileExplorerDetail extends NavigationMixin(
 	}
 
 	connectedCallback() {
-<<<<<<< HEAD
-		// initialize component
-		this.handleEnvCheck();
-=======
 		this.environmentCheck();
->>>>>>> Folder-Templates
 	}
 
 	renderedCallback() {
 	}
 
-	handleEnvCheck() {
+	environmentCheck() {
 		isCommunity().then(result => {
-			//alert('isCommunity:' + result);
 			this.showPreview = !result;
 		}).catch(error => {
 			this.error = error;
@@ -209,7 +197,6 @@ export default class QsydFileExplorerDetail extends NavigationMixin(
 			let res = JSON.parse(result);
 			if (res) {
 				this._contentVersion = res;
-				// console.log('--Details ContentVerison-->' + JSON.stringify(this._contentVersion));
 			}
 		}).catch(error => {
 			this._error = error;
@@ -239,12 +226,6 @@ export default class QsydFileExplorerDetail extends NavigationMixin(
 		}
 	}
 
-	// handleSampleLogoImageError(e) {
-	//     if (e && e.target) {
-	//         alert('!!!');
-	//     }
-	// }
-
 	handleDialogOpen() {
 		this.show();
 		this.redraw = true;
@@ -268,7 +249,6 @@ export default class QsydFileExplorerDetail extends NavigationMixin(
 	}
 
 	handleInsertTag() {
-		//alert('handleInsertTag:' + this._tagInput)
 		if (!this._tagInput || this._tagInput.trim().length == 0) {
 			return;
 		}
@@ -388,59 +368,5 @@ export default class QsydFileExplorerDetail extends NavigationMixin(
 				actionName: this.CONSTANTS.NAVIGATION_ACTIONS.VIEW,
 			},
 		});
-	}
-
-	get isContentVersionReady() {
-		return (this._contentVersion);
-	}
-
-	get isFile() {
-		return (this._item && this._item.documentId);
-	}
-
-	get previewImageSrc() {
-		if (this._contentVersion) {
-
-			return this.currentPagePrefix +
-				'/sfc/servlet.shepherd/version/renditionDownload?rendition=THUMB720BY480&versionId=' +
-				this._contentVersion.Id + '&operationContext=CHATTER';
-		} else {
-			return 'https://qsyd-perma-bucket.s3-ap-southeast-2.amazonaws.com/file-explorer/images/file200x200.png';
-		}
-	}
-
-	get downloadLink() {
-		return '/sfc/servlet.shepherd/document/download/' +
-			this._item.documentId;
-	}
-
-	get filetype() {
-		return this._item.type;
-	}
-
-	get fileowner() {
-		return this._item.owner;
-	}
-
-	get filename() {
-		return this._item.text;
-	}
-
-	get filesize() {
-		if (this._item.size == 0 || this._item.size == null ||
-			isNaN(this._item.size)) {
-			return '0.00 B';
-		}
-		let e = Math.floor(Math.log(this._item.size) / Math.log(1024));
-		return (this._item.size / Math.pow(1024, e)).toFixed(2) + ' ' +
-			' KMGTP'.charAt(e) + 'B';
-	}
-
-	get lastModifiedDate() {
-		let dtParse = Date.parse(this._contentVersion.LastModifiedDate);
-		let dt = new Date(dtParse);
-		let dtString = dt.toLocaleString();
-
-		return dtString;
 	}
 }

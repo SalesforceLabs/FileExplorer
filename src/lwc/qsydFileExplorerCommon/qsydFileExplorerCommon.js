@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 /*
  * Copyright (c) 2020, salesforce.com, inc.
  * All rights reserved.
@@ -8,7 +6,6 @@
  */
 
 
->>>>>>> Folder-Templates
 /**
      Author:         Paul Lucas
      Company:        Salesforce
@@ -229,23 +226,6 @@ const CONSTANTS = {
 	},
 
 	CUSTOM_DOM_EVENT_TYPES: {
-<<<<<<< HEAD
-		'ITEM_CLICK': 'itemclick',
-		'ITEM_ACTION': 'itemaction',
-		'ITEM_CHANGE': 'itemchange',
-		'EXPLORER_MANAGEMENT_OPEN': 'explorermanagementopen',
-		'EXPLORER_MANAGEMENT_CLOSE': 'explorermanagementclose',
-		'DATA_REFRESH': 'datarefresh',
-		'DATA_LOADED': 'dataloaded',
-
-		// 'ACTION_ADD_FILE': 'actionaddfile',
-		// 'ACTION_MOVE_FILE': 'actionmovefile',
-		// 'ACTION_ADD_FOLDER': 'actionaddfolder',
-		// 'ACTION_MOVE_FOLDER': 'actionmovefolder',
-		// 'ACTION_RENAME_FOLDER': 'actionrenamefolder',
-		// 'ACTION_DELETE_FOLDER': 'actiondeletefolder',
-		// 'ACTION_DATA_REFRESH': 'actiondatarefresh',
-=======
 		DATA_REFRESH: 'datarefresh',
 		DATA_LOADED: 'dataloaded',
 		EXPLORER_LOADED: 'explorerloaded',
@@ -263,7 +243,6 @@ const CONSTANTS = {
 		// ACTION_RENAME_FOLDER: 'actionrenamefolder',
 		// ACTION_DELETE_FOLDER: 'actiondeletefolder',
 		// ACTION_DATA_REFRESH: 'actiondatarefresh',
->>>>>>> Folder-Templates
 	},
 
 	ACTION_TYPES: {
@@ -317,15 +296,6 @@ const CONSTANTS = {
 	},
 
 	ACTION_HEADERS: {
-<<<<<<< HEAD
-		'ADD_FILE': 'Add File(s) to ${text} folder',
-		'MOVE_FILE': 'Move File',
-		'ADD_FOLDER': 'Add Folder',
-		'MOVE_FOLDER': 'Move Folder',
-		'RENAME_FOLDER': 'Rename Folder',
-		'DELETE_FOLDER': 'Delete Folder',
-		'REFRESH': 'Refresh',
-=======
 		ADD_FILE: ACTION_HEADERS__ADD_FILE,
 		MOVE_FILE: ACTION_HEADERS__MOVE_FILE,
 		ADD_FOLDER: ACTION_HEADERS__ADD_FOLDER,
@@ -335,7 +305,6 @@ const CONSTANTS = {
 		DELETE_FOLDER: ACTION_HEADERS__DELETE_FOLDER,
 		REFRESH: ACTION_HEADERS__REFRESH,
 		EDIT_TAGS: ACTION_HEADERS__EDIT_TAGS,
->>>>>>> Folder-Templates
 	},
 
 	ACTION_SUCCESS_MESSAGES: {
@@ -418,10 +387,7 @@ const itemDefaults = {
 	documentId: null,
 	entityId: null,
 	ext: null,
-<<<<<<< HEAD
-=======
 	hostFolderLabel: CONSTANTS.TREE_LABELS.HOME,
->>>>>>> Folder-Templates
 	folder: null,
 	icon: null,
 	id: null,
@@ -429,11 +395,7 @@ const itemDefaults = {
 	objectApiName: null,
 	size: 0,
 	tags: null,
-<<<<<<< HEAD
-	text: '',
-=======
 	text: CONSTANTS.TREE_LABELS.HOME,
->>>>>>> Folder-Templates
 	type: null,
 };
 
@@ -458,6 +420,10 @@ class item {
 		return this.documentId;
 	}
 
+	getType() {
+		return this.isFile() ? 'file' : 'folder';
+	}
+
 	// TODO: Refactor id = 'root'
 	isRoot() {
 		return (!this.id || this.id === 'root');
@@ -467,10 +433,6 @@ class item {
 		return (!!this.documentId);
 	}
 
-<<<<<<< HEAD
-	getType() {
-		return this.isFile() ? 'file' : 'folder';
-=======
 	isTemplate() {
 		return (this.objectApiName ===
 			CONSTANTS.FILE_EXPLORER_OBJECT_API_NAMES.FOLDER_TEMPLATE);
@@ -493,7 +455,6 @@ class item {
 			default:
 				break;
 		}
->>>>>>> Folder-Templates
 	}
 }
 

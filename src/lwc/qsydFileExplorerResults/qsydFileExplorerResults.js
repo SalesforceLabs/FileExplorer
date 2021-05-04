@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 /*
  * Copyright (c) 2020, salesforce.com, inc.
  * All rights reserved.
@@ -8,17 +6,10 @@
  */
 
 
->>>>>>> Folder-Templates
 /**
  * @File Name          : qsydFileExplorerResults.js
  * @Description        :
  * @Author             : Paul Lucas, Jiun Ryu, Elly Zhu, Derrick Vuong
- * @Group              :
- * @Last Modified By   : Derrick Vuong
- * @Last Modified On   : 4/29/2020, 12:14:38 PM
- * @Modification Log   :
- * Ver       Date            Author      		    Modification
- * 1.0       4/23/2020       PL, JR, EZ, DV         Initial Version
  **/
 import {LightningElement, api} from 'lwc';
 import {CONSTANTS} from 'c/qsydFileExplorerCommon';

@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 /*
  * Copyright (c) 2020, salesforce.com, inc.
  * All rights reserved.
@@ -8,14 +6,11 @@
  */
 
 
->>>>>>> Folder-Templates
 import {LightningElement, api} from 'lwc';
 import {
 	CONSTANTS,
 	item,
 } from 'c/qsydFileExplorerCommon';
-// import setFolder
-// 	from '@salesforce/apex/qsydFileExplorerController.setFolder';
 
 export default class QsydFileExplorerActions extends LightningElement {
 
@@ -30,13 +25,8 @@ export default class QsydFileExplorerActions extends LightningElement {
 				value: CONSTANTS.ACTION_TYPES.ADD_FILE,
 				disabled: false,
 				prefixIconName: 'utility:add',
-<<<<<<< HEAD
-				isDisabled: function(item, context) {
-					return false; // (!context.isFile() && !context.isRoot());
-=======
 				isDisabled: function (item, context) {
 					return context.isTemplate();
->>>>>>> Folder-Templates
 				},
 			},
 			{
@@ -188,11 +178,8 @@ export default class QsydFileExplorerActions extends LightningElement {
 
 	resolveMenuItems() {
 
-<<<<<<< HEAD
-=======
 		// Expected config
 
->>>>>>> Folder-Templates
 		// this.menuItems = [
 		// 	{
 		// 		'key': 'File',

@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 /*
  * Copyright (c) 2020, salesforce.com, inc.
  * All rights reserved.
@@ -8,7 +6,6 @@
  */
 
 
->>>>>>> Folder-Templates
 /**
  * @File Name          : qsydFileExplorer.js
  * @Description        :
@@ -21,7 +18,9 @@ import {
 	listToTree,
 	clone,
 	item,
-	interpolate
+	showToast,
+	reduceErrors,
+	interpolate,
 } from 'c/qsydFileExplorerCommon';
 
 import checkForPermission
@@ -118,12 +117,6 @@ export default class QsydFileExplorerCmp extends LightningElement {
 	renderedCallback() {
 	}
 
-<<<<<<< HEAD
-	// errorCallback(error, stack) {
-	// 	console.log('>>>>> errorCallback');
-	//  throw error;
-	// }
-=======
 	disconnectedCallback() {
 		this.removeEventListener(CONSTANTS.CUSTOM_DOM_EVENT_TYPES.DATA_LOADED,
 			this.handleDataLoaded);
@@ -133,6 +126,7 @@ export default class QsydFileExplorerCmp extends LightningElement {
 	}
 
 	errorCallback(error, stack) {
+
 		showToast(
 			this,
 			CONSTANTS.TOAST_MESSAGE_TYPES.ERROR,
@@ -141,7 +135,6 @@ export default class QsydFileExplorerCmp extends LightningElement {
 			CONSTANTS.TOAST_THEMES.ERROR,
 			CONSTANTS.TOAST_MODE.DISMISSABLE);
 	}
->>>>>>> Folder-Templates
 
 	initialise() {
 		checkForPermission().then(result => {
@@ -263,14 +256,11 @@ export default class QsydFileExplorerCmp extends LightningElement {
 		}
 	}
 
-<<<<<<< HEAD
-=======
 	handleExplorerLoaded(e) {
 		this.showSpinner = false;
 	}
 
 	// TODO: Implement keyboard shortcuts
->>>>>>> Folder-Templates
 	handleKeyDown({code}) {
 		let itemType = new item(this.item).getType(),
 			action = `${CONSTANTS.ACTION_TYPES_KEY_MAP[code.charAt(
@@ -302,23 +292,10 @@ export default class QsydFileExplorerCmp extends LightningElement {
 				break;
 
 			default:
-<<<<<<< HEAD
-				// if (this._selectedItem.isRoot()) {
-				// 	return 'Add files to Home folder:';
-				// }
-				// return 'Add files to folder "' + this._selectedItem.text + '":';
-debugger;
-				this.explorerManagementHeader = interpolate(CONSTANTS.ACTION_HEADERS[e.detail.toString().
-					toUpperCase()], this.item);
-
-				// this.explorerManagementHeader = CONSTANTS.ACTION_HEADERS[e.detail.toString().
-				// 	toUpperCase()];
-=======
 				this.item = new item(this.item);
 				this.item.setHostFolderLabel(this.dataDictionary.folders);
 				this.explorerManagementHeader = interpolate(
 					CONSTANTS.ACTION_HEADERS[e.detail.toString().toUpperCase()], this.item);
->>>>>>> Folder-Templates
 
 				explorerManagement.show(e.detail);
 				break;
@@ -363,23 +340,6 @@ debugger;
 				this.dataDictionary,
 				searchText);
 		} else if (searchText !== null && searchText !== '') {
-<<<<<<< HEAD
-				this.results = this.findMatchingResultsToText(
-					this.dataDictionary,
-					searchText);
-        } else {
-            if (this.item.id != 'root') {
-                this.results = this.findTreeItem(this.dataDictionary, 'Contents',
-                    this.folderId);
-                this.breadcrumbs = this.buildBreadcrumbs(this.dataDictionary,
-                    this.item);
-            } else {
-                this.results = this.findTreeItem(this.dataDictionary, 'Contents',
-                    null);
-                this.breadcrumbs = this.buildBreadcrumbs(this.dataDictionary, null);
-            }
-        }
-=======
 			this.results = this.findMatchingResultsToText(
 				this.dataDictionary,
 				searchText);
@@ -398,7 +358,6 @@ debugger;
 					null);
 			}
 		}
->>>>>>> Folder-Templates
 	}
 
 	// #### SEARCH EVENT END
@@ -459,9 +418,9 @@ debugger;
 				files.forEach(file => {
 					if (file.text.match(searchKey)) {
 						fileTextMatches.push(file);
-                    }
-                    
-                    if (file.tags && file.tags.match(searchKey)) {
+					}
+
+					if (file.tags && file.tags.match(searchKey)) {
 						fileTagMatches.push(file);
 					}
 				});
