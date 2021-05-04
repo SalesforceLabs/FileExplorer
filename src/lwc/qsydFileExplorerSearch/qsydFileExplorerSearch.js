@@ -1,6 +1,16 @@
+<<<<<<< HEAD
+=======
+/*
+ * Copyright (c) 2020, salesforce.com, inc.
+ * All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause
+ * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ */
+
+
+>>>>>>> Folder-Templates
 /**
  * @File Name          : qsydFileExplorerSearch.js
- * @Description        :
  * @Author             : Paul Lucas, Jiun Ryu, Elly Zhu, Derrick Vuong
  * @Group              :
  * @Last Modified By   : Derrick Vuong
@@ -10,11 +20,13 @@
  * 1.0       4/23/2020       PL, JR, EZ, DV         Initial Version
  **/
 import {LightningElement, api} from 'lwc';
+import {CONSTANTS} from 'c/qsydFileExplorerCommon';
 
 export default class QsydFileExplorerSearch extends LightningElement {
 	@api searchText;
 	@api results;
 
+	CONSTANTS = CONSTANTS;
 	displayItems;
 	fileType;
 	isLoading = false;
@@ -32,11 +44,17 @@ export default class QsydFileExplorerSearch extends LightningElement {
 		}
 	}
 
-	get filesLabel() { return this.results.files.length + ' Files'; }
+	get filesLabel() {
+		return this.results.files.length + ' ' + CONSTANTS.SEARCH_CATEGORY.FILES;
+	}
 
-	get foldersLabel() { return this.results.folders.length + ' Folders'; }
+	get foldersLabel() {
+		return this.results.folders.length + ' ' + CONSTANTS.SEARCH_CATEGORY.FOLDERS;
+	}
 
-	get tagsLabel() { return this.results.tags.length + ' Tagged'; }
+	get tagsLabel() {
+		return this.results.tags.length + ' ' + CONSTANTS.SEARCH_CATEGORY.TAGGED;
+	}
 
 	get displayItemsAvailable() {
 		return this.displayItems && this.displayItems.length > 0 ? true : false;

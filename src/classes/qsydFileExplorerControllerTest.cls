@@ -14,18 +14,19 @@ global with sharing class qsydFileExplorerControllerTest {
     @TestSetup
     private static void setupTestData() {
 
-        //Create LinkedEntity Record
+        // Create LinkedEntity Record
         Account a = new Account(Name = 'TestAccount');
         insert a;
 
         //Create ContentVersion Record 
         ContentVersion contentVersion = new ContentVersion(
                 Title = 'Penguins',
-                PathOnClient = 'Penguins.jpg',
+                ReasonForChange = 'update',
+                PathOnClient = 'Penguins.ppt',
                 VersionData = Blob.valueOf(SIG_B64),
                 IsMajorVersion = true
         );
-        insert contentVersion;
+        INSERT contentVersion;
         List<ContentDocument> contentDocumentList = [SELECT Id, Title, LatestPublishedVersionId FROM ContentDocument WHERE LatestPublishedVersionId = :contentVersion.Id];
 
         //Create ContentDocumentLink Record 
@@ -33,11 +34,11 @@ global with sharing class qsydFileExplorerControllerTest {
         cdl.LinkedEntityId = a.id;
         cdl.ContentDocumentId = contentDocumentList[0].Id;
         cdl.shareType = 'V';
-        insert cdl;
+        INSERT cdl;
 
         //Create Folder Record
-        FileExplorerFolder__c qFolder = new FileExplorerFolder__c(LinkedEntityId__c = a.Id, Label__c = 'qFolder');
-        insert qFolder;
+        qsyd_FE__FileExplorerFolder__c qFolder = new qsyd_FE__FileExplorerFolder__c(qsyd_FE__LinkedEntityId__c = a.Id, qsyd_FE__Label__c = 'qFolder');
+        INSERT qFolder;
     }
 
     @IsTest
@@ -51,10 +52,9 @@ global with sharing class qsydFileExplorerControllerTest {
         if (cdlList.size() > 0) {
             contentDocumentId = cdlList[0].ContentDocumentId;
         }
-        List<ContentVersion> expectedCV = [SELECT Id, VersionNumber, ReasonForChange, LastModifiedDate FROM ContentVersion WHERE Title = 'Penguins' AND PathOnClient = 'Penguins.jpg'];
-        String expected = JSON.serialize(expectedCV[0]);
-        String actual = qsydFileExplorerController.getLatestContentVersion(contentDocumentId);
-        System.assertEquals(expected, actual);
+        List<ContentVersion> expectedCV = [SELECT Id, VersionNumber, ReasonForChange, LastModifiedDate FROM ContentVersion WHERE Title = 'Penguins' AND PathOnClient = 'Penguins.ppt'];
+
+        System.assertEquals(expectedCV[0].Id, ((ContentVersion) JSON.deserialize(qsydFileExplorerController.getLatestContentVersion(contentDocumentId), ContentVersion.class)).Id);
         Test.stopTest();
     }
 
@@ -175,7 +175,32 @@ global with sharing class qsydFileExplorerControllerTest {
     }
 
     @IsTest
-    private static void retrieveItemMap() {
+    private static void qsyd_FileInitialisationTest() {
+        qsyd_File file;
+
+        Test.startTest();
+        file = new qsyd_File('a000a0000000000000', 'a000a0000000000001', 'label', 'a000a0000000000002', 'a000a0000000000004', 'doc', '.doc', 'owner', 'tags', 10, null);
+        System.assertEquals(true, file.icon.contains('word.png'));
+        file = new qsyd_File('a000a0000000000000', 'a000a0000000000001', 'label', 'a000a0000000000002', 'a000a0000000000004', 'xls', '.xls', 'owner', 'tags', 10, null);
+        System.assertEquals(true, file.icon.contains('excel.png'));
+        file = new qsyd_File('a000a0000000000000', 'a000a0000000000001', 'label', 'a000a0000000000002', 'a000a0000000000004', 'ai', '.ai', 'owner', 'tags', 10, null);
+        System.assertEquals(true, file.icon.contains('illustrator.png'));
+        file = new qsyd_File('a000a0000000000000', 'a000a0000000000001', 'label', 'a000a0000000000002', 'a000a0000000000004', 'jpg', '.jpg', 'owner', 'tags', 10, null);
+        System.assertEquals(true, file.icon.contains('image.png'));
+        file = new qsyd_File('a000a0000000000000', 'a000a0000000000001', 'label', 'a000a0000000000002', 'a000a0000000000004', 'pdf', '.pdf', 'owner', 'tags', 10, null);
+        System.assertEquals(true, file.icon.contains('pdf.png'));
+        file = new qsyd_File('a000a0000000000000', 'a000a0000000000001', 'label', 'a000a0000000000002', 'a000a0000000000004', 'ps', '.ps', 'owner', 'tags', 10, null);
+        System.assertEquals(true, file.icon.contains('photoshop.png'));
+        file = new qsyd_File('a000a0000000000000', 'a000a0000000000001', 'label', 'a000a0000000000002', 'a000a0000000000004', 'ppt', '.ppt', 'owner', 'tags', 10, null);
+        System.assertEquals(true, file.icon.contains('ppt.png'));
+        file = new qsyd_File('a000a0000000000000', 'a000a0000000000001', 'label', 'a000a0000000000002', 'a000a0000000000004', 'other', '.other', 'owner', 'tags', 10, null);
+        System.assertEquals(true, file.icon.contains('doc.png'));
+        Test.stopTest();
+
+    }
+
+        @IsTest
+    private static void retrieveItemMapTest() {
         setupTestData();
 
         Test.startTest();
@@ -272,4 +297,108 @@ global with sharing class qsydFileExplorerControllerTest {
         System.assertEquals(0, folders.size());
     }
 
+    @IsTest
+    private static void given_comeParameters_when_aFolderConstructorIsCalledWithInvalidParameters_then_instanceParametersAreSet() {
+        qsyd_FolderTemplate template;
+
+        Test.startTest();
+
+        template = new qsyd_FolderTemplate('templateId', 'entityId', 'folderId');
+
+        Test.stopTest();
+
+        System.assertEquals(null, template.templateId);
+        System.assertEquals(null, template.entityId);
+        System.assertEquals(null, template.folderId);
+    }
+
+    @IsTest
+    private static void given_comeParameters_when_aFolderConstructorIsCalledWithValidParameters_then_instanceParametersAreSet() {
+        qsyd_FolderTemplate template;
+
+        Test.startTest();
+
+        template = new qsyd_FolderTemplate('a000a0000000000000', 'a000a0000000000001', 'a000a0000000000002');
+
+        Test.stopTest();
+
+        System.assertEquals('a000a0000000000000', template.templateId);
+        System.assertEquals('a000a0000000000001', template.entityId);
+        System.assertEquals('a000a0000000000002', template.folderId);
+    }
+
+    @IsTest
+    private static void given_someTemplateParameters_when_aListIsRequested_then_activeTemplatesAreReturned() {
+        qsyd_FolderTemplate.qsyd_PaginatedFolderTemplates paginatedTemplates;
+        String filter = 'plate';
+        String sortBy = 'qsyd_FE__Label__c';
+        Integer pageSize = 2;
+        Integer pageOffset = 0;
+
+        // Setup
+        List<qsyd_FE__FileExplorerFolderTemplate__c> templates = new List<qsyd_FE__FileExplorerFolderTemplate__c>{
+                new qsyd_FE__FileExplorerFolderTemplate__c(qsyd_FE__Label__c = 'Template 1', qsyd_FE__Description__c = 'Template 1 description', qsyd_FE__IsActive__c = TRUE),
+                new qsyd_FE__FileExplorerFolderTemplate__c(qsyd_FE__Label__c = 'Template 2', qsyd_FE__Description__c = 'Template 2 description', qsyd_FE__IsActive__c = TRUE),
+                new qsyd_FE__FileExplorerFolderTemplate__c(qsyd_FE__Label__c = 'Template 3', qsyd_FE__Description__c = 'Template 3 description', qsyd_FE__IsActive__c = TRUE),
+                new qsyd_FE__FileExplorerFolderTemplate__c(qsyd_FE__Label__c = 'Template 4', qsyd_FE__Description__c = 'Template 4 description', qsyd_FE__IsActive__c = FALSE),
+                new qsyd_FE__FileExplorerFolderTemplate__c(qsyd_FE__Label__c = 'Template 5', qsyd_FE__Description__c = 'Template 5 description', qsyd_FE__IsActive__c = TRUE),
+                new qsyd_FE__FileExplorerFolderTemplate__c(qsyd_FE__Label__c = 'Template 6', qsyd_FE__Description__c = 'Template 6 description', qsyd_FE__IsActive__c = TRUE)
+        };
+
+        INSERT templates;
+
+        Test.startTest();
+
+        paginatedTemplates = (qsyd_FolderTemplate.qsyd_PaginatedFolderTemplates) JSON.deserialize(qsydFileExplorerController.getTemplates(filter, sortBy, pageSize, pageOffset), qsyd_FolderTemplate.qsyd_PaginatedFolderTemplates.class);
+        paginatedTemplates = (qsyd_FolderTemplate.qsyd_PaginatedFolderTemplates) JSON.deserialize(qsydFileExplorerController.getTemplates(filter, sortBy, pageSize, paginatedTemplates.pageOffset), qsyd_FolderTemplate.qsyd_PaginatedFolderTemplates.class);
+        paginatedTemplates = (qsyd_FolderTemplate.qsyd_PaginatedFolderTemplates) JSON.deserialize(qsydFileExplorerController.getTemplates(filter, sortBy, pageSize, paginatedTemplates.pageOffset), qsyd_FolderTemplate.qsyd_PaginatedFolderTemplates.class);
+
+        Test.stopTest();
+
+        System.assertEquals(-1, paginatedTemplates.pageOffset);
+        System.assertEquals(1, paginatedTemplates.records.size());
+    }
+
+    @IsTest
+    private static void given_aRecord_when_aTemplateIsProvided_then_aCloneOfThatTemplateIsMade() {
+        String folderId = null;
+        List<qsyd_FE__FileExplorerFolder__c> folders;
+
+        // Setup
+        Account acme = new Account(Name = 'Acme');
+        INSERT acme;
+
+        qsyd_FE__FileExplorerFolderTemplate__c template = new qsyd_FE__FileExplorerFolderTemplate__c(qsyd_FE__Label__c = 'Template 1', qsyd_FE__Description__c = 'Template 1 description', qsyd_FE__IsActive__c = TRUE);
+        INSERT template;
+
+        qsyd_FE__FileExplorerFolder__c parentFolder = new qsyd_FE__FileExplorerFolder__c(qsyd_FE__LinkedEntityId__c = template.Id, qsyd_FE__Label__c = 'parent');
+        INSERT parentFolder;
+
+        qsyd_FE__FileExplorerFolder__c childFolder = new qsyd_FE__FileExplorerFolder__c(qsyd_FE__LinkedEntityId__c = template.Id, qsyd_FE__Label__c = 'child', qsyd_FE__Folder__c = parentFolder.Id);
+        INSERT childFolder;
+
+        Test.startTest();
+
+        qsydFileExplorerController.cloneTemplate(template.Id, acme.Id, folderId);
+
+        childFolder = [
+                SELECT Id,
+                        qsyd_FE__Folder__c
+                FROM qsyd_FE__FileExplorerFolder__c
+                WHERE qsyd_FE__LinkedEntityId__c = :acme.Id
+                AND qsyd_FE__Label__c = 'child'
+                LIMIT 1
+        ][0];
+
+        parentFolder = [
+                SELECT qsyd_FE__Label__c
+                FROM qsyd_FE__FileExplorerFolder__c
+                WHERE qsyd_FE__LinkedEntityId__c = :acme.Id
+                AND Id = :childFolder.qsyd_FE__Folder__c
+                LIMIT 1
+        ][0];
+
+        Test.stopTest();
+        System.assertEquals('parent', parentFolder.qsyd_FE__Label__c);
+    }
 }

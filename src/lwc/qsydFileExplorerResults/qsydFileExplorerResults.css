@@ -1,3 +1,14 @@
+<<<<<<< HEAD
+=======
+/*
+ * Copyright (c) 2020, salesforce.com, inc.
+ * All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause
+ * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ */
+
+
+>>>>>>> Folder-Templates
 .results lightning-accordion-section lightning-layout {
     max-height: 215px;
     overflow: auto;
@@ -23,9 +34,8 @@
     height: 5px;
 }
 
-.results lightning-accordion-section lightning-layout::-webkit-scrollbar-thumb
-{
-    background-color: rgba(0,0,0,0.2);
+.results lightning-accordion-section lightning-layout::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
     border-radius: 5px;
 }
 

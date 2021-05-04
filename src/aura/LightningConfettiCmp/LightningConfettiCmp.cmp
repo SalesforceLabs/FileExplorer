@@ -1,0 +1,42 @@
+<!--
+   	Author:         Paul Lucas
+    Company:        Salesforce
+    Description:    LightningConfettiCmp
+    Date:           06-Sep-2019
+
+	History:
+	When            Who                 What
+
+	TODO:
+
+-->
+<aura:component
+        implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens"
+        access="global">
+
+    <!-- Scripts -->
+    <ltng:require scripts="{!$Resource.ConfettiJS}" afterScriptsLoaded="{!c.handleAfterScriptsLoaded}"/>
+
+    <!-- Attributes -->
+    <aura:attribute name="colors" type="String[]"
+                    default="['#610B0B','#FFFF00','#FF00BF','#0040FF','#585858','#00FFBF','#FE642E','#FFBF00','#0101DF',
+                    '#FF8000','#00FF00','#FF0040','#A901DB','#0B0B3B','#FF0000']" access="global"/>
+
+    <aura:attribute name="cannon" type="Boolean" default="true" description="Cannon effect" access="global"/>
+    <aura:attribute name="fireworks" type="Boolean" default="false" description="Fireworks effect" access="global"/>
+    <aura:attribute name="confettiShower" type="Boolean" default="false" description="Confetti shower effect" access="global"/>
+    <aura:attribute name="winnerCelebration" type="Boolean" default="false" description="Winner celebration effect" access="global"/>
+    <aura:attribute name="burstMode" type="Boolean" default="false" description="Burst mode effect" access="global"/>
+    <aura:attribute name="duration" type="Integer" default="3" description="The duration of effects, in seconds" access="global"/>
+
+    <!-- Api -->
+    <aura:method name="celebrate" action="{!c.handleCelebration}"
+                 description="Fire celebration">
+        <aura:attribute name="effects" type="List" default="[]" description="List of effects"/>
+        <aura:attribute name="duration" type="Integer" default="3" description="Duration of effect in seconds"/>
+    </aura:method>
+
+    <!--    <canvas id="customCanvas" aura:id="customCanvas" class="canvasCss">-->
+    <!--    </canvas>-->
+
+</aura:component>

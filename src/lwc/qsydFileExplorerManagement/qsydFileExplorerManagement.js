@@ -1,3 +1,14 @@
+<<<<<<< HEAD
+=======
+/*
+ * Copyright (c) 2020, salesforce.com, inc.
+ * All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause
+ * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ */
+
+
+>>>>>>> Folder-Templates
 /**
      Author:         Paul Lucas
      Company:        Salesforce
@@ -258,9 +269,7 @@ export default class QSydFileExplorerManagement extends LightningElement {
 		this.targetItem = data.node.original;
 		this.targetItem.parents = data.node.parents;
 
-		this.template.querySelector('div.tree-home').
-			classList.
-			remove('item-selected');
+		this.template.querySelector('div.tree-home').classList.remove('item-selected');
 	}
 
 	handleHomeClick(e) {
@@ -277,27 +286,25 @@ export default class QSydFileExplorerManagement extends LightningElement {
 		const message = numDocuments + ' File' + (numDocuments > 1 ? 's' : '') +
 			' Successfully Added!';
 
-		setFolder({contentDocumentIds: documentIds, folderId: folderId}).
-			then(result => {
-				this.showToast(
-					CONSTANTS.TOAST_MESSAGE_TYPES.SUCCESS,
-					message,
-					'',
-					CONSTANTS.TOAST_THEMES.SUCCESS,
-					CONSTANTS.TOAST_MODE.DISMISSABLE);
+		setFolder({contentDocumentIds: documentIds, folderId: folderId}).then(result => {
+			this.showToast(
+				CONSTANTS.TOAST_MESSAGE_TYPES.SUCCESS,
+				message,
+				'',
+				CONSTANTS.TOAST_THEMES.SUCCESS,
+				CONSTANTS.TOAST_MODE.DISMISSABLE);
 
-				this.handleDialogClose({
-					action: this._action,
-				});
-			}).
-			catch(error => {
-				this.showToast(
-					CONSTANTS.TOAST_MESSAGE_TYPES.ERROR,
-					reduceErrors(error).join(', '),
-					'',
-					CONSTANTS.TOAST_THEMES.ERROR,
-					CONSTANTS.TOAST_MODE.DISMISSABLE);
+			this.handleDialogClose({
+				action: this._action,
 			});
+		}).catch(error => {
+			this.showToast(
+				CONSTANTS.TOAST_MESSAGE_TYPES.ERROR,
+				reduceErrors(error).join(', '),
+				'',
+				CONSTANTS.TOAST_THEMES.ERROR,
+				CONSTANTS.TOAST_MODE.DISMISSABLE);
+		});
 	}
 
 	handleDialogClose(data) {
@@ -445,70 +452,66 @@ export default class QSydFileExplorerManagement extends LightningElement {
 		save(
 			{
 				serializedItem: JSON.stringify(deltaItem),
-			}).
-			then((result) => {
-				this.showToast(
-					CONSTANTS.TOAST_MESSAGE_TYPES.SUCCESS,
-					CONSTANTS.ACTION_SUCCESS_MESSAGES[this._action.toUpperCase()],
-					'',
-					CONSTANTS.TOAST_THEMES.SUCCESS,
-					CONSTANTS.TOAST_MODE.DISMISSABLE);
+			}).then((result) => {
+			this.showToast(
+				CONSTANTS.TOAST_MESSAGE_TYPES.SUCCESS,
+				CONSTANTS.ACTION_SUCCESS_MESSAGES[this._action.toUpperCase()],
+				'',
+				CONSTANTS.TOAST_THEMES.SUCCESS,
+				CONSTANTS.TOAST_MODE.DISMISSABLE);
 
-				this.handleDialogClose({
-					action: this._action,
-					// item: this.selectedItem
-					item: {id: JSON.parse(result).id},
-				});
-			}).
-			catch(error => {
-				this._error = error;
-				this.showToast(
-					CONSTANTS.TOAST_MESSAGE_TYPES.ERROR,
-					reduceErrors(error).join(', '),
-					'',
-					CONSTANTS.TOAST_THEMES.ERROR,
-					CONSTANTS.TOAST_MODE.DISMISSABLE);
-
-				this.handleDialogClose({
-					action: this._action,
-					item: {},
-				});
+			this.handleDialogClose({
+				action: this._action,
+				// item: this.selectedItem
+				item: {id: JSON.parse(result).id},
 			});
+		}).catch(error => {
+			this._error = error;
+			this.showToast(
+				CONSTANTS.TOAST_MESSAGE_TYPES.ERROR,
+				reduceErrors(error).join(', '),
+				'',
+				CONSTANTS.TOAST_THEMES.ERROR,
+				CONSTANTS.TOAST_MODE.DISMISSABLE);
+
+			this.handleDialogClose({
+				action: this._action,
+				item: {},
+			});
+		});
 	}
 
 	removeItem(deltaItem) {
 		remove(
 			{
 				serializedItem: JSON.stringify(deltaItem),
-			}).
-			then(result => {
+			}).then(result => {
 
-				this.showToast(
-					CONSTANTS.TOAST_MESSAGE_TYPES.SUCCESS,
-					CONSTANTS.ACTION_SUCCESS_MESSAGES[this._action.toUpperCase()],
-					'',
-					CONSTANTS.TOAST_THEMES.SUCCESS,
-					CONSTANTS.TOAST_MODE.DISMISSABLE);
+			this.showToast(
+				CONSTANTS.TOAST_MESSAGE_TYPES.SUCCESS,
+				CONSTANTS.ACTION_SUCCESS_MESSAGES[this._action.toUpperCase()],
+				'',
+				CONSTANTS.TOAST_THEMES.SUCCESS,
+				CONSTANTS.TOAST_MODE.DISMISSABLE);
 
-				this.handleDialogClose({
-					action: this._action,
-					item: {id: this.selectedItem.folder}, // New selected item should be the parent folder
-				});
-			}).
-			catch(error => {
-				this._error = error;
-
-				this.showToast(
-					CONSTANTS.TOAST_MESSAGE_TYPES.ERROR,
-					reduceErrors(error).join(', '),
-					'',
-					CONSTANTS.TOAST_THEMES.ERROR,
-					CONSTANTS.TOAST_MODE.DISMISSABLE);
-
-				this.handleDialogClose({
-					action: this._action,
-					item: {},
-				});
+			this.handleDialogClose({
+				action: this._action,
+				item: {id: this.selectedItem.folder}, // New selected item should be the parent folder
 			});
+		}).catch(error => {
+			this._error = error;
+
+			this.showToast(
+				CONSTANTS.TOAST_MESSAGE_TYPES.ERROR,
+				reduceErrors(error).join(', '),
+				'',
+				CONSTANTS.TOAST_THEMES.ERROR,
+				CONSTANTS.TOAST_MODE.DISMISSABLE);
+
+			this.handleDialogClose({
+				action: this._action,
+				item: {},
+			});
+		});
 	}
 }

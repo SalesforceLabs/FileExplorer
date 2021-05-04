@@ -1,3 +1,14 @@
+<<<<<<< HEAD
+=======
+/*
+ * Copyright (c) 2020, salesforce.com, inc.
+ * All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause
+ * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ */
+
+
+>>>>>>> Folder-Templates
 /**
  Author:         Paul Lucas
  Company:        Salesforce
@@ -9,15 +20,23 @@
  */
 
 import {LightningElement, api, wire} from 'lwc';
+<<<<<<< HEAD
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 import {CONSTANTS, item, listToTree} from 'c/qsydFileExplorerCommon';
+=======
+import {CONSTANTS, item} from 'c/qsydFileExplorerCommon';
+>>>>>>> Folder-Templates
 import {loadScript, loadStyle} from 'lightning/platformResourceLoader';
 import qsyd_Common from '@salesforce/resourceUrl/qsyd_Common';
 import jquery from '@salesforce/resourceUrl/jquery_350';
 import jstree from '@salesforce/resourceUrl/jstree_339';
 import jstree339 from '@salesforce/resourceUrl/jstree339';
+<<<<<<< HEAD
 import filexplorer from '@salesforce/resourceUrl/filexplorer';
 // import jstree from '@salesforce/resourceUrl/jstree_339_min';
+=======
+// import jstree339 from '@salesforce/resourceUrl/jstree_339_min';
+>>>>>>> Folder-Templates
 
 export default class QSydFileExplorerTree extends LightningElement {
 	/**
@@ -42,6 +61,7 @@ export default class QSydFileExplorerTree extends LightningElement {
 	/**
 	 * Private properties
 	 */
+	CONSTANTS = CONSTANTS;
 	isLoading = true;
 	files;
 	folders;
@@ -158,14 +178,11 @@ export default class QSydFileExplorerTree extends LightningElement {
 		}
 
 		Promise.all([
-			// loadScript(this, qsyd_Common),
 			loadScript(this, jquery),
-			// loadScript(this, jstree + '/jstree.3.3.9.js'),
 			loadScript(this, jstree339),
 			loadStyle(this, jstree + '/themes/default/style.css'),
 		]).then(() => {
 			this.initialiseTree();
-
 		}).catch(error => {
 			console.log(error);
 		});
@@ -219,7 +236,7 @@ export default class QSydFileExplorerTree extends LightningElement {
 					},
 				},
 				'plugins': ['sort_ascending_folders_first'],
-				'sort_ascending_folders_first': function(a, b) {
+				'sort_ascending_folders_first': function (a, b) {
 					let nodeA = this.get_node(a, false);
 					let nodeB = this.get_node(b, false);
 
@@ -244,15 +261,17 @@ export default class QSydFileExplorerTree extends LightningElement {
 	handleTreeReady(e, data) {
 		this._$treeInstance = this._$tree.jstree(true);
 		this.isLoading = false;
+
+		this.dispatchEvent(
+			new CustomEvent(CONSTANTS.CUSTOM_DOM_EVENT_TYPES.EXPLORER_LOADED, {bubbles: true, composed: true}),
+		);
 	}
 
 	handleTreeChange(e, data) {
 		this._selectedItem = (data.node && data.node.original)
 			? data.node.original
 			: {};
-		this.template.querySelector('div.tree-home').
-			classList.
-			remove('item-selected');
+		this.template.querySelector('div.tree-home').classList.remove('item-selected');
 		this.propagateEvent(data.action);
 	}
 
@@ -294,6 +313,14 @@ export default class QSydFileExplorerTree extends LightningElement {
 
 	handleCollapseClick() {
 		this._$treeInstance.close_all(null, 0);
+	}
+
+	handleRefreshClick() {
+		this.dispatchEvent(
+			new CustomEvent(CONSTANTS.CUSTOM_DOM_EVENT_TYPES.ITEM_ACTION, {
+				detail: CONSTANTS.ACTION_TYPES.REFRESH,
+			}),
+		);
 	}
 
 	handleHomeClick(e) {

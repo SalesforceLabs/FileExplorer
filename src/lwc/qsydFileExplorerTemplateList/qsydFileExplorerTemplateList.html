@@ -1,0 +1,49 @@
+<!--
+ * Copyright (c) 2020, salesforce.com, inc.
+ * All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause
+ * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ -->
+
+<!--
+   	Author:         Paul Lucas
+    Company:        Salesforce
+    Description:    qsydFileExplorerTemplateList
+    Date:           01-Aug-2020
+
+	TODO:
+
+-->
+<template>
+
+    <lightning-input name="search" class="search slds-p-bottom_small" placeholder={CONSTANTS.SEARCH.PLACEHOLDER}
+                     label="Search" variant="label-hidden" type="search" is-loading={isLoading}
+                     onchange={handleSearchChange}
+                     onkeyup={handleSearchKeyUp}>
+    </lightning-input>
+
+    <template if:true={showTable}>
+        <div class="table-container">
+            <lightning-datatable
+                    key-field="id" class="table" data={records} columns={columns} is-loading enable-infinite-loading
+                    load-more-offset="20" show-row-number-column max-row-selection="1" onloadmore={handleLoadMore}
+                    onsort={handleColumnSort}
+                    onrowaction={handleRowAction}>
+            </lightning-datatable>
+        </div>
+    </template>
+
+    <template if:true={error}>
+        <c-qsyd-message-panel type="error" errors={error}
+                              message={CONSTANTS.ACTION_ERROR_MESSAGES.FAILED_TO_RETRIEVE_TEMPLATES}></c-qsyd-message-panel>
+    </template>
+
+    <template if:true={showMessage}>
+        <c-qsyd-message-panel type="no_data"
+                              message={CONSTANTS.ACTION_MESSAGES.NO_TEMPLATES}></c-qsyd-message-panel>
+        <lightning-button label={CONSTANTS.ACTION_LABELS.ADD_TEMPLATE} title={CONSTANTS.ACTION_LABELS.ADD_TEMPLATE}
+                          icon-name="utility:record_create"
+                          class="slds-m-left_x-small slds-align_absolute-center" variant="brand"
+                          onclick={handleAddTemplateClick}></lightning-button>
+    </template>
+</template>

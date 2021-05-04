@@ -1,3 +1,14 @@
+<<<<<<< HEAD
+=======
+/*
+ * Copyright (c) 2020, salesforce.com, inc.
+ * All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause
+ * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ */
+
+
+>>>>>>> Folder-Templates
 /**
  * @File Name          : qsydFileExplorer.js
  * @Description        :
@@ -12,26 +23,31 @@ import {
 	item,
 	interpolate
 } from 'c/qsydFileExplorerCommon';
+
+import checkForPermission
+	from '@salesforce/apex/qsydFileExplorerController.checkForPermission';
 import retrieveItemMap
 	from '@salesforce/apex/qsydFileExplorerController.retrieveItemMap';
 
 /* Changes to these width should be done in qsydFileExplorer.css as well for consistency */
 const treeMinWidth = '159', mainMinWidth = '285';
 
-var dragging = false, startPos, treeContainerWidth, mainContainerWidth;
+let dragging = false, startPos, treeContainerWidth, mainContainerWidth;
 
 export default class QsydFileExplorerCmp extends LightningElement {
 
 	/**
 	 * Internal properties
 	 */
-		// _payload;
 	_error;
 	_action;
 
 	/**
 	 * Private properties
 	 */
+	CONSTANTS = CONSTANTS;
+	spinnerAltText = 'Loading';
+	showFileExplorer;
 	results;
 	typedownResults;
 	shadowItem;
@@ -42,13 +58,20 @@ export default class QsydFileExplorerCmp extends LightningElement {
 	breadcrumbs;
 	explorerManagementHeader = 'Manage File Explorer';
 
-	get folderId() {
-		if (this.item) {
-			return this.item.documentId
-				? this.item.folder
-				: this.item.id;
-		}
-		return null;
+	get error() {
+		return this._error;
+	}
+
+	set error(value) {
+		this._error = value;
+
+		showToast(
+			this,
+			CONSTANTS.TOAST_MESSAGE_TYPES.ERROR,
+			reduceErrors(this._error).join(', '),
+			'',
+			CONSTANTS.TOAST_THEMES.ERROR,
+			CONSTANTS.TOAST_MODE.STICKY);
 	}
 
 	get action() {
@@ -59,35 +82,94 @@ export default class QsydFileExplorerCmp extends LightningElement {
 		this._action = value;
 	}
 
+	get folderId() {
+		if (this.item) {
+			return this.item.documentId
+				? this.item.folder
+				: this.item.id;
+		}
+		return null;
+	}
+
 	/**
 	 * Public properties
 	 */
 	@api recordId;
 	@api objectApiName;
+	@api showSpinner;
 	@api title;
 	@api searchResultDisplayStyle = 'Console Results';
 
 	constructor() {
 		super();
 
-		this.addEventListener('dataloaded', this.handleDataLoaded);
+		this.addEventListener(CONSTANTS.CUSTOM_DOM_EVENT_TYPES.DATA_LOADED,
+			this.handleDataLoaded);
+		this.addEventListener(CONSTANTS.CUSTOM_DOM_EVENT_TYPES.EXPLORER_LOADED,
+			this.handleExplorerLoaded.bind(this));
 		// this.addEventListener('keydown', this.handleKeyDown);
 	}
 
 	connectedCallback() {
-		this.retrieveFileExplorerItemMap();
+		this.showFileExplorer = false;
+		this.initialise();
 	}
 
 	renderedCallback() {
 	}
 
+<<<<<<< HEAD
 	// errorCallback(error, stack) {
 	// 	console.log('>>>>> errorCallback');
 	//  throw error;
 	// }
+=======
+	disconnectedCallback() {
+		this.removeEventListener(CONSTANTS.CUSTOM_DOM_EVENT_TYPES.DATA_LOADED,
+			this.handleDataLoaded);
+		this.removeEventListener(
+			CONSTANTS.CUSTOM_DOM_EVENT_TYPES.EXPLORER_LOADED,
+			this.handleExplorerLoaded);
+	}
+
+	errorCallback(error, stack) {
+		showToast(
+			this,
+			CONSTANTS.TOAST_MESSAGE_TYPES.ERROR,
+			reduceErrors(error).join(', '),
+			'',
+			CONSTANTS.TOAST_THEMES.ERROR,
+			CONSTANTS.TOAST_MODE.DISMISSABLE);
+	}
+>>>>>>> Folder-Templates
+
+	initialise() {
+		checkForPermission().then(result => {
+			this.showFileExplorer = result;
+
+			if (this.showFileExplorer) {
+				this.retrieveFileExplorerItemMap();
+			} else {
+				this.showSpinner = true;
+				this.template.querySelector('lightning-layout.no-access').classList.remove('slds-hidden');
+
+				this.dispatchEvent(
+					new CustomEvent(
+						CONSTANTS.CUSTOM_DOM_EVENT_TYPES.EXPLORER_LOADED, {}),
+				);
+			}
+		}).catch(error => {
+			this.dispatchEvent(
+				new CustomEvent(
+					CONSTANTS.CUSTOM_DOM_EVENT_TYPES.EXPLORER_LOADED, {}),
+			);
+			this.error = error;
+		});
+	}
 
 	@api
 	retrieveFileExplorerItemMap(e) {
+		this.showSpinner = true;
 		retrieveItemMap({recordId: this.recordId}).then(result => {
 			this.dataDictionary = JSON.parse(result);
 			this.dataSet = dictionaryToList(clone(this.dataDictionary));
@@ -102,7 +184,9 @@ export default class QsydFileExplorerCmp extends LightningElement {
 				}),
 			);
 		}).catch(error => {
-			this._error = error;
+			this.error = error;
+			console.log('>>>>> Error in retrieveFileExplorerItemMap:');
+			console.log(error);
 		});
 	}
 
@@ -111,9 +195,13 @@ export default class QsydFileExplorerCmp extends LightningElement {
 			return {
 				type: type,
 				files: dictionary.files.filter(
-					({folder}) => { return folder == folderId; }),
+					({folder}) => {
+						return folder == folderId;
+					}),
 				folders: dictionary.folders.filter(
-					({folder}) => { return folder == folderId; }),
+					({folder}) => {
+						return folder == folderId;
+					}),
 			};
 		}
 		return null;
@@ -145,7 +233,6 @@ export default class QsydFileExplorerCmp extends LightningElement {
 	}
 
 	handleDataLoaded(e) {
-
 		switch (this.action) {
 			case CONSTANTS.ACTION_TYPES.ADD_FILE:
 				this.results = this.findTreeItem(this.dataDictionary,
@@ -176,6 +263,14 @@ export default class QsydFileExplorerCmp extends LightningElement {
 		}
 	}
 
+<<<<<<< HEAD
+=======
+	handleExplorerLoaded(e) {
+		this.showSpinner = false;
+	}
+
+	// TODO: Implement keyboard shortcuts
+>>>>>>> Folder-Templates
 	handleKeyDown({code}) {
 		let itemType = new item(this.item).getType(),
 			action = `${CONSTANTS.ACTION_TYPES_KEY_MAP[code.charAt(
@@ -207,6 +302,7 @@ export default class QsydFileExplorerCmp extends LightningElement {
 				break;
 
 			default:
+<<<<<<< HEAD
 				// if (this._selectedItem.isRoot()) {
 				// 	return 'Add files to Home folder:';
 				// }
@@ -217,6 +313,12 @@ debugger;
 
 				// this.explorerManagementHeader = CONSTANTS.ACTION_HEADERS[e.detail.toString().
 				// 	toUpperCase()];
+=======
+				this.item = new item(this.item);
+				this.item.setHostFolderLabel(this.dataDictionary.folders);
+				this.explorerManagementHeader = interpolate(
+					CONSTANTS.ACTION_HEADERS[e.detail.toString().toUpperCase()], this.item);
+>>>>>>> Folder-Templates
 
 				explorerManagement.show(e.detail);
 				break;
@@ -236,11 +338,9 @@ debugger;
 
 	// #### CLICK ITEM START
 	handleItemClick(e) {
-		// let mainContainer = this.template.querySelector(".file-main-container");
-		// mainContainer.focus();
+		this.item = new item(e.detail);
 
-		this.item = e.detail;
-		if (this.item.id != 'root') {
+		if (!this.item.isRoot()) {
 			this.results = this.findTreeItem(this.dataDictionary, 'Contents',
 				this.folderId);
 			this.breadcrumbs = this.buildBreadcrumbs(this.dataDictionary,
@@ -258,11 +358,12 @@ debugger;
 	handleSearch(e) {
 		let searchText = e.detail;
 
-		if (this.searchResultDisplayStyle == 'Typedown Results') {
+		if (this.searchResultDisplayStyle === 'Typedown Results') {
 			this.typedownResults = this.findMatchingResultsToText(
 				this.dataDictionary,
 				searchText);
 		} else if (searchText !== null && searchText !== '') {
+<<<<<<< HEAD
 				this.results = this.findMatchingResultsToText(
 					this.dataDictionary,
 					searchText);
@@ -278,6 +379,26 @@ debugger;
                 this.breadcrumbs = this.buildBreadcrumbs(this.dataDictionary, null);
             }
         }
+=======
+			this.results = this.findMatchingResultsToText(
+				this.dataDictionary,
+				searchText);
+		} else {
+			if (!this.item || !this.item.isRoot()) {
+				this.results = this.findTreeItem(this.dataDictionary,
+					'Contents',
+					this.folderId);
+				this.breadcrumbs = this.buildBreadcrumbs(this.dataDictionary,
+					this.item);
+			} else {
+				this.results = this.findTreeItem(this.dataDictionary,
+					'Contents',
+					null);
+				this.breadcrumbs = this.buildBreadcrumbs(this.dataDictionary,
+					null);
+			}
+		}
+>>>>>>> Folder-Templates
 	}
 
 	// #### SEARCH EVENT END
@@ -295,17 +416,17 @@ debugger;
 
 	dragMouseMove(e) {
 		if (dragging && treeContainerWidth !== 0 && mainContainerWidth !== 0) {
-			var currentPos = e.pageX + 2, posDiff = currentPos - startPos;
-			var treeContainer = this.template.querySelector(
+			let currentPos = e.pageX + 2, posDiff = currentPos - startPos;
+			let treeContainer = this.template.querySelector(
 				'.file-tree-container');
-			var mainContainer = this.template.querySelector(
+			let mainContainer = this.template.querySelector(
 				'.file-main-container');
 
-			var newTreeWidth = treeContainerWidth + posDiff;
-			var newMainWidth = mainContainerWidth - posDiff;
+			let newTreeWidth = treeContainerWidth + posDiff;
+			let newMainWidth = mainContainerWidth - posDiff;
 
 			if (newTreeWidth >= treeMinWidth && newMainWidth >= mainMinWidth) {
-				var parentWidth = treeContainer.parentNode.offsetWidth;
+				let parentWidth = treeContainer.parentNode.offsetWidth;
 				treeContainer.style = 'width: ' + (newTreeWidth / parentWidth) *
 					100 + '%';
 				mainContainer.style = 'width: ' + (newMainWidth / parentWidth) *
