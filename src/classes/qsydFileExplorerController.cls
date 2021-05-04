@@ -151,7 +151,7 @@ global with sharing class qsydFileExplorerController {
 
         try {
             countDocumentLink = Database.countQuery('SELECT count() From ContentDocumentLink WHERE IsDeleted = FALSE AND LinkedEntityId = \'' + recordId + '\'');
-            countFile = Database.countQuery('SELECT count() From qsyd_FE__FileExplorerFile__c WHERE qsyd_FE__LinkedEntityId__c = \'' + recordId + '\'');
+            countFile = Database.countQuery('SELECT count() From FileExplorerFile__c WHERE LinkedEntityId__c = \'' + recordId + '\'');
 
             return (countFile == countDocumentLink);
 
@@ -239,7 +239,7 @@ global with sharing class qsydFileExplorerController {
                 }
             }
 
-            if (Schema.SObjectType.qsyd_FE__FileExplorerFile__c.isDeletable()) {
+            if (Schema.SObjectType.FileExplorerFile__c.isDeletable()) {
                 accessDecision = Security.stripInaccessible(AccessType.CREATABLE, insertFileList);
                 INSERT accessDecision.getRecords();
                 DELETE deleteFileList;

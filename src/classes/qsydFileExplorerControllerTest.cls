@@ -37,7 +37,7 @@ global with sharing class qsydFileExplorerControllerTest {
         INSERT cdl;
 
         //Create Folder Record
-        qsyd_FE__FileExplorerFolder__c qFolder = new qsyd_FE__FileExplorerFolder__c(qsyd_FE__LinkedEntityId__c = a.Id, qsyd_FE__Label__c = 'qFolder');
+        FileExplorerFolder__c qFolder = new FileExplorerFolder__c(LinkedEntityId__c = a.Id, Label__c = 'qFolder');
         INSERT qFolder;
     }
 
@@ -331,18 +331,18 @@ global with sharing class qsydFileExplorerControllerTest {
     private static void given_someTemplateParameters_when_aListIsRequested_then_activeTemplatesAreReturned() {
         qsyd_FolderTemplate.qsyd_PaginatedFolderTemplates paginatedTemplates;
         String filter = 'plate';
-        String sortBy = 'qsyd_FE__Label__c';
+        String sortBy = 'Label__c';
         Integer pageSize = 2;
         Integer pageOffset = 0;
 
         // Setup
-        List<qsyd_FE__FileExplorerFolderTemplate__c> templates = new List<qsyd_FE__FileExplorerFolderTemplate__c>{
-                new qsyd_FE__FileExplorerFolderTemplate__c(qsyd_FE__Label__c = 'Template 1', qsyd_FE__Description__c = 'Template 1 description', qsyd_FE__IsActive__c = TRUE),
-                new qsyd_FE__FileExplorerFolderTemplate__c(qsyd_FE__Label__c = 'Template 2', qsyd_FE__Description__c = 'Template 2 description', qsyd_FE__IsActive__c = TRUE),
-                new qsyd_FE__FileExplorerFolderTemplate__c(qsyd_FE__Label__c = 'Template 3', qsyd_FE__Description__c = 'Template 3 description', qsyd_FE__IsActive__c = TRUE),
-                new qsyd_FE__FileExplorerFolderTemplate__c(qsyd_FE__Label__c = 'Template 4', qsyd_FE__Description__c = 'Template 4 description', qsyd_FE__IsActive__c = FALSE),
-                new qsyd_FE__FileExplorerFolderTemplate__c(qsyd_FE__Label__c = 'Template 5', qsyd_FE__Description__c = 'Template 5 description', qsyd_FE__IsActive__c = TRUE),
-                new qsyd_FE__FileExplorerFolderTemplate__c(qsyd_FE__Label__c = 'Template 6', qsyd_FE__Description__c = 'Template 6 description', qsyd_FE__IsActive__c = TRUE)
+        List<FileExplorerFolderTemplate__c> templates = new List<FileExplorerFolderTemplate__c>{
+                new FileExplorerFolderTemplate__c(Label__c = 'Template 1', Description__c = 'Template 1 description', IsActive__c = TRUE),
+                new FileExplorerFolderTemplate__c(Label__c = 'Template 2', Description__c = 'Template 2 description', IsActive__c = TRUE),
+                new FileExplorerFolderTemplate__c(Label__c = 'Template 3', Description__c = 'Template 3 description', IsActive__c = TRUE),
+                new FileExplorerFolderTemplate__c(Label__c = 'Template 4', Description__c = 'Template 4 description', IsActive__c = FALSE),
+                new FileExplorerFolderTemplate__c(Label__c = 'Template 5', Description__c = 'Template 5 description', IsActive__c = TRUE),
+                new FileExplorerFolderTemplate__c(Label__c = 'Template 6', Description__c = 'Template 6 description', IsActive__c = TRUE)
         };
 
         INSERT templates;
@@ -362,19 +362,19 @@ global with sharing class qsydFileExplorerControllerTest {
     @IsTest
     private static void given_aRecord_when_aTemplateIsProvided_then_aCloneOfThatTemplateIsMade() {
         String folderId = null;
-        List<qsyd_FE__FileExplorerFolder__c> folders;
+        List<FileExplorerFolder__c> folders;
 
         // Setup
         Account acme = new Account(Name = 'Acme');
         INSERT acme;
 
-        qsyd_FE__FileExplorerFolderTemplate__c template = new qsyd_FE__FileExplorerFolderTemplate__c(qsyd_FE__Label__c = 'Template 1', qsyd_FE__Description__c = 'Template 1 description', qsyd_FE__IsActive__c = TRUE);
+        FileExplorerFolderTemplate__c template = new FileExplorerFolderTemplate__c(Label__c = 'Template 1', Description__c = 'Template 1 description', IsActive__c = TRUE);
         INSERT template;
 
-        qsyd_FE__FileExplorerFolder__c parentFolder = new qsyd_FE__FileExplorerFolder__c(qsyd_FE__LinkedEntityId__c = template.Id, qsyd_FE__Label__c = 'parent');
+        FileExplorerFolder__c parentFolder = new FileExplorerFolder__c(LinkedEntityId__c = template.Id, Label__c = 'parent');
         INSERT parentFolder;
 
-        qsyd_FE__FileExplorerFolder__c childFolder = new qsyd_FE__FileExplorerFolder__c(qsyd_FE__LinkedEntityId__c = template.Id, qsyd_FE__Label__c = 'child', qsyd_FE__Folder__c = parentFolder.Id);
+        FileExplorerFolder__c childFolder = new FileExplorerFolder__c(LinkedEntityId__c = template.Id, Label__c = 'child', Folder__c = parentFolder.Id);
         INSERT childFolder;
 
         Test.startTest();
@@ -383,22 +383,22 @@ global with sharing class qsydFileExplorerControllerTest {
 
         childFolder = [
                 SELECT Id,
-                        qsyd_FE__Folder__c
-                FROM qsyd_FE__FileExplorerFolder__c
-                WHERE qsyd_FE__LinkedEntityId__c = :acme.Id
-                AND qsyd_FE__Label__c = 'child'
+                        Folder__c
+                FROM FileExplorerFolder__c
+                WHERE LinkedEntityId__c = :acme.Id
+                AND Label__c = 'child'
                 LIMIT 1
         ][0];
 
         parentFolder = [
-                SELECT qsyd_FE__Label__c
-                FROM qsyd_FE__FileExplorerFolder__c
-                WHERE qsyd_FE__LinkedEntityId__c = :acme.Id
-                AND Id = :childFolder.qsyd_FE__Folder__c
+                SELECT Label__c
+                FROM FileExplorerFolder__c
+                WHERE LinkedEntityId__c = :acme.Id
+                AND Id = :childFolder.Folder__c
                 LIMIT 1
         ][0];
 
         Test.stopTest();
-        System.assertEquals('parent', parentFolder.qsyd_FE__Label__c);
+        System.assertEquals('parent', parentFolder.Label__c);
     }
 }

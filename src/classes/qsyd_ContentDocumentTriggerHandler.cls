@@ -90,13 +90,13 @@ public with sharing class qsyd_ContentDocumentTriggerHandler extends TriggerHand
         }
 
         // TODO: Check for changes before updating
-        file.qsyd_FE__ContentDocumentId__c = cd.Id;
-        file.qsyd_FE__LinkedEntityId__c = linkedEntityId;
-        file.qsyd_FE__Label__c = cd.Title;
-        file.qsyd_FE__FileType__c = cd.FileType;
-        file.qsyd_FE__FileExtension__c = cd.FileExtension;
-        file.qsyd_FE__FileOwner__c = cd.OwnerId;
-        file.qsyd_FE__ContentSize__c = cd.ContentSize;
+        file.ContentDocumentId__c = cd.Id;
+        file.LinkedEntityId__c = linkedEntityId;
+        file.Label__c = cd.Title;
+        file.FileType__c = cd.FileType;
+        file.FileExtension__c = cd.FileExtension;
+        file.FileOwner__c = cd.OwnerId;
+        file.ContentSize__c = cd.ContentSize;
 
         this.accessDecision = Security.stripInaccessible(AccessType.UPSERTABLE,
                 new List<FileExplorerFile__c>{
@@ -127,7 +127,7 @@ public with sharing class qsyd_ContentDocumentTriggerHandler extends TriggerHand
         this.accessDecision = Security.stripInaccessible(AccessType.READABLE, files);
 
         try {
-            if (Schema.SObjectType.qsyd_FE__FileExplorerFile__c.isDeletable()) {
+            if (Schema.SObjectType.FileExplorerFile__c.isDeletable()) {
                 DELETE files;
             }
         } catch (Exception e) {

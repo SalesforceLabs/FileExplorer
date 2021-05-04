@@ -99,18 +99,18 @@ global virtual inherited sharing class qsyd_Folder extends qsyd_Item implements 
         // Ideally, this would be in it's own method however, cannot add new final methods to virtual or abstract classes
         if ([
                 SELECT COUNT()
-                FROM qsyd_FE__FileExplorerFolder__c
-                WHERE qsyd_FE__Label__c = :this.text
-                AND qsyd_FE__LinkedEntityId__c = :this.entityId
-                AND qsyd_FE__Folder__c = :this.folder
+                FROM FileExplorerFolder__c
+                WHERE Label__c = :this.text
+                AND LinkedEntityId__c = :this.entityId
+                AND Folder__c = :this.folder
                 WITH SECURITY_ENFORCED
                 LIMIT 1
         ] > 0) {
             throw new AuraHandledException(System.Label.Action_Error_Messages_Duplicate_folder);
         }
 
-        this.fileExplorerFolder = (qsyd_FE__FileExplorerFolder__c) Security.stripInaccessible(AccessType.UPSERTABLE,
-                new List<qsyd_FE__FileExplorerFolder__c>{
+        this.fileExplorerFolder = (FileExplorerFolder__c) Security.stripInaccessible(AccessType.UPSERTABLE,
+                new List<FileExplorerFolder__c>{
                         fileExplorerFolder
                 }).getRecords()[0];
 
@@ -133,33 +133,33 @@ global virtual inherited sharing class qsyd_Folder extends qsyd_Item implements 
      * @return A qsyd_Folder instance
      */
     global qsyd_Folder remove() {
-        List<qsyd_FE__FileExplorerFolder__c> childFolders;
-        List<qsyd_FE__FileExplorerFile__c> childFiles;
+        List<FileExplorerFolder__c> childFolders;
+        List<FileExplorerFile__c> childFiles;
         Set<String> childFolderNames = new Set<String>();
 
         childFolders = [
-                SELECT qsyd_FE__Folder__c, qsyd_FE__Label__c
-                FROM qsyd_FE__FileExplorerFolder__c
-                WHERE qsyd_FE__LinkedEntityId__c = :this.entityId
-                AND qsyd_FE__Folder__c = :this.id
+                SELECT Folder__c, Label__c
+                FROM FileExplorerFolder__c
+                WHERE LinkedEntityId__c = :this.entityId
+                AND Folder__c = :this.id
                 AND Id != :this.id
                 WITH SECURITY_ENFORCED
         ];
 
         childFolders = (List<FileExplorerFolder__c>) Security.stripInaccessible(AccessType.READABLE, childFolders).getRecords();
 
-        for (qsyd_FE__FileExplorerFolder__c f : childFolders) {
-            f.qsyd_FE__Folder__c = this.folder;
-            childFolderNames.add(f.qsyd_FE__Label__c);
+        for (FileExplorerFolder__c f : childFolders) {
+            f.Folder__c = this.folder;
+            childFolderNames.add(f.Label__c);
         }
 
         // Ideally, this would be in it's own method however, cannot add new final methods to virtual or abstract classes
         if ([
                 SELECT COUNT()
-                FROM qsyd_FE__FileExplorerFolder__c
-                WHERE qsyd_FE__Label__c IN :childFolderNames
-                AND qsyd_FE__LinkedEntityId__c = :this.entityId
-                AND qsyd_FE__Folder__c = :this.folder
+                FROM FileExplorerFolder__c
+                WHERE Label__c IN :childFolderNames
+                AND LinkedEntityId__c = :this.entityId
+                AND Folder__c = :this.folder
                 AND Id != :this.id
                 WITH SECURITY_ENFORCED
                 LIMIT 1
