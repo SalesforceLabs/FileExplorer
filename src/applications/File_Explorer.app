@@ -10,8 +10,6 @@
     </actionOverrides>
     <brand>
         <headerColor>#7BC4B9</headerColor>
-        <logo>Q_Sydney_Logo</logo>
-        <logoVersion>1</logoVersion>
         <shouldOverrideOrgTheme>false</shouldOverrideOrgTheme>
     </brand>
     <formFactors>Small</formFactors>
