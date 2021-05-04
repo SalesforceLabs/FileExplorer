@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 /*
  * Copyright (c) 2020, salesforce.com, inc.
  * All rights reserved.
@@ -8,7 +6,6 @@
  */
 
 
->>>>>>> Folder-Templates
 import {LightningElement, api} from 'lwc';
 import {item} from 'c/qsydFileExplorerCommon';
 import formFactor from '@salesforce/client/formFactor';

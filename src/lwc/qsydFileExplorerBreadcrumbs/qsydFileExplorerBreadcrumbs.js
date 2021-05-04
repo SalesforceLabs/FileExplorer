@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-import { LightningElement, api } from 'lwc';
-import { item } from 'c/qsydFileExplorerCommon';
- 
-=======
 /*
  * Copyright (c) 2020, salesforce.com, inc.
  * All rights reserved.
@@ -16,7 +11,6 @@ import {
 	CONSTANTS
 } from 'c/qsydFileExplorerCommon';
 
->>>>>>> Folder-Templates
 export default class QsydFileExplorerBreadcrumbs extends LightningElement {
 	/**
 	 * Private properties

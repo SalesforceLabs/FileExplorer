@@ -21,6 +21,7 @@
     <label>File Explorer</label>
     <navType>Standard</navType>
     <tabs>standard-home</tabs>
+    <tabs>FileExplorerFolderTemplate__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>File_Explorer_UtilityBar</utilityBar>
 </CustomApplication>

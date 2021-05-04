@@ -29,6 +29,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>qsyd_FolderTemplate</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>qsyd_IItem</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -48,6 +52,11 @@
         <apexClass>qsyd_ItemList</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>File_Explorer</name>
+    </customPermissions>
+    <description>Provides access to the Lightning File Explorer</description>
     <fieldPermissions>
         <editable>true</editable>
         <field>FileExplorerFile__c.ContentDocumentId__c</field>
@@ -100,6 +109,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>FileExplorerFolderTemplate__c.Description__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>FileExplorerFolderTemplate__c.IsActive__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>FileExplorerFolder__c.Folder__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -112,6 +131,11 @@
         <editable>true</editable>
         <field>FileExplorerFolder__c.Label__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>FileExplorerFolder__c.TemplateFolderId__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>File Explorer Permission Set</label>
@@ -130,7 +154,20 @@
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
+        <object>FileExplorerFolderTemplate__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
         <object>FileExplorerFolder__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
+    <tabSettings>
+        <tab>FileExplorerFolderTemplate__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
 </PermissionSet>

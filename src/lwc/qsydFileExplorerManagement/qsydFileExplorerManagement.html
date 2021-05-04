@@ -1,7 +1,4 @@
 <!--
-<<<<<<< HEAD
-   	Author:         Paul Lucas
-=======
  * Copyright (c) 2020, salesforce.com, inc.
  * All rights reserved.
  * SPDX-License-Identifier: BSD-3-Clause
@@ -11,7 +8,6 @@
 
 <!--
     Author:         Paul Lucas
->>>>>>> Folder-Templates
     Company:        Salesforce
     Description:    qsydFileExplorerManagement
     Date:           01-May-2020
@@ -37,7 +33,7 @@
 
                     <template if:true={hasHeaderString}>
                         <h2 class="slds-text-heading_medium slds-hyphenate header-string">
-                            {header}
+                            <lightning-formatted-rich-text value={header}></lightning-formatted-rich-text>
                         </h2>
                     </template>
                     <template if:false={hasHeaderString}>

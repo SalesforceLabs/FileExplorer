@@ -128,23 +128,36 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
-        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>File_Explorer_Folder_Template_Record_Page1</content>
         <formFactor>Large</formFactor>
-        <type>Default</type>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>File_Explorer_Folder_Template_Record_Page1</content>
         <formFactor>Small</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
     <allowInChatterGroups>false</allowInChatterGroups>
-    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <compactLayoutAssignment>Default</compactLayoutAssignment>
+    <compactLayouts>
+        <fullName>Default</fullName>
+        <fields>Name</fields>
+        <fields>Label__c</fields>
+        <fields>IsActive__c</fields>
+        <label>Default</label>
+    </compactLayouts>
     <deploymentStatus>Deployed</deploymentStatus>
     <deprecated>false</deprecated>
-    <description>Store a hierarchical structure of content documents</description>
+    <description>Define a template for a File Explorer Folder structure to aid in storing a hierarchical structure of content documents.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -156,35 +169,12 @@
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>Private</externalSharingModel>
     <fields>
-        <fullName>Folder__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
+        <fullName>Description__c</fullName>
         <deprecated>false</deprecated>
+        <description>When, what and why you would use this template</description>
         <externalId>false</externalId>
-        <label>Folder</label>
-        <referenceTo>FileExplorerFolder__c</referenceTo>
-        <relationshipLabel>Folders</relationshipLabel>
-        <relationshipName>File_Explorer_Folders</relationshipName>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>IsDeleted__c</fullName>
-        <defaultValue>false</defaultValue>
-        <deprecated>false</deprecated>
-        <description>Deprecated.</description>
-        <externalId>false</externalId>
-        <label>Is Deleted</label>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
-        <fullName>Label__c</fullName>
-        <deprecated>false</deprecated>
-        <description>Folder Label</description>
-        <externalId>true</externalId>
-        <inlineHelpText>Folder Label</inlineHelpText>
-        <label>Label</label>
+        <inlineHelpText>When, what and why you would use this template</inlineHelpText>
+        <label>Description</label>
         <length>255</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
@@ -192,53 +182,48 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>LinkedEntityId__c</fullName>
+        <fullName>IsActive__c</fullName>
+        <defaultValue>false</defaultValue>
         <deprecated>false</deprecated>
-        <description>Linked Entity Id</description>
+        <description>Active folders are available for selection by users</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Active folders are available for selection by users</inlineHelpText>
+        <label>Is Active?</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Label__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <deprecated>false</deprecated>
+        <description>Used to identify a template</description>
         <externalId>true</externalId>
-        <inlineHelpText>Linked Entity Id</inlineHelpText>
-        <label>Linked Entity Id</label>
-        <length>18</length>
+        <inlineHelpText>Used to identify a template</inlineHelpText>
+        <label>Label</label>
+        <length>255</length>
         <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
-        <unique>false</unique>
+        <unique>true</unique>
     </fields>
-    <fields>
-        <fullName>TemplateFolderId__c</fullName>
-        <deprecated>false</deprecated>
-        <description>Original folder id used when cloning a template</description>
-        <externalId>true</externalId>
-        <inlineHelpText>Original folder id used when cloning a template</inlineHelpText>
-        <label>Template Folder Id</label>
-        <length>18</length>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <label>File Explorer Folder</label>
+    <label>File Explorer Folder Template</label>
     <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>
-        <columns>Folder__c</columns>
         <columns>Label__c</columns>
-        <columns>TemplateFolderId__c</columns>
-        <columns>OBJECT_ID</columns>
+        <columns>Description__c</columns>
+        <columns>IsActive__c</columns>
+        <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
     </listViews>
     <nameField>
-        <displayFormat>FEF-{0000000}</displayFormat>
-        <label>File Explorer Folder Name</label>
+        <displayFormat>FEFT-{0000000}</displayFormat>
+        <label>File Explorer Folder Template Name</label>
         <type>AutoNumber</type>
     </nameField>
-    <pluralLabel>File Explorer Folders</pluralLabel>
-    <searchLayouts>
-        <searchResultsAdditionalFields>Label__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Folder__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>IsDeleted__c</searchResultsAdditionalFields>
-    </searchLayouts>
+    <pluralLabel>File Explorer Folder Templates</pluralLabel>
+    <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>
