@@ -171,9 +171,9 @@ import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 const CONSTANTS = {
 
 	FILE_EXPLORER_OBJECT_API_NAMES: {
-		FILE: 'qsyd_FE__FileExplorerFile__c',
-		FOLDER: 'qsyd_FE__FileExplorerFolder__c',
-		FOLDER_TEMPLATE: 'qsyd_FE__FileExplorerFolderTemplate__c',
+		FILE: 'FileExplorerFile__c',
+		FOLDER: 'FileExplorerFolder__c',
+		FOLDER_TEMPLATE: 'FileExplorerFolderTemplate__c',
 	},
 
 	NAVIGATION_ACTIONS: {

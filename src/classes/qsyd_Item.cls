@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-/**      
-    Author:         Paul Lucas
-    Company:        Salesforce
-    Description:    qsyd_Item
-    Date:           20-Apr-2020
-=======
 /*
  * Copyright (c) 2020, salesforce.com, inc.
  * All rights reserved.
@@ -18,7 +11,6 @@
     @company        Salesforce
     @description    qsyd_Item
     @date           26-Apr-2020
->>>>>>> Folder-Templates
 
     History:
     When           Who                 What

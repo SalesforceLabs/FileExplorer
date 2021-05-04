@@ -34,7 +34,7 @@ global inherited sharing class qsyd_FolderList implements qsyd_IItemList {
      * @param items
      */
     global qsyd_FolderList(List<qsyd_Item> items) {
-        this.fileExplorerFoldersMap = new Map<Id, qsyd_FE__FileExplorerFolder__c>();
+        this.fileExplorerFoldersMap = new Map<Id, FileExplorerFolder__c>();
         this.folders = items;
     }
 
@@ -117,7 +117,7 @@ global inherited sharing class qsyd_FolderList implements qsyd_IItemList {
      *
      * @return A list of file explorer folders
      */
-    global List<qsyd_FE__FileExplorerFolder__c> getCanonicalList() {
+    global List<FileExplorerFolder__c> getCanonicalList() {
         return this.fileExplorerFoldersMap.values();
     }
 }

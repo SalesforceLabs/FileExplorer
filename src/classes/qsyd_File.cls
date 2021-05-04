@@ -20,7 +20,7 @@
 global virtual inherited sharing class qsyd_File extends qsyd_Item implements qsyd_IItem {
     public static final String FILES_KEY = 'files';
     public static final String SITE_PATH_PREFIX = !String.isBlank(Site.getPathPrefix()) ? Site.getPathPrefix() : '';
-    public static final String ASSETS_PATH = SITE_PATH_PREFIX.removeEndIgnoreCase('/s') + '/resource/qsyd_FE__filexplorer/assets/';
+    public static final String ASSETS_PATH = SITE_PATH_PREFIX.removeEndIgnoreCase('/s') + '/resource/filexplorer/assets/';
 
     private FileExplorerFile__c fileExplorerFile;
 
@@ -124,7 +124,7 @@ global virtual inherited sharing class qsyd_File extends qsyd_Item implements qs
      */
     global qsyd_File save() {
         this.accessDecision = Security.stripInaccessible(AccessType.UPSERTABLE,
-                new List<qsyd_FE__FileExplorerFile__c>{
+                new List<FileExplorerFile__c>{
                         this.fileExplorerFile
                 });
 
