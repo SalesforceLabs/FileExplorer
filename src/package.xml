@@ -13,6 +13,7 @@
         <members>qsyd_FileList</members>
         <members>qsyd_Folder</members>
         <members>qsyd_FolderList</members>
+        <members>qsyd_FolderTemplate</members>
         <members>qsyd_IItem</members>
         <members>qsyd_IItemList</members>
         <members>qsyd_Item</members>

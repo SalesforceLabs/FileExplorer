@@ -1,8 +1,16 @@
-/**      
-    Author:         Paul Lucas
-    Company:        Salesforce
-    Description:    qsyd_FileList
-    Date:           26-Apr-2020
+/*
+ * Copyright (c) 2020, salesforce.com, inc.
+ * All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause
+ * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ */
+
+
+ /**
+    @author         Paul Lucas
+    @company        Salesforce
+    @description    qsyd_FileList
+    @date           20-Apr-2020
         
     TODO:
  */
@@ -12,20 +20,43 @@ global inherited sharing class qsyd_FileList implements qsyd_IItemList {
     private Map<Id, FileExplorerFile__c> fileExplorerFilesMap;
     private List<qsyd_Item> files;
 
+    /**
+     * @description Constructor
+     */
     global qsyd_FileList() {
         this.fileExplorerFilesMap = new Map<Id, FileExplorerFile__c>();
         this.files = new List<qsyd_File>();
     }
 
+    /**
+     * @description Constructor
+     *
+     * @param items
+     */
     global qsyd_FileList(List<qsyd_Item> items) {
+        this.fileExplorerFilesMap = new Map<Id, qsyd_FE__FileExplorerFile__c>();
         this.files = items;
     }
 
+    /**
+     * @description Populate a list of qsyd_Item
+     *
+     * @param items
+     *
+     * @return A qsyd_FileList
+     */
     global qsyd_FileList load(List<qsyd_Item> items) {
         this.files = items;
         return this;
     }
 
+    /**
+     * @description Retrieve file explorer file records
+     *
+     * @param recordId
+     *
+     * @return A qsyd_FileList
+     */
     global qsyd_FileList retrieve(String recordId) {
 
         this.fileExplorerFilesMap = new Map<Id, FileExplorerFile__c>([
@@ -50,6 +81,11 @@ global inherited sharing class qsyd_FileList implements qsyd_IItemList {
         return this;
     }
 
+    /**
+     * @description Converts from file explorer files to a list of qsyd_Files
+     *
+     * @return A qsyd_FileList
+     */
     global qsyd_FileList convertToLogical() {
 
         for (FileExplorerFile__c f : this.fileExplorerFilesMap.values()) {
@@ -59,6 +95,11 @@ global inherited sharing class qsyd_FileList implements qsyd_IItemList {
         return this;
     }
 
+    /**
+     * @description Converts from qsyd_Item to file explorer files
+     *
+     * @return A qsyd_FileList
+     */
     global qsyd_FileList convertToCanonical() {
         for (qsyd_Item f : this.files) {
             this.fileExplorerFilesMap.put(f.id, new FileExplorerFile__c(Id = f.id, Folder__c = f.folder));
@@ -66,11 +107,21 @@ global inherited sharing class qsyd_FileList implements qsyd_IItemList {
         return this;
     }
 
+    /**
+     * @description Get a list of qsyd_Items
+     *
+     * @return A list of qsyd_Items
+     */
     global List<qsyd_Item> getLogicalList() {
         return this.files;
     }
 
-    global List<FileExplorerFile__c> getCanonicalList() {
+    /**
+     * @description Get a list of file explorer files
+     *
+     * @return A list of file explorer files
+     */
+    global List<qsyd_FE__FileExplorerFile__c> getCanonicalList() {
         return this.fileExplorerFilesMap.values();
     }
 }

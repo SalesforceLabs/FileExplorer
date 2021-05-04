@@ -1,0 +1,22 @@
+<!--
+ * Copyright (c) 2020, salesforce.com, inc.
+ * All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause
+ * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ -->
+
+<template>
+    <div class="slds-text-longform slds-var-p-top_medium">
+        <h3 class="slds-text-heading_medium">{message}</h3>
+        <template if:true={errorMessages.length}>
+            <p>
+                <a onclick={handleShowDetailsClick}>Show details</a>
+            </p>
+            <template if:true={viewDetails}>
+                <template for:each={errorMessages} for:item="er">
+                    <lightning-formatted-rich-text value={er} key={er}></lightning-formatted-rich-text>
+                </template>
+            </template>
+        </template>
+    </div>
+</template>

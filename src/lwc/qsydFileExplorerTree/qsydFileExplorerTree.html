@@ -1,8 +1,23 @@
 <!--
+<<<<<<< HEAD
   @File Name          : qsydFileExplorerTree.html
   @Description        : 
   @Author             : Paul Lucas, Jiun Ryu, Elly Zhu, Derrick Vuong
   
+=======
+ * Copyright (c) 2020, salesforce.com, inc.
+ * All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause
+ * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ -->
+
+
+<!--
+ @File Name          : qsydFileExplorerTree.html
+ @Description        :
+ @Author             : Paul Lucas, Jiun Ryu, Elly Zhu, Derrick Vuong
+
+>>>>>>> Folder-Templates
 -->
 <template>
     <lightning-layout multiple-rows="true" vertical-align="stretch">
@@ -10,13 +25,17 @@
             <div class="slds-text-heading_small">
                 <lightning-button-group class="slds-float_right">
                     <lightning-button-icon class="slds-button slds-button_icon slds-button_icon-border"
-                                           title="Collapse"
+                                           title={CONSTANTS.ACTION_LABELS.COLLAPSE}
                                            icon-name="utility:contract"
                                            onclick={handleCollapseClick}></lightning-button-icon>
                     <lightning-button-icon class="slds-button slds-button_icon slds-button_icon-border"
-                                           title="Expand"
+                                           title={CONSTANTS.ACTION_LABELS.EXPAND}
                                            icon-name="utility:expand"
                                            onclick={handleExpandClick}></lightning-button-icon>
+                    <lightning-button-icon class="slds-button slds-button_icon slds-button_icon-border"
+                                           title={CONSTANTS.ACTION_LABELS.REFRESH}
+                                           icon-name="utility:refresh"
+                                           onclick={handleRefreshClick}></lightning-button-icon>
                 </lightning-button-group>
             </div>
 
@@ -24,7 +43,7 @@
                 <div class="tree-home" onclick={handleHomeClick}>
                     <img class="slds-m-left_xx-small"
                          src="https://qsyd-perma-bucket.s3-ap-southeast-2.amazonaws.com/file-explorer/images/tree_folder.png">
-                    <span class=slds-p-left_small>Home</span>
+                    <span class=slds-p-left_small>{CONSTANTS.TREE_LABELS.HOME}</span>
                 </div>
                 <div class="jstree slds-p-top_xxx-small" lwc:dom="manual"></div>
 
