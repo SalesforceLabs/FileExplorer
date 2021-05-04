@@ -1,17 +1,10 @@
 <!--
- * Copyright (c) 2020, salesforce.com, inc.
- * All rights reserved.
- * SPDX-License-Identifier: BSD-3-Clause
- * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
- -->
- 
- 
- <!--
   @File Name          : qsydFileExplorerDetail.html
   @Description        : 
   @Author             : Elly Yijun Zhu
 -->
 <template>
+    <!-- <img src="https://qsyd-filexplorer-dev-ed--c.visualforce.com/resource/1586317982000/qsyd_Mockups/Detail.png" /> -->
     <div class="details-container">
         <template if:true={isFile}>
             <div class="slds-p-around_x-small">
@@ -98,6 +91,10 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- <div class="slds-text-align_right">
+                            <img src="/resource/qbranch_logo" onerror={handleSampleLogoImageError}
+                                style="width: 1px;" />
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -137,6 +134,7 @@
                             </div>
 
                             <div class="slds-p-around_x-small pillcontainer">
+                                <!-- <p>Tags:</p> -->
                                 <div if:true={redraw}>
                                     <lightning-pill-container items={_modalTags} onitemremove={handleTagRemove}>
                                     </lightning-pill-container>
