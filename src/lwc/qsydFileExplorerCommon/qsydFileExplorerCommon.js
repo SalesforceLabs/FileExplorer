@@ -1,12 +1,4 @@
-/*
- * Copyright (c) 2020, salesforce.com, inc.
- * All rights reserved.
- * SPDX-License-Identifier: BSD-3-Clause
- * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
- */
- 
- 
- /**
+/**
      Author:         Paul Lucas
      Company:        Salesforce
      Description:    qsydFileExplorerCommon - Common File Explorer logic
@@ -64,6 +56,14 @@ const CONSTANTS = {
 		'EXPLORER_MANAGEMENT_CLOSE': 'explorermanagementclose',
 		'DATA_REFRESH': 'datarefresh',
 		'DATA_LOADED': 'dataloaded',
+
+		// 'ACTION_ADD_FILE': 'actionaddfile',
+		// 'ACTION_MOVE_FILE': 'actionmovefile',
+		// 'ACTION_ADD_FOLDER': 'actionaddfolder',
+		// 'ACTION_MOVE_FOLDER': 'actionmovefolder',
+		// 'ACTION_RENAME_FOLDER': 'actionrenamefolder',
+		// 'ACTION_DELETE_FOLDER': 'actiondeletefolder',
+		// 'ACTION_DATA_REFRESH': 'actiondatarefresh',
 	},
 
 	ACTION_TYPES: {
@@ -95,12 +95,12 @@ const CONSTANTS = {
 	},
 
 	ACTION_HEADERS: {
-		'ADD_FILE': 'Add file(s) to <strong>${hostFolderLabel}</strong> folder',
-		'MOVE_FILE': 'Move file',
-		'ADD_FOLDER': 'Add folder to <strong>${hostFolderLabel}</strong> folder',
-		'MOVE_FOLDER': 'Move <strong>${hostFolderLabel}</strong> folder',
-		'RENAME_FOLDER': 'Rename folder',
-		'DELETE_FOLDER': 'Delete <strong>${hostFolderLabel}</strong> folder',
+		'ADD_FILE': 'Add File(s) to ${text} folder',
+		'MOVE_FILE': 'Move File',
+		'ADD_FOLDER': 'Add Folder',
+		'MOVE_FOLDER': 'Move Folder',
+		'RENAME_FOLDER': 'Rename Folder',
+		'DELETE_FOLDER': 'Delete Folder',
 		'REFRESH': 'Refresh',
 	},
 
@@ -136,14 +136,13 @@ const itemDefaults = {
 	documentId: null,
 	entityId: null,
 	ext: null,
-	hostFolderLabel: 'Home',
 	folder: null,
 	icon: null,
 	id: null,
 	owner: null,
 	size: 0,
 	tags: null,
-	text: 'Home',
+	text: '',
 	type: null,
 };
 
@@ -168,10 +167,6 @@ class item {
 		return this.documentId;
 	}
 
-	getType() {
-		return this.isFile() ? 'file' : 'folder';
-	}
-
 	// TODO: Refactor id = 'root'
 	isRoot() {
 		return (!this.id || this.id === 'root');
@@ -181,21 +176,8 @@ class item {
 		return (!!this.documentId);
 	}
 
-	setHostFolderLabel(folders) {
-		let folder;
-
-		switch (this.isFile()) {
-			case true:
-				folder = folders.find(f => f.id === this.folder);
-				this.hostFolderLabel = folder ? folder.text : this.hostFolderLabel;
-				break;
-
-			case false:
-				this.hostFolderLabel = this.text;
-
-			default:
-				break;
-		}
+	getType() {
+		return this.isFile() ? 'file' : 'folder';
 	}
 }
 
