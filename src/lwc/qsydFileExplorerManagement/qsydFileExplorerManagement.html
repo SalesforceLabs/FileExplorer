@@ -1,18 +1,10 @@
 <!--
- * Copyright (c) 2020, salesforce.com, inc.
- * All rights reserved.
- * SPDX-License-Identifier: BSD-3-Clause
- * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
- -->
-
-
-<!--
-    Author:         Paul Lucas
+   	Author:         Paul Lucas
     Company:        Salesforce
     Description:    qsydFileExplorerManagement
     Date:           01-May-2020
 
-    TODO:
+	TODO:
 
 -->
 <template>
@@ -22,7 +14,7 @@
                  aria-labelledby="modal-heading-01"
                  aria-modal="true"
                  aria-describedby="modal-content-id-1"
-                 class="slds-modal slds-fade-in-open">
+                 class="slds-modal slds-modal_medium slds-fade-in-open">
             <div class="slds-modal__container">
                 <header class="slds-modal__header">
                     <lightning-button-icon class="slds-modal__close"
@@ -47,7 +39,7 @@
                     </p>
                 </header>
 
-                <div class="slds-modal__content slds-p-around_medium"
+                <div class="slds-modal__content slds-p-around_medium slds-scrollable"
                      id="modal-content-id-1">
 
                     <template if:true={addFile}>
@@ -63,43 +55,47 @@
                     </template>
 
                     <template if:true={moveItem}>
-                        <p class="slds-m-vertical_medium">Where would like to move <strong
-                                class="slds-var-p-horizontal_xx-small">"{selectedItemLabel}"</strong>?
-                        </p>
                         <div class="tree-home" onclick={handleHomeClick}>
                             <img class="slds-m-left_xx-small"
                                  src="https://qsyd-perma-bucket.s3-ap-southeast-2.amazonaws.com/file-explorer/images/tree_folder.png">
-                            <span class=slds-p-left_small>Home</span>
+                            <span class=slds-p-left_small>{CONSTANTS.TREE_LABELS.HOME}</span>
                         </div>
                         <div class="jstree" lwc:dom="manual"></div>
                     </template>
 
                     <template if:true={addFolder}>
-                        <lightning-input type="text" class="add_folder" label="New Folder"
-                                         placeholder="Enter your folder name..." required
+                        <lightning-input type="text" class="add_folder" label={CONSTANTS.ACTION_LABELS.FOLDER_NAME}
+                                         placeholder={CONSTANTS.ACTION_LABELS.FOLDER_NAME_PLACEHOLDER} required
                                          minlength="1" max-length="50"
-                                         field-level-help="The folder name must be 50 characters or less">
+                                         field-level-help={CONSTANTS.ACTION_VALIDATIONS.FOLDER_NAME_VALIDATION}>
                         </lightning-input>
                     </template>
 
                     <template if:true={renameFolder}>
-                        <lightning-input type="text" class="rename_folder" label="Rename Folder"
+                        <lightning-input type="text" class="rename_folder" label={CONSTANTS.ACTION_LABELS.FOLDER_NAME}
                                          value={selectedItemLabel}
-                                         minlength="1" max-length="50" placeholder="Enter your folder name..." required
-                                         field-level-help="The folder name must be 50 characters or less">
+                                         minlength="1" max-length="50"
+                                         placeholder={CONSTANTS.ACTION_LABELS.FOLDER_NAME_PLACEHOLDER} required
+                                         field-level-help={CONSTANTS.ACTION_VALIDATIONS.FOLDER_NAME_VALIDATION}>
                         </lightning-input>
                     </template>
 
                     <template if:true={deleteFolder}>
-                        Deleting this folder will move all child items to its parent folder. Are you sure you want to
-                        do this?
+                        {CONSTANTS.ACTION_MESSAGES.DELETE_FOLDER}
+                    </template>
+
+                    <template if:true={templateFolder}>
+                        <c-qsyd-file-explorer-template-list class="template_folder" record-id={recordId} object-api-name={objectApiName}
+                                                            table-height="290px"></c-qsyd-file-explorer-template-list>
                     </template>
                 </div>
 
                 <footer class="slds-modal__footer">
-                    <lightning-button label="Cancel" title="Cancel" icon-name="utility:cancel_file_request"
+                    <lightning-button label={CONSTANTS.ACTION_LABELS.CANCEL} title={CONSTANTS.ACTION_LABELS.CANCEL}
+                                      icon-name="utility:cancel_file_request"
                                       class="slds-m-left_x-small" onclick={handleCancelClick}></lightning-button>
-                    <lightning-button label="Confirm" title={explorerManagementHeader} icon-name="utility:save"
+                    <lightning-button label={CONSTANTS.ACTION_LABELS.CONFIRM} title={CONSTANTS.ACTION_LABELS.CONFIRM}
+                                      icon-name="utility:save"
                                       class="slds-m-left_x-small" variant="brand"
                                       onclick={handleAcceptClick}></lightning-button>
                 </footer>

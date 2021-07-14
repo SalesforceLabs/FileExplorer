@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="urn:metadata.tooling.soap.sforce.com" fqn="qsydFileExplorerCmp">
+    <apiVersion>48.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>File Explorer</masterLabel>
+    <targets>
+        <target>lightning__RecordPage</target>
+        <target>lightningCommunity__Default</target>
+        <target>lightningCommunity__Page</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default">
+            <property name="recordId" label="Record Id" type="String" default="{!recordId}"></property>
+            <property name="title" label="Title" type="String" default="File Explorer"></property>
+            <property name="searchResultDisplayStyle" label="Search Result Display Style" type="String"
+                      datasource="Console Results,Typedown Results" default="Console Results"></property>
+        </targetConfig>
+        <targetConfig targets="lightning__RecordPage">
+            <property name="title" label="Title" type="String" default="File Explorer"></property>
+            <property name="searchResultDisplayStyle" label="Search Result Display Style" type="String"
+                      datasource="Console Results,Typedown Results" default="Console Results"></property>
+            <supportedFormFactors>
+                <supportedFormFactor type="Large"/>
+                <supportedFormFactor type="Small"/>
+            </supportedFormFactors>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

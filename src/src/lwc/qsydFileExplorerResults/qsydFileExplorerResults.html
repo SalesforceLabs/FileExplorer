@@ -1,0 +1,85 @@
+<!--
+ * Copyright (c) 2020, salesforce.com, inc.
+ * All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause
+ * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ -->
+ 
+ 
+ <!--
+  @File Name          : qsydFileExplorerResults.html
+  @Description        : 
+  @Author             : Paul Lucas, Jiun Ryu, Elly Zhu, Derrick Vuong
+-->
+<template>
+    <!-- START Folder Contents -->
+    <template if:true={contentsRequested}>
+        <lightning-layout multiple-rows="true">
+            <lightning-layout-item size="12" class="resultsMenu">
+                <c-qsyd-file-explorer-breadcrumbs onitemclick={handleClick} breadcrumbs={breadcrumbs}></c-qsyd-file-explorer-breadcrumbs>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" class="results">
+                <lightning-layout multiple-rows="true">
+                    <template for:each={results.folders} for:item="folder">
+                        <lightning-layout-item key={folder.id} padding="around-small">
+                            <c-qsyd-file-explorer-item onitemclick={handleClick} item={folder} type="folder"></c-qsyd-file-explorer-item>
+                        </lightning-layout-item>
+                    </template>
+                    <template for:each={results.files} for:item="file">
+                        <lightning-layout-item key={file.id} padding="around-small">
+                            <c-qsyd-file-explorer-item onitemclick={handleClick} item={file} 
+                                                       type="file" selected-item-id={selectedItemId}>
+                            </c-qsyd-file-explorer-item>
+                        </lightning-layout-item>
+                    </template>
+                </lightning-layout>
+            </lightning-layout-item>
+        </lightning-layout>
+    </template>
+    <!-- END Folder Contents -->
+
+    <!-- START Search Result Accordion-->
+    <template if:true={searchRequested}>
+        <lightning-layout multiple-rows="true">
+            <lightning-layout-item size="12" class="results">
+                <div class="slds-text-heading_small">
+                    Search Results for "{results.searchText}"
+                </div>
+                <lightning-accordion allow-multiple-sections-open
+                                     active-section-name={activeSections}>
+                    <lightning-accordion-section name="Files" label={filesLabel}>
+                        <lightning-layout if:true={filesAvailable} multiple-rows="true">
+                            <template for:each={results.files} for:item="file">
+                                <lightning-layout-item key={file.id} padding="around-small">
+                                    <c-qsyd-file-explorer-item onitemclick={handleClick} item={file} type="file"></c-qsyd-file-explorer-item>
+                                </lightning-layout-item>
+                            </template>
+                        </lightning-layout>
+                    </lightning-accordion-section>
+
+                    <lightning-accordion-section name="Folders" label={foldersLabel}>
+                        <lightning-layout if:true={foldersAvailable} multiple-rows="true">
+                            <template for:each={results.folders} for:item="folder">
+                                <lightning-layout-item key={folder.id} padding="around-small">
+                                    <c-qsyd-file-explorer-item onitemclick={handleClick} item={folder} type="folder"></c-qsyd-file-explorer-item>
+                                </lightning-layout-item>
+                            </template>
+                        </lightning-layout>
+                    </lightning-accordion-section>
+
+                    <lightning-accordion-section name="Tags" label={tagsLabel}>
+                        <lightning-layout if:true={tagsAvailable} multiple-rows="true">
+                            <template for:each={results.tags} for:item="tag">
+                                <lightning-layout-item key={tag.id} padding="around-small">
+                                    <c-qsyd-file-explorer-item onitemclick={handleClick} item={tag} type="file"></c-qsyd-file-explorer-item>
+                                </lightning-layout-item>
+                            </template>
+                        </lightning-layout>
+                    </lightning-accordion-section>
+                </lightning-accordion>
+            </lightning-layout-item>
+        </lightning-layout>
+    </template>
+    <!-- END Search Result Accordion-->
+
+</template>

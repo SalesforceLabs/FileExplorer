@@ -1,0 +1,161 @@
+<!--
+ * Copyright (c) 2020, salesforce.com, inc.
+ * All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause
+ * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ -->
+ 
+ 
+ <!--
+  @File Name          : qsydFileExplorerDetail.html
+  @Description        : 
+  @Author             : Elly Yijun Zhu
+-->
+<template>
+    <div class="details-container">
+        <template if:true={isFile}>
+            <div class="slds-p-around_x-small">
+                <div class="details-header">
+                    <div>
+                        <span class="slds-text-body_regular"
+                              style="font-size: 0.925rem; overflow-wrap: break-word;"><b>{filename}</b></span>
+                        <span style="margin-left:2px" class="slds-float_right">
+                            <lightning-button-menu icon-name="utility:down" menu-alignment="right" icon-size="x-small"
+                                                   alternative-text="Settings" variant="border-filled">
+                                <template if:true={showPreview}>
+                                    <lightning-menu-item label="Preview" value="Preview"
+                                                         onclick={navigateToFilePreviewPage}>
+                                    </lightning-menu-item>
+                                </template>
+                                <lightning-menu-item label="Open File" value="openFile"
+                                                     onclick={navigateToFileRecordPage}>
+                                </lightning-menu-item>
+                                <lightning-menu-item label="Download" value="downloadFile" href={downloadLink}>
+                                </lightning-menu-item>
+                                <lightning-menu-item label="Edit Tags" value="editTags" onclick={handleDialogOpen}>
+                                </lightning-menu-item>
+                            </lightning-button-menu>
+                        </span>
+                    </div>
+                </div>
+                <div class="details-content">
+                    <div
+                            class="slds-grid slds-wrap slds-grid_align-spread slds-grid_vertical-align-center slds-gutters">
+                        <div class="slds-col slds-size_1-of-1">
+                            <div title="preview" class="slds-p-vertical_x-small slds-text-align_center">
+                                <div class={previewImageClass}>
+                                    <img src={previewImageSrc} onerror={handleImgError}/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1">
+                            <div class="slds-grid slds-wrap slds-grid_align-spread slds-gutters">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <div title="title">
+                                        <span><b>Type</b></span>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    {filetype}
+                                </div>
+                                <div class="slds-col slds-size_1-of-3">
+                                    <div title="title">
+                                        <span><b>Size</b></span>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <span>{filesize}</span>
+                                </div>
+
+                                <div class="slds-col slds-size_1-of-3">
+                                    <div title="title">
+                                        <span><b>Owner</b></span>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <span>{fileowner}</span>
+                                </div>
+                                <template if:true={isContentVersionReady}>
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <div title="title">
+                                            <span><b>Last Modified</b></span>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <span>{lastModifiedDate}</span>
+                                    </div>
+                                </template>
+                                <div class="slds-col slds-size_1-of-3">
+                                    <div title="title">
+                                        <span><b>Tags</b></span>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <template for:each={tags} for:item='tag'>
+                                        <lightning-badge key={tag} label={tag}>
+                                        </lightning-badge>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <template if:true={showModal}>
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                         aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open editTagModal">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                            <lightning-button-icon class="slds-modal__close" title="Close" icon-name="utility:close"
+                                                   icon-class="slds-button_icon-inverse" onclick={handleTagsCancel}>
+                            </lightning-button-icon>
+                            <h2 class="slds-text-heading_medium slds-hyphenate header-string">
+                                Edit Tags
+                            </h2>
+                        </header>
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                            <div class="slds-p-around_x-small">
+                                <div class="tagInput inline">
+                                    <label class="slds-form-element__label" for="tagInput">
+                                        Please enter your tag:
+                                        <span class="slds-p-left_xx-small slds-p-top_xx-small">
+                                            <lightning-helptext content="maximum tag length is 15 characters">
+                                            </lightning-helptext>
+                                        </span></label>
+
+                                    <input class="slds-input" id="tagInput" autocomplete="on" onkeyup={handleKeyUp}
+                                           value={tagInput} maxlength="15"/>
+                                </div>
+                                <div class="inline">
+                                    <lightning-button-icon icon-name="utility:add" size="large"
+                                                           alternative-text="Add Tag" variant="brand"
+                                                           class="slds-m-left_small slds-theme_success"
+                                                           onclick={handleAddButtonClick}>
+                                    </lightning-button-icon>
+                                </div>
+                            </div>
+
+                            <div class="slds-p-around_x-small pillcontainer">
+                                <div if:true={redraw}>
+                                    <lightning-pill-container items={_modalTags} onitemremove={handleTagRemove}>
+                                    </lightning-pill-container>
+                                </div>
+                            </div>
+                        </div>
+
+                        <footer class="slds-modal__footer modal-hidden">
+                            <lightning-button label="Cancel" title="Cancel" onclick={handleTagsCancel}
+                                              class="slds-m-left_x-small"></lightning-button>
+                            <lightning-button variant="brand" label="Save" title="Save" onclick={handleTagsSave}
+                                              class="slds-m-left_x-small"></lightning-button>
+
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </template>
+
+        </template>
+    </div>
+</template>

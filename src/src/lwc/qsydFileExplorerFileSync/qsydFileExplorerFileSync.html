@@ -1,0 +1,27 @@
+<!--
+ * Copyright (c) 2020, salesforce.com, inc.
+ * All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause
+ * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ -->
+ 
+ 
+ <template>
+    <div class="syncContainer">
+        <template if:true={needSync}>
+            <div>
+                <p
+                    class="slds-text-body_regular slds-notify slds-notify--alert slds-theme--warning slds-theme--alert-texture slds-m-top_x-small">
+                    <span>
+                        <lightning-icon icon-name="utility:warning" alternative-text="Warning!" size="xx-small"
+                            title="Warning">
+                        </lightning-icon>
+                    </span>
+                    The File Explorer needs to be synchronised with the latest list of Files. Click <a
+                        class="slds-m-horizontal_xx-small" onclick={handleSync} href="javascript:(0)"> here </a> to
+                    synchronise.
+                </p>
+            </div>
+        </template>
+    </div>
+</template>

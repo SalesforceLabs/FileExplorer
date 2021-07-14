@@ -1,0 +1,75 @@
+<!--
+ * Copyright (c) 2020, salesforce.com, inc.
+ * All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause
+ * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ -->
+ 
+ 
+ <!--
+  @File Name          : qsydFileExplorer.html
+  @Description        : 
+  @Author             : Paul Lucas, Jiun Ryu, Elly Zhu, Derrick Vuong
+-->
+<template>
+    <lightning-layout multiple-rows="true" vertical-align="stretch" onmouseup={dragBarMouseUp}
+                      onmousemove={dragMouseMove} ontouchmove={dragMouseMove} ontouchend={dragBarMouseUp}>
+        <lightning-layout-item size="12" padding="around-small">
+
+            <div class="slds-text-heading_small">
+                <lightning-icon icon-name="standard:file" alternative-text="File" title="File Explorer" size="small"
+                                class="slds-m-right_x-small"></lightning-icon>
+                {title}
+                <c-qsyd-file-explorer-actions record-id={recordId} object-api-name={objectApiName} selected-item={item}
+                                              onitemaction={handleItemAction}>
+                </c-qsyd-file-explorer-actions>
+                <c-qsyd-file-explorer-file-sync record-id={recordId}
+                                                object-api-name={objectApiName}
+                                                ondatarefresh={retrieveFileExplorerItemMap}></c-qsyd-file-explorer-file-sync>
+                <c-qsyd-file-explorer-management header={explorerManagementHeader} record-id={recordId}
+                                                 object-api-name={objectApiName} selected-item={item}
+                                                 folder-id={folderId} dictionary-data={dataDictionary}
+                                                 onitemchange={handleItemChange}
+                                                 onexplorermanagementclose={handleExplorerManagementClose}>
+                    <div slot="tagline"></div>
+                </c-qsyd-file-explorer-management>
+            </div>
+        </lightning-layout-item>
+        <lightning-layout-item size="12" class="file-explorer-container">
+            <lightning-layout multiple-rows="true" vertical-align="stretch">
+                <lightning-layout-item size="12" medium-device-size="12" large-device-size="9" class="slds-grid">
+                    <div class="file-tree-container" style="width: calc(100% * 1/3)">
+                        <div class="file-tree slds-p-around_small">
+                            <c-qsyd-file-explorer-tree record-id={recordId} object-api-name={objectApiName}
+                                                       tree-data={dataTree} dictionary-data={dataDictionary}
+                                                       selected-item={item} onitemclick={handleItemClick}>
+                            </c-qsyd-file-explorer-tree>
+                        </div>
+                    </div>
+                    <div class="drag-bar" onmousedown={dragBarMouseDown} ontouchstart={dragBarMouseDown}>
+                        <lightning-icon icon-name="utility:drag_and_drop" size="xx-small" class="slds-is-absolute"></lightning-icon>
+                    </div>
+                    <div class="file-main-container slds-p-around_small" style="width: calc(100% * 2/3)">
+                        <div>
+                            <c-qsyd-file-explorer-search onitemclick={handleItemClick} onsearchrequest={handleSearch}
+                                                         results={typedownResults}></c-qsyd-file-explorer-search>
+                            <c-qsyd-file-explorer-results onitemclick={handleItemClick} record-id={recordId}
+                                                          selected-item={item} breadcrumbs={breadcrumbs}
+                                                          results={results}>
+                            </c-qsyd-file-explorer-results>
+                        </div>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" medium-device-size="12" large-device-size="3" padding="around-small"
+                                       class="file-detail-container">
+                    <div class="file-detail">
+                        <div class="">
+                            <c-qsyd-file-explorer-detail item={item} onexplorermanagementclose={handleExplorerManagementClose}>
+                            </c-qsyd-file-explorer-detail>
+                        </div>
+                    </div>
+                </lightning-layout-item>
+            </lightning-layout>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>

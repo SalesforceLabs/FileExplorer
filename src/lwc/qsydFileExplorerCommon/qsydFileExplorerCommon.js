@@ -1,11 +1,3 @@
-/*
- * Copyright (c) 2020, salesforce.com, inc.
- * All rights reserved.
- * SPDX-License-Identifier: BSD-3-Clause
- * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
- */
-
-
 /**
      Author:         Paul Lucas
      Company:        Salesforce
@@ -575,19 +567,22 @@ const reduceErrors = (errors) => {
 		errors = [errors];
 	}
 
-	return errors.filter(Boolean).map((error) => {
-		if (Array.isArray(error.body)) {
-			return error.body.map((b) => b.message);
-		} else if (error.body && isString(error.body.message)) {
-			return error.body.message;
-		} else if (isString(error.message)) {
-			return error.message;
-		}
+	return errors.filter(Boolean).
+		map((error) => {
+			if (Array.isArray(error.body)) {
+				return error.body.map((b) => b.message);
+			} else if (error.body && isString(error.body.message)) {
+				return error.body.message;
+			} else if (isString(error.message)) {
+				return error.message;
+			}
 
-		// Default to statusText property
-		return error.statusText;
-	}).reduce((prev, curr) => prev.concat(curr.replace(/(<([^>]+)>)/gi, '')),
-		[]).filter(Boolean);
+			// Default to statusText property
+			return error.statusText;
+		}).
+		reduce((prev, curr) => prev.concat(curr.replace(/(<([^>]+)>)/gi, '')),
+			[]).
+		filter(Boolean);
 };
 
 /**

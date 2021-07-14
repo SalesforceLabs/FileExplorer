@@ -140,9 +140,9 @@ global with sharing class qsydFileExplorerTest {
         });
 
         canonicalFolders = folderItemList
-                .retrieve(a.Id)
-                .convertToCanonical()
-                .getCanonicalList();
+        .retrieve(a.Id)
+        .convertToCanonical()
+        .getCanonicalList();
 
         Test.stopTest();
 

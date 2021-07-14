@@ -1,0 +1,38 @@
+<!--
+ * Copyright (c) 2020, salesforce.com, inc.
+ * All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause
+ * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ -->
+ 
+ 
+ <!--
+  @File Name          : qsydFileExplorerBreadcrumbs.html
+  @Description        : 
+  @Author             : Paul Lucas, Jiun Ryu, Elly Zhu, Derrick Vuong
+-->
+<template>
+    <nav class="breadcrumbs" role="navigation">
+        <ol class="slds-breadcrumb slds-list_horizontal slds-wrap">
+            <li class="slds-breadcrumb__item">
+                <a data-item-id="root" onclick={handleClick}>Home</a>
+            </li>
+            <template if:true={pathTooLong}>
+                <li class="slds-breadcrumb__item">
+                    <a>...</a>
+                </li>
+            </template>
+
+            <template iterator:it={breadcrumbs}>
+                <template if:false={pathTooLong}>
+                    <li class="slds-breadcrumb__item" if:false={it.last} key={it.value.id}>
+                        <a data-item-id={it.value.id} onclick={handleClick}>{it.value.text}</a>
+                    </li>
+                </template>
+                <li class="slds-breadcrumb__item" if:true={it.last} key={it.value.id}>
+                    <a data-item-id={it.value.id} onclick={handleClick}>{it.value.text}</a>
+                </li>
+            </template>
+        </ol>
+    </nav>
+</template>

@@ -1,0 +1,70 @@
+<!--
+ * Copyright (c) 2020, salesforce.com, inc.
+ * All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause
+ * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ -->
+ 
+ 
+ <!--
+  @File Name          : qsydFileExplorerSearch.html
+  @Description        : 
+  @Author             : Paul Lucas, Jiun Ryu, Elly Zhu, Derrick Vuong
+-->
+<template>
+    <div class="slds-is-relative search-container">
+        <lightning-input name="enter-search" class="slds-p-bottom_x-small" placeholder="Search..." label="Search"
+            variant="label-hidden" type="search" is-loading={isLoading} onchange={handleSearchChange}
+            onfocus={handleSearchFocus} onkeyup={handleSearchKeyUp}>
+        </lightning-input>
+
+        <div tabindex="0" if:true={searchRequested} class="slds-box slds-box_xx-small search-results-container">
+            <div class="slds-p-around_small slds-border_bottom">
+                Search Results for "{searchText}"
+            </div>
+            <lightning-layout vertical-align="stretch">
+                <lightning-layout-item flexibility="auto, no-grow" class="slds-border_right">
+                    <ul class="search-filter-list">
+                        <li class="slds-p-around_small active-filter-item" onclick={handleFilterItemClick}
+                            data-filter-name="files">
+                            <lightning-tile label="Files" type="media" href="javascript:void(0)">
+                                <lightning-icon slot="media" icon-name="standard:file" size="small"
+                                    class="slds-m-top_x-small"></lightning-icon>
+                                <p class="slds-truncate" title={filesLabel}>{filesLabel}</p>
+                            </lightning-tile>
+                        </li>
+                        <li class="slds-p-around_small" onclick={handleFilterItemClick} data-filter-name="folders">
+                            <lightning-tile label="Folders" type="media" href="javascript:void(0)">
+                                <lightning-icon slot="media" icon-name="standard:folder" size="small"
+                                    class="slds-m-top_x-small"></lightning-icon>
+                                <p class="slds-truncate" title={foldersLabel}>{foldersLabel}</p>
+                            </lightning-tile>
+                        </li>
+                        <li class="slds-p-around_small" onclick={handleFilterItemClick} data-filter-name="tags">
+                            <lightning-tile label="Tagged" type="media" href="javascript:void(0)">
+                                <lightning-icon slot="media" icon-name="utility:quote" size="small"
+                                    class="slds-m-top_x-small"></lightning-icon>
+                                <p class="slds-truncate" title={tagsLabel}>{tagsLabel}</p>
+                            </lightning-tile>
+                        </li>
+                    </ul>
+                </lightning-layout-item>
+                <lightning-layout-item flexibility="auto" class="search-result-list">
+                    <lightning-layout multiple-rows="true">
+                        <template if:true={displayItemsAvailable} for:each={displayItems} for:item="item">
+                            <lightning-layout-item key={item.id} padding="around-small">
+                                <c-qsyd-file-explorer-item onitemclick={handleClick} item={item} type={fileType}>
+                                </c-qsyd-file-explorer-item>
+                            </lightning-layout-item>
+                        </template>
+                        <template if:false={displayItemsAvailable}>
+                            <div class="slds-p-around_small slds-size_1-of-1 slds-text-align_center">
+                                No results found in this category.
+                            </div>
+                        </template>
+                    </lightning-layout>
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+    </div>
+</template>

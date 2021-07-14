@@ -1,11 +1,3 @@
-/*
- * Copyright (c) 2020, salesforce.com, inc.
- * All rights reserved.
- * SPDX-License-Identifier: BSD-3-Clause
- * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
- */
-
-
 /**
  Author:         Paul Lucas
  Company:        Salesforce
@@ -222,7 +214,7 @@ export default class QSydFileExplorerTree extends LightningElement {
 					},
 				},
 				'plugins': ['sort_ascending_folders_first'],
-				'sort_ascending_folders_first': function (a, b) {
+				'sort_ascending_folders_first': function(a, b) {
 					let nodeA = this.get_node(a, false);
 					let nodeB = this.get_node(b, false);
 
@@ -257,7 +249,9 @@ export default class QSydFileExplorerTree extends LightningElement {
 		this._selectedItem = (data.node && data.node.original)
 			? data.node.original
 			: {};
-		this.template.querySelector('div.tree-home').classList.remove('item-selected');
+		this.template.querySelector('div.tree-home').
+			classList.
+			remove('item-selected');
 		this.propagateEvent(data.action);
 	}
 
