@@ -1,37 +1,30 @@
-/*
- * Copyright (c) 2020, salesforce.com, inc.
- * All rights reserved.
- * SPDX-License-Identifier: BSD-3-Clause
- * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
- */
+/**      
+    Author:         Paul Lucas
+    Company:        Salesforce
+    Description:    qsyd_File
+    Date:           20-Apr-2020
 
-
-/**
-    @author         Paul Lucas
-    @company        Salesforce
-    @description    qsyd_File
-    @date           20-Apr-2020
-
-    History
+    History:
     When           Who                 What
 
     TODO:
  */
+
 global virtual inherited sharing class qsyd_File extends qsyd_Item implements qsyd_IItem {
     public static final String FILES_KEY = 'files';
-    public static final String SITE_PATH_PREFIX = !String.isBlank(Site.getPathPrefix()) ? Site.getPathPrefix() : '';
+    public static final String SITE_PATH_PREFIX = !String.IsBlank(Site.getPathPrefix()) ? Site.getPathPrefix() : '';
     public static final String ASSETS_PATH = SITE_PATH_PREFIX.removeEndIgnoreCase('/s') + '/resource/qsyd_FE__filexplorer/assets/';
 
     private qsyd_FE__FileExplorerFile__c fileExplorerFile;
 
     /**
-     * @description Constructor
+     * Constructor
      */
     global qsyd_File() {
     }
 
     /**
-     * @description Constructor
+     * Constructor
      *
      * @param id
      * @param folder
@@ -85,11 +78,9 @@ global virtual inherited sharing class qsyd_File extends qsyd_Item implements qs
     }
 
     /**
-     * @description Populates an instance of qsyd_File
+     * Populates an instance of qsyd_File
      *
-     * @param item A qsyd_Item instance
-     *
-     * @return A qsyd_File instance
+     * @return an instance of qsyd_File
      */
     global qsyd_File load(qsyd_Item item) {
         this.id = item.id;
@@ -107,9 +98,9 @@ global virtual inherited sharing class qsyd_File extends qsyd_Item implements qs
     }
 
     /**
-     * @description Converts from qsyd_File to File Explorer File
+     * Converts from qsyd_File to File Explorer File
      *
-     * @return A qsyd_File instance
+     * @return an instance of qsyd_File
      */
     global qsyd_File convertToCanonical() {
         this.fileExplorerFile = new qsyd_FE__FileExplorerFile__c(Id = this.id, qsyd_FE__Label__c = this.text, qsyd_FE__Folder__c = this.folder, qsyd_FE__LinkedEntityId__c = this.entityId);
@@ -118,9 +109,9 @@ global virtual inherited sharing class qsyd_File extends qsyd_Item implements qs
     }
 
     /**
-     * @description Saves a File Explorer File record
+     * Saves a File Explorer File record
      *
-     * @return A qsyd_File instance
+     * @return an instance of qsyd_File
      */
     global qsyd_File save() {
         this.accessDecision = Security.stripInaccessible(AccessType.UPSERTABLE,
@@ -139,9 +130,9 @@ global virtual inherited sharing class qsyd_File extends qsyd_Item implements qs
     }
 
     /**
-     * @description No action
+     * No action
      *
-     * @return A qsyd_File instance
+     * @return an instance of qsyd_File
      */
     global qsyd_File remove() {
 

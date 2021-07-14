@@ -1,14 +1,7 @@
 <!--
- * Copyright (c) 2020, salesforce.com, inc.
- * All rights reserved.
- * SPDX-License-Identifier: BSD-3-Clause
- * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
- -->
-
-<!--
- @File Name          : qsydFileExplorerDetail.html
- @Description        :
- @Author             : Elly Yijun Zhu
+  @File Name          : qsydFileExplorerDetail.html
+  @Description        : 
+  @Author             : Elly Yijun Zhu
 -->
 <template>
     <div class="details-container">
@@ -45,7 +38,7 @@
                         <div class="slds-col slds-size_1-of-1">
                             <div title="preview" class="slds-p-vertical_x-small slds-text-align_center">
                                 <div class={previewImageClass}>
-                                    <img src={previewImageSrc} onerror={handleImgError} />
+                                    <img src={previewImageSrc} onerror={handleImgError}/>
                                 </div>
                             </div>
                         </div>
@@ -169,8 +162,7 @@
 
         <template if:false={isFile}>
             <div class="no-content">
-                <c-qsyd-message-panel type="preview"
-                                      message={CONSTANTS.DETAIL_MESSAGES.SELECT_FILE}></c-qsyd-message-panel>
+                <c-qsyd-message-panel type="preview" message={CONSTANTS.DETAIL_MESSAGES.SELECT_FILE}></c-qsyd-message-panel>
             </div>
         </template>
     </div>

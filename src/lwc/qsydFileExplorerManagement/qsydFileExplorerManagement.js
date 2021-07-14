@@ -1,11 +1,3 @@
-/*
- * Copyright (c) 2020, salesforce.com, inc.
- * All rights reserved.
- * SPDX-License-Identifier: BSD-3-Clause
- * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
- */
-
-
 /**
      Author:         Paul Lucas
      Company:        Salesforce
@@ -17,7 +9,6 @@
  */
 
 import {LightningElement, api} from 'lwc';
-import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 import {loadScript, loadStyle} from 'lightning/platformResourceLoader';
 import jquery from '@salesforce/resourceUrl/jquery_350';
 import jstree from '@salesforce/resourceUrl/jstree_339';
@@ -25,8 +16,9 @@ import jstree339 from '@salesforce/resourceUrl/jstree339';
 import {
 	CONSTANTS,
 	item,
+	showToast,
 	listToTree,
-	clone, dictionaryToList,
+	clone,
 	reduceErrors,
 } from 'c/qsydFileExplorerCommon';
 import setFolder from '@salesforce/apex/qsydFileExplorerController.setFolder';
@@ -34,6 +26,8 @@ import save
 	from '@salesforce/apex/qsydFileExplorerController.postItem';
 import remove
 	from '@salesforce/apex/qsydFileExplorerController.deleteItem';
+import cloneTemplate
+	from '@salesforce/apex/qsydFileExplorerController.cloneTemplate';
 
 const CSS_CLASS = 'modal-hidden';
 
@@ -53,6 +47,7 @@ export default class QSydFileExplorerManagement extends LightningElement {
 	/**
 	 * Private properties
 	 */
+	CONSTANTS = CONSTANTS;
 	isLoading = true;
 	files;
 	folders;
@@ -60,6 +55,22 @@ export default class QSydFileExplorerManagement extends LightningElement {
 	dataTree;
 	uploadedFiles;
 	hasHeaderString = false;
+
+	get error() {
+		return this._error;
+	}
+
+	set error(value) {
+		this._error = value;
+
+		showToast(
+			this,
+			CONSTANTS.TOAST_MESSAGE_TYPES.ERROR,
+			reduceErrors(this._error).join(', '),
+			'',
+			CONSTANTS.TOAST_THEMES.ERROR,
+			CONSTANTS.TOAST_MODE.STICKY);
+	}
 
 	get selectedItemLabel() {
 		return this._selectedItem.text;
@@ -84,6 +95,10 @@ export default class QSydFileExplorerManagement extends LightningElement {
 
 	get deleteFolder() {
 		return this._action === CONSTANTS.ACTION_TYPES.DELETE_FOLDER;
+	}
+
+	get templateFolder() {
+		return this._action === CONSTANTS.ACTION_TYPES.TEMPLATE_FOLDER;
 	}
 
 	/**
@@ -201,7 +216,6 @@ export default class QSydFileExplorerManagement extends LightningElement {
 
 			Promise.all([
 				loadScript(this, jquery),
-				// loadScript(this, jstree + '/jstree.3.3.9.js'),
 				loadScript(this, jstree339),
 				loadStyle(this, jstree + '/themes/default/style.css'),
 			]).then(() => {
@@ -266,7 +280,9 @@ export default class QSydFileExplorerManagement extends LightningElement {
 		this.targetItem = data.node.original;
 		this.targetItem.parents = data.node.parents;
 
-		this.template.querySelector('div.tree-home').classList.remove('item-selected');
+		this.template.querySelector('div.tree-home').
+			classList.
+			remove('item-selected');
 	}
 
 	handleHomeClick(e) {
@@ -283,25 +299,24 @@ export default class QSydFileExplorerManagement extends LightningElement {
 		const message = numDocuments + ' File' + (numDocuments > 1 ? 's' : '') +
 			' Successfully Added!';
 
-		setFolder({contentDocumentIds: documentIds, folderId: folderId}).then(result => {
-			this.showToast(
-				CONSTANTS.TOAST_MESSAGE_TYPES.SUCCESS,
-				message,
-				'',
-				CONSTANTS.TOAST_THEMES.SUCCESS,
-				CONSTANTS.TOAST_MODE.DISMISSABLE);
+		setFolder({contentDocumentIds: documentIds, folderId: folderId}).
+			then(result => {
+				showToast(
+					this,
+					CONSTANTS.TOAST_MESSAGE_TYPES.SUCCESS,
+					message,
+					'',
+					CONSTANTS.TOAST_THEMES.SUCCESS,
+					CONSTANTS.TOAST_MODE.DISMISSABLE,
+				);
 
-			this.handleDialogClose({
-				action: this._action,
+				this.handleDialogClose({
+					action: this._action,
+				});
+			}).
+			catch(error => {
+				this.error = error;
 			});
-		}).catch(error => {
-			this.showToast(
-				CONSTANTS.TOAST_MESSAGE_TYPES.ERROR,
-				reduceErrors(error).join(', '),
-				'',
-				CONSTANTS.TOAST_THEMES.ERROR,
-				CONSTANTS.TOAST_MODE.DISMISSABLE);
-		});
 	}
 
 	handleDialogClose(data) {
@@ -313,17 +328,6 @@ export default class QSydFileExplorerManagement extends LightningElement {
 		);
 
 		this.hide();
-	}
-
-	showToast(title, message, messageData, variant, mode) {
-		this.dispatchEvent(new ShowToastEvent({
-			'title': title.charAt(0).toUpperCase() +
-				title.substr(1).toLowerCase(),
-			'message': message,
-			'messageData': messageData,
-			'variant': variant,
-			'mode': mode,
-		}));
 	}
 
 	handleSlotTaglineChange() {
@@ -352,7 +356,8 @@ export default class QSydFileExplorerManagement extends LightningElement {
 			case CONSTANTS.ACTION_TYPES.MOVE_FILE:
 				if (this.targetItem) {
 					if (this.targetItem.id === this.selectedItem.folder) {
-						this.showToast(
+						showToast(
+							this,
 							CONSTANTS.TOAST_MESSAGE_TYPES.WARNING,
 							CONSTANTS.ACTION_ERROR_MESSAGES.MOVE_FILE_SAME_SOURCE_AND_TARGET,
 							'',
@@ -383,11 +388,11 @@ export default class QSydFileExplorerManagement extends LightningElement {
 				break;
 
 			case CONSTANTS.ACTION_TYPES.MOVE_FOLDER:
-
 				if (this.targetItem) {
 					if (this.targetItem.parents.includes(
 						this.selectedItem.id)) {
-						this.showToast(
+						showToast(
+							this,
 							CONSTANTS.TOAST_MESSAGE_TYPES.WARNING,
 							CONSTANTS.ACTION_ERROR_MESSAGES.MOVE_FOLDER_DESCENDANT,
 							'',
@@ -398,7 +403,8 @@ export default class QSydFileExplorerManagement extends LightningElement {
 					}
 
 					if (this.targetItem.id === this.selectedItem.id) {
-						this.showToast(
+						showToast(
+							this,
 							CONSTANTS.TOAST_MESSAGE_TYPES.WARNING,
 							CONSTANTS.ACTION_ERROR_MESSAGES.MOVE_FOLDER_CIRCULAR_DEPENDENCY,
 							'',
@@ -409,7 +415,8 @@ export default class QSydFileExplorerManagement extends LightningElement {
 					}
 
 					if (this.targetItem.id === this.selectedItem.folder) {
-						this.showToast(
+						showToast(
+							this,
 							CONSTANTS.TOAST_MESSAGE_TYPES.WARNING,
 							CONSTANTS.ACTION_ERROR_MESSAGES.MOVE_FOLDER_SAME_SOURCE_AND_TARGET,
 							'',
@@ -440,75 +447,112 @@ export default class QSydFileExplorerManagement extends LightningElement {
 				this.removeItem(deltaItem);
 				break;
 
+			case CONSTANTS.ACTION_TYPES.TEMPLATE_FOLDER:
+				const selectedRows = (element && element.tableData)
+					? element.tableData.getSelectedRows()
+					: null;
+
+				if (!selectedRows || !selectedRows[0]) {
+					showToast(
+						this,
+						CONSTANTS.TOAST_MESSAGE_TYPES.WARNING,
+						CONSTANTS.ACTION_MESSAGES.SELECT_TEMPLATE_FOLDER,
+						'',
+						CONSTANTS.TOAST_THEMES.WARNING,
+						CONSTANTS.TOAST_MODE.DISMISSABLE);
+					e.target.disabled = false;
+					break;
+				}
+
+				this.saveFolderTemplate(selectedRows[0].Id, this.recordId,
+					this.selectedItem.id);
+				break;
+
 			default:
 				break;
 		}
 	}
 
-	saveItem(deltaItem, e) {
-		save(
-			{
-				serializedItem: JSON.stringify(deltaItem),
-			}).then((result) => {
-			this.showToast(
-				CONSTANTS.TOAST_MESSAGE_TYPES.SUCCESS,
-				CONSTANTS.ACTION_SUCCESS_MESSAGES[this._action.toUpperCase()],
-				'',
-				CONSTANTS.TOAST_THEMES.SUCCESS,
-				CONSTANTS.TOAST_MODE.DISMISSABLE);
+	saveItem(deltaItem) {
+		save({serializedItem: JSON.stringify(deltaItem)}).
+			then((result) => {
+				showToast(
+					this,
+					CONSTANTS.TOAST_MESSAGE_TYPES.SUCCESS,
+					CONSTANTS.ACTION_SUCCESS_MESSAGES[this._action.toUpperCase()],
+					'',
+					CONSTANTS.TOAST_THEMES.SUCCESS,
+					CONSTANTS.TOAST_MODE.DISMISSABLE);
 
-			this.handleDialogClose({
-				action: this._action,
-				// item: this.selectedItem
-				item: {id: JSON.parse(result).id},
+				this.handleDialogClose({
+					action: this._action,
+					item: {id: JSON.parse(result).id},
+				});
+			}).
+			catch(error => {
+				this.error = error;
+				this.handleDialogClose({
+					action: this._action,
+					item: {},
+				});
 			});
-		}).catch(error => {
-			this._error = error;
-			this.showToast(
-				CONSTANTS.TOAST_MESSAGE_TYPES.ERROR,
-				reduceErrors(error).join(', '),
-				'',
-				CONSTANTS.TOAST_THEMES.ERROR,
-				CONSTANTS.TOAST_MODE.DISMISSABLE);
-
-			this.handleDialogClose({
-				action: this._action,
-				item: {},
-			});
-		});
 	}
 
 	removeItem(deltaItem) {
 		remove(
 			{
 				serializedItem: JSON.stringify(deltaItem),
-			}).then(result => {
+			}).
+			then(result => {
 
-			this.showToast(
-				CONSTANTS.TOAST_MESSAGE_TYPES.SUCCESS,
-				CONSTANTS.ACTION_SUCCESS_MESSAGES[this._action.toUpperCase()],
-				'',
-				CONSTANTS.TOAST_THEMES.SUCCESS,
-				CONSTANTS.TOAST_MODE.DISMISSABLE);
+				showToast(
+					this,
+					CONSTANTS.TOAST_MESSAGE_TYPES.SUCCESS,
+					CONSTANTS.ACTION_SUCCESS_MESSAGES[this._action.toUpperCase()],
+					'',
+					CONSTANTS.TOAST_THEMES.SUCCESS,
+					CONSTANTS.TOAST_MODE.DISMISSABLE);
 
-			this.handleDialogClose({
-				action: this._action,
-				item: {id: this.selectedItem.folder}, // New selected item should be the parent folder
+				this.handleDialogClose({
+					action: this._action,
+					item: {id: this.selectedItem.folder}, // New selected item should be the parent folder
+				});
+			}).
+			catch(error => {
+				this.error = error;
+				this.handleDialogClose({
+					action: this._action,
+					item: this.selectedItem,
+				});
 			});
-		}).catch(error => {
-			this._error = error;
+	}
 
-			this.showToast(
-				CONSTANTS.TOAST_MESSAGE_TYPES.ERROR,
-				reduceErrors(error).join(', '),
-				'',
-				CONSTANTS.TOAST_THEMES.ERROR,
-				CONSTANTS.TOAST_MODE.DISMISSABLE);
+	saveFolderTemplate(templateId, entityId, folderId) {
+		cloneTemplate({
+			templateId: templateId,
+			entityId: entityId,
+			folderId: folderId,
+		}).
+			then((result) => {
+				showToast(
+					this,
+					CONSTANTS.TOAST_MESSAGE_TYPES.SUCCESS,
+					CONSTANTS.ACTION_SUCCESS_MESSAGES[this._action.toUpperCase()],
+					'',
+					CONSTANTS.TOAST_THEMES.SUCCESS,
+					CONSTANTS.TOAST_MODE.DISMISSABLE);
 
-			this.handleDialogClose({
-				action: this._action,
-				item: {},
+				this.handleDialogClose({
+					action: this._action,
+					item: this.selectedItem,
+				});
+			}).
+			catch(error => {
+				this.error = error;
+				this.handleDialogClose({
+					action: this._action,
+					item: this.selectedItem,
+				});
 			});
-		});
 	}
 }

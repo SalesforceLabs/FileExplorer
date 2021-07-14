@@ -1,21 +1,18 @@
 <!--
- * Copyright (c) 2020, salesforce.com, inc.
- * All rights reserved.
- * SPDX-License-Identifier: BSD-3-Clause
- * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
- -->
-
-
-<!--
- @File Name          : qsydFileExplorerBreadcrumbs.html
- @Description        :
- @Author             : Paul Lucas, Jiun Ryu, Elly Zhu, Derrick Vuong
+  @File Name          : qsydFileExplorerBreadcrumbs.html
+  @Description        : 
+  @Author             : Paul Lucas, Jiun Ryu, Elly Zhu, Derrick Vuong
+  @Group              : 
+  @Last Modified By   : Jiun Ryu
+  @Last Modified On   : 4/21/2020, 1:56:16 PM
+  @Modification Log   : 
+  Ver       Date            Author      		    Modification
+  1.0    4/21/2020          Jiun Ryu                Initial Version
 -->
 <template>
     <lightning-button-group class="slds-float_right">
         <lightning-button-menu alternative-text="Show menu" variant="border-filled" menu-alignment="right"
-                               value="File and Folder Management" icon-name="utility:settings"
-                               onselect={handleMenuItemSelect}>
+                               value="File and Folder Management" icon-name="utility:settings" onselect={handleMenuItemSelect}>
 
             <template iterator:it={menuItems}>
                 <lightning-menu-subheader if:true={it.first} key={it.value.key}

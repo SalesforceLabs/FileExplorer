@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="urn:metadata.tooling.soap.sforce.com" fqn="qsydFileExplorerTree">
+    <apiVersion>48.0</apiVersion>
+    <description>QSyd - File Explorer Tree</description>
+    <isExposed>false</isExposed>
+    <masterLabel>QSyd - File Explorer Tree</masterLabel>
+</LightningComponentBundle>

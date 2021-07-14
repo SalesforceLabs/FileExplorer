@@ -1,10 +1,3 @@
-/*
- * Copyright (c) 2020, salesforce.com, inc.
- * All rights reserved.
- * SPDX-License-Identifier: BSD-3-Clause
- * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
- */
-
 /**
      Author:         Paul Lucas
      Company:        Salesforce
@@ -224,10 +217,11 @@ export default class QSydFileExplorerTemplateList extends NavigationMixin(
 	connectedCallback() {
 		this.hostStyle.setProperty('--table-height', this.getTableHeight());
 
-		this.initialise().catch(error => {
-			console.log('>>>>> Error in connectedCallback: ' + error);
-			this.error = error;
-		});
+		this.initialise().
+			catch(error => {
+				console.log('>>>>> Error in connectedCallback: ' + error);
+				this.error = error;
+			});
 	}
 
 	/**
@@ -286,8 +280,7 @@ export default class QSydFileExplorerTemplateList extends NavigationMixin(
 			this.error = error;
 			console.error('>>>>> Error in initialise: ');
 			console.error(error);
-		} finally {
-		}
+		} finally { }
 	}
 
 	async getNextPage() {

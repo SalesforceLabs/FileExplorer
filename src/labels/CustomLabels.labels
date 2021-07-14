@@ -53,7 +53,7 @@
         <categories>Action Error Messages</categories>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Action Error Messages - Move folder descendant</shortDescription>
+        <shortDescription>Action Error Messages -	Move folder descendant</shortDescription>
         <value>You cannot move a folder that is part of its descendant path</value>
     </labels>
     <labels>

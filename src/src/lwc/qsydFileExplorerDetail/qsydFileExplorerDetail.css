@@ -1,0 +1,157 @@
+/*
+ * Copyright (c) 2020, salesforce.com, inc.
+ * All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause
+ * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ */
+ 
+ 
+ .details-container .slds-button_icon-container-more,
+.details-container .slds-button--icon-container-more {
+    line-height: normal !important;
+}
+
+.details-content span,
+.details-content .slds-badge {
+    font-size: 0.75rem !important;
+}
+
+.details-content .slds-badge {
+    color: white !important;
+    background-color: #1389EE !important;
+    margin-bottom: 2px;
+    margin-left: 0px;
+    margin-right: 0.25rem;
+}
+
+.details-content .previewImgContainer {
+    margin: auto;
+    width: 100%;
+}
+
+.details-content .previewImgBackground {
+    background-image: url('https://qsyd-perma-bucket.s3-ap-southeast-2.amazonaws.com/file-explorer/images/file200x200.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.details-content .previewImgContainer img {
+    width: auto;
+    margin: auto;
+    max-height: 400px;
+}
+
+.details-content .slds-col {
+    margin-bottom: 0.5rem;
+}
+
+.editTagModal .slds-pill_container {
+    border: 0px !important;
+}
+
+.editTagModal .tagInput,
+.editTagModal .tagInput input {
+    width: 80%;
+}
+
+.editTagModal .pillcontainer {
+    min-height: 30px;
+}
+
+.inline {
+    display: inline;
+}
+
+
+@media only screen and (max-width: 1024px) {}
+
+
+/*
+* Tablets
+*/
+
+@media (min-width: 1024px) and (max-width: 1366px) and (orientation: landscape) {
+    .details-content .slds-col {
+        margin-bottom: 0.175rem !important;
+    }
+
+    .details-content .previewImgContainer img {
+        max-height: 250px !important;
+    }
+}
+
+@media (min-device-width: 1024px) and (max-device-width: 1024px) and (orientation: portrait) {
+    .details-content .slds-col {
+        margin-bottom: 0.175rem !important;
+    }
+
+    .details-content .previewImgContainer img {
+        max-height: 250px !important;
+    }
+}
+
+
+
+@media (min-width: 768px) and (max-width: 1023px) and (max-device-width:1023px) and (orientation: portrait) {
+    .details-content .previewImgContainer img {
+        max-height: 150px !important;
+    }
+
+    .details-content .slds-col {
+        margin-bottom: 0.125rem !important;
+    }
+
+    .details-content .slds-size_1-of-1 {
+        width: 50% !important;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    .details-content .previewImgContainer img {
+        max-height: 150px !important;
+    }
+
+    .details-content .slds-col {
+        margin-bottom: 0.125rem !important;
+    }
+}
+
+
+/*
+* Mobile
+*/
+
+@media (min-width: 768px) and (max-width: 830px) and (orientation: landscape) {
+    .details-content .previewImgContainer img {
+        max-height: 130px !important;
+    }
+
+    .details-content .slds-col {
+        margin-bottom: 0.125rem !important;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 767px) and (orientation: portrait) {
+    .details-content .previewImgContainer img {
+        max-height: 130px !important;
+    }
+
+    .details-content .slds-col {
+        margin-bottom: 0.125rem !important;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 767px) and (orientation: landscape) {
+    .details-content .previewImgContainer img {
+        max-height: 130px !important;
+    }
+
+    .details-content .slds-col {
+        margin-bottom: 0.125rem !important;
+    }
+
+    .details-content .slds-size_1-of-1 {
+        width: 50% !important;
+    }
+}

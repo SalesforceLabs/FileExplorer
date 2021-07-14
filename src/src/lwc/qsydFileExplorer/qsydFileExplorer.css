@@ -1,0 +1,164 @@
+/*
+ * Copyright (c) 2020, salesforce.com, inc.
+ * All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause
+ * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ */
+ 
+ 
+ :host {}
+
+:host>lightning-layout {
+    border-radius: var(--lwc-borderRadiusMedium, 0.25rem);
+    border: var(--lwc-borderWidthThin, 1px) solid var(--lwc-colorBorder, rgb(221, 219, 218));
+    background: white;
+}
+
+.file-explorer-container {
+    border-top: var(--lwc-borderWidthThin, 1px) solid var(--lwc-colorBorder, rgb(221, 219, 218));
+}
+
+.file-explorer-container>lightning-layout>lightning-layout-item:first-of-type {
+    min-width: 409px;
+}
+
+.file-tree-container,
+.file-main-container {
+    height: 600px;
+    overflow: auto;
+}
+
+.file-tree-container {
+    min-width: 150px;
+    background-color: #FAFAF9;
+}
+
+.file-main-container {
+    min-width: 240px;
+}
+
+.file-tree {
+    float: left;
+    width: calc(100% - 9px);
+}
+
+.drag-bar {
+    background-color: white;
+    position: relative;
+    float: right;
+    height: 100%;
+    width: 9px;
+    cursor: col-resize;
+}
+
+.file-explorer-container .file-main-container,
+.file-explorer-container .file-detail-container,
+.drag-bar {
+    border-left: var(--lwc-borderWidthThin, 1px) solid var(--lwc-colorBorder, rgb(221, 219, 218));
+}
+
+.drag-bar lightning-icon {
+    /* position: absolute; */
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+}
+
+.file-detail-container {
+    background-color: #F2F1F6;
+    max-height: 600px;
+    overflow-y: scroll;
+}
+
+.refreshRotate {
+    animation: rotate .4s;
+}
+
+/* #### SCROLLBAR CSS */
+
+.file-tree-container::-webkit-scrollbar-track,
+.file-main-container::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px transparent;
+    -webkit-box-shadow: inset 0 0 6px transparent;
+    border-radius: 5px;
+    background-color: transparent;
+    padding: 0 1px;
+}
+
+.file-tree-container::-webkit-scrollbar,
+.file-main-container::-webkit-scrollbar,
+.file-detail-container::-webkit-scrollbar {
+    border-radius: 5px;
+    width: 5px;
+    height: 8px;
+    background-color: transparent;
+}
+
+.file-tree-container::-webkit-scrollbar-thumb,
+.file-main-container::-webkit-scrollbar-thumb,
+.file-detail-container::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: transparent;
+}
+
+/* #### SCROLLBAR HOVER CSS */
+
+.file-tree-container:hover::-webkit-scrollbar-track,
+.file-main-container:hover::-webkit-scrollbar-track,
+.file-detail-container:hover::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(216, 216, 216);
+    -webkit-box-shadow: inset 0 0 6px rgba(216, 216, 216);
+}
+
+.file-tree-container:hover::-webkit-scrollbar,
+.file-main-container:hover::-webkit-scrollbar,
+.file-detail-container:hover::-webkit-scrollbar {
+    background-color: rgb(240, 240, 240);
+}
+
+.file-tree-container:hover::-webkit-scrollbar-thumb,
+.file-main-container:hover::-webkit-scrollbar-thumb,
+.file-detail-container:hover::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+@media (min-width: 801px) and (max-width: 1024px) {
+    .file-explorer-container lightning-layout lightning-layout-item:nth-of-type(1) {
+        width: 60% !important;
+    }
+
+    .file-detail-container {
+        width: 40% !important;
+    }
+
+    .file-tree-container,
+    .file-main-container {
+        height: 550px;
+    }
+
+    .file-tree-container,
+    .drag-bar {
+        display: none;
+    }
+
+    .file-main-container {
+        width: 100% !important;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 800px) {
+
+    .file-tree-container,
+    .file-main-container {
+        height: 400px;
+    }
+
+    .file-tree-container,
+    .drag-bar {
+        display: none;
+    }
+
+    .file-main-container {
+        width: 100% !important;
+    }
+}

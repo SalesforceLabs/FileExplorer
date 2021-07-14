@@ -1,0 +1,109 @@
+<!--
+ * Copyright (c) 2020, salesforce.com, inc.
+ * All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause
+ * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ -->
+ 
+ 
+ <!--
+   	Author:         Paul Lucas
+    Company:        Salesforce
+    Description:    qsydFileExplorerManagement
+    Date:           01-May-2020
+
+	TODO:
+
+-->
+<template>
+    <template if:true={showModal}>
+        <section role="dialog"
+                 tabindex="-1"
+                 aria-labelledby="modal-heading-01"
+                 aria-modal="true"
+                 aria-describedby="modal-content-id-1"
+                 class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <lightning-button-icon class="slds-modal__close"
+                                           title="Close"
+                                           icon-name="utility:close"
+                                           icon-class="slds-button_icon-inverse"
+                                           onclick={handleDialogClose}></lightning-button-icon>
+
+                    <template if:true={hasHeaderString}>
+                        <h2 class="slds-text-heading_medium slds-hyphenate header-string">
+                            <lightning-formatted-rich-text value={header}></lightning-formatted-rich-text>
+                        </h2>
+                    </template>
+                    <template if:false={hasHeaderString}>
+                        <h2 class="slds-text-heading_medium slds-hyphenate header-slot">
+                            <slot name="header"></slot>
+                        </h2>
+                    </template>
+
+                    <p class="slds-m-top_x-small modal-hidden">
+                        <slot name="tagline" onslotchange={handleSlotTaglineChange}></slot>
+                    </p>
+                </header>
+
+                <div class="slds-modal__content slds-p-around_medium"
+                     id="modal-content-id-1">
+
+                    <template if:true={addFile}>
+                        <div class="slds-text-align_center slds-p-around_large">
+                            <lightning-file-upload
+                                    label=""
+                                    name="fileUploader"
+                                    record-id={recordId}
+                                    onuploadfinished={handleUploadFinished}
+                                    multiple>
+                            </lightning-file-upload>
+                        </div>
+                    </template>
+
+                    <template if:true={moveItem}>
+                        <p class="slds-m-vertical_medium">Where would like to move <strong
+                                class="slds-var-p-horizontal_xx-small">"{selectedItemLabel}"</strong>?
+                        </p>
+                        <div class="tree-home" onclick={handleHomeClick}>
+                            <img class="slds-m-left_xx-small" src="https://qsyd-perma-bucket.s3-ap-southeast-2.amazonaws.com/file-explorer/images/tree_folder.png">
+                            <span class=slds-p-left_small>Home</span>
+                        </div>
+                        <div class="jstree" lwc:dom="manual"></div>
+                    </template>
+
+                    <template if:true={addFolder}>
+                        <lightning-input type="text" class="add_folder" label="New Folder"
+                                         placeholder="Enter your folder name..." required
+                                         minlength="1" max-length="50"
+                                         field-level-help="The folder name must be 50 characters or less">
+                        </lightning-input>
+                    </template>
+
+                    <template if:true={renameFolder}>
+                        <lightning-input type="text" class="rename_folder" label="Rename Folder"
+                                         value={selectedItemLabel}
+                                         minlength="1" max-length="50" placeholder="Enter your folder name..." required
+                                         field-level-help="The folder name must be 50 characters or less">
+                        </lightning-input>
+                    </template>
+
+                    <template if:true={deleteFolder}>
+                        Deleting this folder will move all child items to its parent folder. Are you sure you want to
+                        do this?
+                    </template>
+                </div>
+
+                <footer class="slds-modal__footer">
+                    <lightning-button label="Cancel" title="Cancel" icon-name="utility:cancel_file_request"
+                                      class="slds-m-left_x-small" onclick={handleCancelClick}></lightning-button>
+                    <lightning-button label="Confirm" title={explorerManagementHeader} icon-name="utility:save"
+                                      class="slds-m-left_x-small" variant="brand"
+                                      onclick={handleAcceptClick}></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

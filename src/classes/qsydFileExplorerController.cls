@@ -1,16 +1,8 @@
-/*
- * Copyright (c) 2020, salesforce.com, inc.
- * All rights reserved.
- * SPDX-License-Identifier: BSD-3-Clause
- * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
- */
-
-
 /**
-* @file Name           qsydFileExplorerController.cls
-* @description         File Explorer controller class
-* @author              Paul Lucas, Jiun Ryu, Elly Zhu, Derrick Vuong
-**/
+ * : File Explorer controller class
+ *
+ * @author : Paul Lucas, Jiun Ryu, Elly Zhu, Derrick Vuong
+ **/
 global with sharing class qsydFileExplorerController {
 
     private static String FILE_EXPLORER_PERMISSION = 'File_Explorer';
@@ -19,10 +11,18 @@ global with sharing class qsydFileExplorerController {
     static Map<String, List<qsyd_Item>> itemMap = new Map<String, List<qsyd_Item>>();
     static SObjectAccessDecision accessDecision;
 
+
+//    SELECT Id,
+//            qsyd_FE__Enable__c
+//            FROM qsyd_FE__Lightning_File_Explorer__mdt
+//            WHERE DeveloperName = 'Default'
+//    LIMIT 1
+
+
     /**
-     * @description Check if the contextual caller has the "File_Explorer" permission set
+     * Check if the contextual caller has the "File_Explorer" permission set
      *
-     * @return True if the contextual caller has the "File_Explorer" permission set, otherwise return false
+     * @return true if the contextual caller has the "File_Explorer" permission set, otherwise return false
      */
     @AuraEnabled
     public static Boolean checkForPermission() {
@@ -32,7 +32,7 @@ global with sharing class qsydFileExplorerController {
     }
 
     /**
-     * @description Return the latest content version for a given content document
+     * Return the latest content version for a given content document
      *
      * @param contentDocumentId
      *
@@ -70,10 +70,10 @@ global with sharing class qsydFileExplorerController {
     }
 
     /**
-     * @description Associates content documents with a file explorer folder
+     * Associates a content document with a file explorer folder
      *
-     * @param contentDocumentIds A list of content document ids
-     * @param folderId A file explorer folder id
+     * @param contentDocumentIds
+     * @param folderId
      */
     @AuraEnabled
     public static void setFolder(List<Id> contentDocumentIds, String folderId) {
@@ -101,12 +101,12 @@ global with sharing class qsydFileExplorerController {
     }
 
     /**
-     * @description Update a file explorer file's tags
+     * Update a file explorer file's tags
      *
-     * @param fileId A file explorer file id
-     * @param tags A comma delimited list of descriptor tags
+     * @param fileId
+     * @param tags
      *
-     * @return The updated list of tags
+     * @return the updated tags
      */
     @AuraEnabled
     public static String updateTags(String fileId, String tags) {
@@ -139,19 +139,19 @@ global with sharing class qsydFileExplorerController {
     }
 
     /**
-     * @description Determine if synchronisation is required
+     * Determine if synchronisation is required
      *
-     * @param recordId The id of the contextual record associated to the files
+     * @param recordId
      *
-     * @return True if synchronisation is required, otherwise return false
+     * @return true if synchronisation is required, otherwise return false
      */
     @AuraEnabled
     public static Boolean checkSyncStatus(String recordId) {
-        Integer countDocumentLink = 0, countFile = 0;
 
+        Integer countDocumentLink = 0, countFile = 0;
         try {
-            countDocumentLink = Database.countQuery('SELECT count() From ContentDocumentLink WHERE IsDeleted = FALSE AND LinkedEntityId = \'' + recordId + '\'');
-            countFile = Database.countQuery('SELECT count() From qsyd_FE__FileExplorerFile__c WHERE qsyd_FE__LinkedEntityId__c = \'' + recordId + '\'');
+            countDocumentLink = database.countQuery('SELECT count() From ContentDocumentLink WHERE IsDeleted = FALSE AND LinkedEntityId = \'' + recordId + '\'');
+            countFile = database.countQuery('SELECT count() From qsyd_FE__FileExplorerFile__c WHERE qsyd_FE__LinkedEntityId__c = \'' + recordId + '\'');
 
             return (countFile == countDocumentLink);
 
@@ -163,11 +163,11 @@ global with sharing class qsydFileExplorerController {
     }
 
     /**
-     * @description Synchronises a records existing content documents with file explorer files
+     * Synchronises a records existing content documents with file explorer files
      *
-     * @param recordId A content document link id
+     * @param recordId
      *
-     * @return A summary of synchronised file explorer files
+     * @return a summary of synchronised file explorer files
      */
     @AuraEnabled
     public static String syncFiles(String recordId) {
@@ -239,7 +239,7 @@ global with sharing class qsydFileExplorerController {
                 }
             }
 
-            if (Schema.SObjectType.qsyd_FE__FileExplorerFile__c.isDeletable()) {
+            if (Schema.sObjectType.qsyd_FE__FileExplorerFile__c.isDeletable()) {
                 accessDecision = Security.stripInaccessible(AccessType.CREATABLE, insertFileList);
                 INSERT accessDecision.getRecords();
                 DELETE deleteFileList;
@@ -255,9 +255,9 @@ global with sharing class qsydFileExplorerController {
     }
 
     /**
-     * @description True if called from a community context
+     * True if called from a community context
      *
-     * @return True if called from a community context, otherwise return false
+     * @return true if called from a community context, otherwise return false
      */
     @AuraEnabled
     public static Boolean isCommunity() {
@@ -269,21 +269,21 @@ global with sharing class qsydFileExplorerController {
     }
 
     /**
-     * @description Get the community prefix, if available
+     * Get the community prefix, if available
      *
-     * @return A community prefix, if available
+     * @return a community prefix, if available
      */
     @AuraEnabled
     public static String getCommunityPrefix() {
-        return !String.isBlank(Site.getPathPrefix()) ? Site.getPathPrefix().removeEndIgnoreCase('/s') : '';
+        return !String.IsBlank(Site.getPathPrefix()) ? Site.getPathPrefix().removeEndIgnoreCase('/s') : '';
     }
 
     /**
-     * @description Save either a file explorer file or folder
+     * Save either a file explorer file or folder
      *
-     * @param serializedItem Either a file explorer file or folder instance
+     * @param serializedItem
      *
-     * @return The file explorer item
+     * @return the file explorer item
      */
     @AuraEnabled
     public static String postItem(String serializedItem) {
@@ -303,9 +303,9 @@ global with sharing class qsydFileExplorerController {
     }
 
     /**
-     * @description Delete either a file explorer file or folder
+     * Delete either a file explorer file or folder
      *
-     * @param serializedItem Either a file explorer file or folder instance
+     * @param serializedItem
      */
     @AuraEnabled
     public static void deleteItem(String serializedItem) {
@@ -323,9 +323,9 @@ global with sharing class qsydFileExplorerController {
     }
 
     /**
-     * @description Retrieve the file explorer files and folder records for a given record
+     * Retrieve the file explorer files and folder records for a given record
      *
-     * @param recordId The record id to retrieve any associated file explorer items
+     * @param recordId
      *
      * @return File explorer files and folders
      */
@@ -346,7 +346,7 @@ global with sharing class qsydFileExplorerController {
     }
 
     /**
-     * @description Get a page of folder templates
+     * Get a page of folder templates
      *
      * @param filter
      * @param sortBy
@@ -362,7 +362,7 @@ global with sharing class qsydFileExplorerController {
     }
 
     /**
-     * @description Clone a folder template
+     * Clone a folder template
      *
      * @param templateId
      * @param entityId
