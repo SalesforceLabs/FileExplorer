@@ -4,32 +4,8 @@
  * @author : Paul Lucas, Jiun Ryu, Elly Zhu, Derrick Vuong
  **/
 global with sharing class qsydFileExplorerController {
-
-    private static String FILE_EXPLORER_PERMISSION = 'File_Explorer';
-
-    // Items for a specified linked entity
     static Map<String, List<qsyd_Item>> itemMap = new Map<String, List<qsyd_Item>>();
     static SObjectAccessDecision accessDecision;
-
-
-//    SELECT Id,
-//            qsyd_FE__Enable__c
-//            FROM qsyd_FE__Lightning_File_Explorer__mdt
-//            WHERE DeveloperName = 'Default'
-//    LIMIT 1
-
-
-    /**
-     * Check if the contextual caller has the "File_Explorer" permission set
-     *
-     * @return true if the contextual caller has the "File_Explorer" permission set, otherwise return false
-     */
-    @AuraEnabled
-    public static Boolean checkForPermission() {
-        Boolean hasLightningFileExplorerPermission = FeatureManagement.checkPermission(FILE_EXPLORER_PERMISSION);
-
-        return hasLightningFileExplorerPermission;
-    }
 
     /**
      * Return the latest content version for a given content document
@@ -217,6 +193,7 @@ global with sharing class qsydFileExplorerController {
 
                 for (ContentDocumentLink cdl : contentDocumentLinks) {
                     currentContentDocumentMap.put(cdl.ContentDocumentId, cdl);
+
                     if (!currentFileMap.containsKey(cdl.ContentDocumentId)) {
                         qsyd_FE__FileExplorerFile__c fe = new qsyd_FE__FileExplorerFile__c();
                         fe.qsyd_FE__ContentDocumentId__c = cdl.ContentDocumentId;
@@ -226,6 +203,7 @@ global with sharing class qsydFileExplorerController {
                         fe.qsyd_FE__FileExtension__c = cdl.ContentDocument.FileExtension;
                         fe.qsyd_FE__FileOwner__c = cdl.ContentDocument.OwnerId;
                         fe.qsyd_FE__ContentSize__c = cdl.ContentDocument.ContentSize;
+
                         insertFileList.add(fe);
                     }
                 }
@@ -241,8 +219,9 @@ global with sharing class qsydFileExplorerController {
 
             if (Schema.sObjectType.qsyd_FE__FileExplorerFile__c.isDeletable()) {
                 accessDecision = Security.stripInaccessible(AccessType.CREATABLE, insertFileList);
-                INSERT accessDecision.getRecords();
+
                 DELETE deleteFileList;
+                INSERT accessDecision.getRecords();
             }
 
             return 'insertFileList: ' + JSON.serialize(insertFileList) + 'deleteFileList: ' + JSON.serialize(deleteFileList);

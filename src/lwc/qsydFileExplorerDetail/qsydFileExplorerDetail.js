@@ -31,6 +31,7 @@ export default class QsydFileExplorerDetail extends NavigationMixin(
 	redraw = false;
 	showModal = false;
 	showPreview = true;
+	version = '';
 
 	constructor() {
 		super();

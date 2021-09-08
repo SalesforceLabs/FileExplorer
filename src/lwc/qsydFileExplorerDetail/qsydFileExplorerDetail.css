@@ -3,6 +3,13 @@
     line-height: normal !important;
 }
 
+.details-container .version {
+    font-size: smaller;
+    position: absolute;
+    right: 10px;
+    bottom: 5px;
+}
+
 .details-container .no-content {
     position: relative;
     top: 50%;
@@ -62,7 +69,8 @@
 }
 
 
-@media only screen and (max-width: 1024px) {}
+@media only screen and (max-width: 1024px) {
+}
 
 
 /*
@@ -90,8 +98,7 @@
 }
 
 
-
-@media (min-width: 768px) and (max-width: 1023px) and (max-device-width:1023px) and (orientation: portrait) {
+@media (min-width: 768px) and (max-width: 1023px) and (max-device-width: 1023px) and (orientation: portrait) {
     .details-content .previewImgContainer img {
         max-height: 150px !important;
     }

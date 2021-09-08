@@ -15,8 +15,8 @@ import {
 	interpolate,
 } from 'c/qsydFileExplorerCommon';
 
-import checkForPermission
-	from '@salesforce/apex/qsydFileExplorerController.checkForPermission';
+import showFileExplorer
+	from '@salesforce/apex/qsyd_FileExplorerCommon.showFileExplorer';
 import retrieveItemMap
 	from '@salesforce/apex/qsydFileExplorerController.retrieveItemMap';
 
@@ -39,6 +39,7 @@ export default class QsydFileExplorerCmp extends LightningElement {
 	CONSTANTS = CONSTANTS;
 	spinnerAltText = 'Loading';
 	showFileExplorer;
+	reasonWhyFileExplorerNotShown;
 	results;
 	typedownResults;
 	shadowItem;
@@ -128,8 +129,12 @@ export default class QsydFileExplorerCmp extends LightningElement {
 	}
 
 	initialise() {
-		checkForPermission().then(result => {
-			this.showFileExplorer = result;
+		showFileExplorer().then(result => {
+			console.log('>>>>> initialise.result');
+			console.log(result);
+
+			this.showFileExplorer = (result === '');
+			this.reasonWhyFileExplorerNotShown = result;
 
 			if (this.showFileExplorer) {
 				this.retrieveFileExplorerItemMap();
