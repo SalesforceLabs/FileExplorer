@@ -151,6 +151,8 @@ import DETAIL_LABELS__TYPE from '@salesforce/label/c.Detail_Labels_Type';
 
 import DETAIL_MESSAGES__SELECT_FILE
 	from '@salesforce/label/c.Detail_Messages_Select_File';
+import DETAIL_MESSAGES__VERSION
+	from '@salesforce/label/c.Detail_Messages_Version';
 
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 
@@ -347,6 +349,7 @@ const CONSTANTS = {
 
 	DETAIL_MESSAGES: {
 		SELECT_FILE: DETAIL_MESSAGES__SELECT_FILE,
+		VERSION: DETAIL_MESSAGES__VERSION,
 	},
 
 	SEARCH: {

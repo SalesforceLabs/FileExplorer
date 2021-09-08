@@ -337,6 +337,14 @@
         <value>Deleting this folder will move all child items to its parent folder. Are you sure you want to do this?</value>
     </labels>
     <labels>
+        <fullName>Action_Messages_File_Explorer_is_not_enabled</fullName>
+        <categories>Action Messages</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Messages - File Explorer is not enabled</shortDescription>
+        <value>In order to access the File Explorer, please ask your Administrator to enable the Lightning File Explorer in the Custom Metadata Settings record.</value>
+    </labels>
+    <labels>
         <fullName>Action_Messages_No_permission_set</fullName>
         <categories>Action Messages</categories>
         <language>en_US</language>

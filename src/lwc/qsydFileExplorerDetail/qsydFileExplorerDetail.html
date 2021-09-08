@@ -4,7 +4,7 @@
   @Author             : Elly Yijun Zhu
 -->
 <template>
-    <div class="details-container">
+    <div class="details-container slds-has-flexi-truncate">
         <template if:true={isFile}>
             <div class="slds-p-around_x-small">
                 <div class="details-header">
@@ -38,7 +38,7 @@
                         <div class="slds-col slds-size_1-of-1">
                             <div title="preview" class="slds-p-vertical_x-small slds-text-align_center">
                                 <div class={previewImageClass}>
-                                    <img src={previewImageSrc} onerror={handleImgError}/>
+                                    <img src={previewImageSrc} onerror={handleImgError} />
                                 </div>
                             </div>
                         </div>
@@ -165,5 +165,7 @@
                 <c-qsyd-message-panel type="preview" message={CONSTANTS.DETAIL_MESSAGES.SELECT_FILE}></c-qsyd-message-panel>
             </div>
         </template>
+
+        <span class="version">{CONSTANTS.DETAIL_MESSAGES.VERSION}</span>
     </div>
 </template>
