@@ -1,18 +1,28 @@
-/**      
-    Author:         Paul Lucas
-    Company:        Salesforce
-    Description:    qsyd_FolderTemplate
-    Date:           01-Aug-2020
-        
-    TODO:
+/*
+ * Copyright (c) 2020, salesforce.com, inc.
+ * All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause
+ * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ */
+
+/**
+ * Author:         Paul Lucas
+ * Company:        Salesforce
+ * Description:    qsyd_FolderTemplate
+ * Date:           01-Aug-2020
+ * <p/>
+ * TODO:
  */
 
 global inherited sharing class qsyd_FolderTemplate {
-    private List<qsyd_FE__FileExplorerFolderTemplate__c> template = new List<qsyd_FE__FileExplorerFolderTemplate__c>();
-    private List<qsyd_FE__FileExplorerFolder__c> templateFolders = new List<qsyd_FE__FileExplorerFolder__c>();
+    private List<FileExplorerFolderTemplate__c> template = new List<FileExplorerFolderTemplate__c>();
+    private List<FileExplorerFolder__c> templateFolders = new List<FileExplorerFolder__c>();
     private qsyd_PaginatedFolderTemplates paginatedTemplates = new qsyd_PaginatedFolderTemplates();
     private Map<String, String> templateFolderIdMap = new Map<String, String>();
 
+    /**
+     * The qsyd_FolderTemplate templateId property
+     */
     public String templateId {
         get {
             return templateId;
@@ -24,6 +34,9 @@ global inherited sharing class qsyd_FolderTemplate {
         }
     }
 
+    /**
+     * The qsyd_FolderTemplate entityId property
+     */
     public String entityId {
         get {
             return entityId;
@@ -35,6 +48,9 @@ global inherited sharing class qsyd_FolderTemplate {
         }
     }
 
+    /**
+     * The qsyd_FolderTemplate folderId property
+     */
     public String folderId {
         get {
             return folderId;
@@ -71,14 +87,14 @@ global inherited sharing class qsyd_FolderTemplate {
 
         this.template = [
                 SELECT Id
-                FROM qsyd_FE__FileExplorerFolderTemplate__c
+                FROM FileExplorerFolderTemplate__c
                 WHERE Id = :this.templateId
                 AND IsActive__c = TRUE
                 WITH SECURITY_ENFORCED
                 LIMIT 1
         ];
 
-        this.template = (List<qsyd_FE__FileExplorerFolderTemplate__c>) Security.stripInaccessible(AccessType.READABLE, this.template).getRecords();
+        this.template = (List<FileExplorerFolderTemplate__c>) Security.stripInaccessible(AccessType.READABLE, this.template).getRecords();
 
         if (this.template.isEmpty()) {
             throw new AuraHandledException(System.Label.Action_Error_Messages_Invalid_template);
@@ -95,19 +111,19 @@ global inherited sharing class qsyd_FolderTemplate {
     global qsyd_FolderTemplate rootFoldersDoNotExist() {
 
         Set<String> rootTemplateFolderNames = new Map<String, SObject>([
-                SELECT qsyd_FE__Label__c Id
-                FROM qsyd_FE__FileExplorerFolder__c
-                WHERE qsyd_FE__LinkedEntityId__c = :this.templateId
-                AND qsyd_FE__Folder__c = ''
-                GROUP BY qsyd_FE__Label__c
+                SELECT Label__c Id
+                FROM FileExplorerFolder__c
+                WHERE LinkedEntityId__c = :this.templateId
+                AND Folder__c = ''
+                GROUP BY Label__c
         ]).keySet();
 
         if ([
                 SELECT COUNT()
-                FROM qsyd_FE__FileExplorerFolder__c
-                WHERE qsyd_FE__Label__c IN :rootTemplateFolderNames
-                AND qsyd_FE__LinkedEntityId__c = :this.entityId
-                AND qsyd_FE__Folder__c = :this.folderId
+                FROM FileExplorerFolder__c
+                WHERE Label__c IN :rootTemplateFolderNames
+                AND LinkedEntityId__c = :this.entityId
+                AND Folder__c = :this.folderId
                 WITH SECURITY_ENFORCED
                 LIMIT 1
         ] > 0) {
@@ -126,22 +142,22 @@ global inherited sharing class qsyd_FolderTemplate {
 
         this.templateFolders = [
                 SELECT Id,
-                        qsyd_FE__Label__c,
-                        qsyd_FE__TemplateFolderId__c,
-                        qsyd_FE__LinkedEntityId__c,
-                        qsyd_FE__Folder__c
-                FROM qsyd_FE__FileExplorerFolder__c
-                WHERE qsyd_FE__LinkedEntityId__c = :this.templateId
+                        Label__c,
+                        TemplateFolderId__c,
+                        LinkedEntityId__c,
+                        Folder__c
+                FROM FileExplorerFolder__c
+                WHERE LinkedEntityId__c = :this.templateId
                 WITH SECURITY_ENFORCED
         ];
 
-        this.templateFolders = (List<qsyd_FE__FileExplorerFolder__c>) Security.stripInaccessible(AccessType.READABLE, this.templateFolders).getRecords();
+        this.templateFolders = (List<FileExplorerFolder__c>) Security.stripInaccessible(AccessType.READABLE, this.templateFolders).getRecords();
 
         // Reset references
-        for (qsyd_FE__FileExplorerFolder__c folder : this.templateFolders) {
-            folder.qsyd_FE__TemplateFolderId__c = folder.Id;
+        for (FileExplorerFolder__c folder : this.templateFolders) {
+            folder.TemplateFolderId__c = folder.Id;
             folder.Id = null;
-            folder.qsyd_FE__LinkedEntityId__c = this.entityId;
+            folder.LinkedEntityId__c = this.entityId;
         }
 
         try {
@@ -156,16 +172,16 @@ global inherited sharing class qsyd_FolderTemplate {
         }
 
         // Dictionary of folder ids
-        for (qsyd_FE__FileExplorerFolder__c folder : this.templateFolders) {
-            this.templateFolderIdMap.put(folder.qsyd_FE__TemplateFolderId__c, folder.Id);
+        for (FileExplorerFolder__c folder : this.templateFolders) {
+            this.templateFolderIdMap.put(folder.TemplateFolderId__c, folder.Id);
         }
 
         // Construct folder hierarchy
-        for (qsyd_FE__FileExplorerFolder__c folder : this.templateFolders) {
-            folder.qsyd_FE__Folder__c = String.isBlank(folder.qsyd_FE__Folder__c)
+        for (FileExplorerFolder__c folder : this.templateFolders) {
+            folder.Folder__c = String.isBlank(folder.Folder__c)
                     ? this.folderId
-                    : this.templateFolderIdMap.get(folder.qsyd_FE__Folder__c);
-            folder.qsyd_FE__TemplateFolderId__c = null;
+                    : this.templateFolderIdMap.get(folder.Folder__c);
+            folder.TemplateFolderId__c = null;
         }
 
         try {
@@ -199,12 +215,12 @@ global inherited sharing class qsyd_FolderTemplate {
         filter = !String.isBlank(filter.trim()) ? '\'%' + String.escapeSingleQuotes(filter) + '%\'' : '';
         sortBy = String.escapeSingleQuotes(sortBy);
 
-        String qSelect = 'SELECT Id, Name, qsyd_FE__Label__c, qsyd_FE__Description__c, LastModifiedDate';
+        String qSelect = 'SELECT Id, Name, Label__c, Description__c, LastModifiedDate';
         String qSelectCount = 'SELECT COUNT()';
-        String qFrom = ' FROM qsyd_FE__FileExplorerFolderTemplate__c';
-        String qWhere = ' WHERE qsyd_FE__IsActive__c = TRUE';
-        String qFilterLabel = !String.isBlank(filter) ? ' AND (qsyd_FE__Label__c LIKE ' : '';
-        String qFilterDescription = !String.isBlank(filter) ? ' OR qsyd_FE__Description__c LIKE ' : '';
+        String qFrom = ' FROM FileExplorerFolderTemplate__c';
+        String qWhere = ' WHERE IsActive__c = TRUE';
+        String qFilterLabel = !String.isBlank(filter) ? ' AND (Label__c LIKE ' : '';
+        String qFilterDescription = !String.isBlank(filter) ? ' OR Description__c LIKE ' : '';
         String qFilterEnd = !String.isBlank(filter) ? ' ) ' : '';
         String qWith = ' WITH SECURITY_ENFORCED';
         String qOrderBy = ' ORDER BY ';
@@ -221,7 +237,7 @@ global inherited sharing class qsyd_FolderTemplate {
         });
 
         try {
-            paginatedTemplates.records = (List<qsyd_FE__FileExplorerFolderTemplate__c>) Security.stripInaccessible(AccessType.READABLE, Database.Query(qRecords)).getRecords();
+            paginatedTemplates.records = (List<FileExplorerFolderTemplate__c>) Security.stripInaccessible(AccessType.READABLE, Database.Query(qRecords)).getRecords();
         } catch (Exception e) {
             System.debug('>>>>>> Error in retrieveList, executing query:');
             System.debug(qRecords);
@@ -246,9 +262,12 @@ global inherited sharing class qsyd_FolderTemplate {
         return paginatedTemplates;
     }
 
+    /**
+     * @description Represents a list of folder templates with current page and filters applied
+     */
     global class qsyd_PaginatedFolderTemplates {
         @AuraEnabled
-        public List<qsyd_FE__FileExplorerFolderTemplate__c> records;
+        public List<FileExplorerFolderTemplate__c> records;
 
         @AuraEnabled
         public Integer pageOffset;

@@ -47,7 +47,7 @@ global with sharing class qsydFileExplorerTest {
         INSERT cdl;
 
         //Create Folder Record
-        qsyd_FE__FileExplorerFolder__c qFolder = new qsyd_FE__FileExplorerFolder__c(qsyd_FE__LinkedEntityId__c = a.Id, qsyd_FE__Label__c = 'qFolder');
+        FileExplorerFolder__c qFolder = new FileExplorerFolder__c(LinkedEntityId__c = a.Id, Label__c = 'qFolder');
         INSERT qFolder;
 
         fileItem = new qsyd_File(
@@ -72,15 +72,15 @@ global with sharing class qsydFileExplorerTest {
         fileItem.convertToCanonical()
                 .save();
 
-        List<qsyd_FE__FileExplorerFile__c> qFiles = [
+        List<FileExplorerFile__c> qFiles = [
                 SELECT Id,
-                        qsyd_FE__ContentDocumentId__c,
-                        qsyd_FE__Folder__c,
-                        qsyd_FE__Label__c,
-                        qsyd_FE__LinkedEntityId__c,
-                        qsyd_FE__FileExtension__c,
-                        qsyd_FE__ContentSize__c
-                FROM qsyd_FE__FileExplorerFile__c
+                        ContentDocumentId__c,
+                        Folder__c,
+                        Label__c,
+                        LinkedEntityId__c,
+                        FileExtension__c,
+                        ContentSize__c
+                FROM FileExplorerFile__c
                 ORDER BY LastModifiedDate DESC
                 LIMIT 1
         ];
@@ -93,7 +93,7 @@ global with sharing class qsydFileExplorerTest {
 
     @IsTest
     private static void given_newFileItemList_when_convertedToCanonical_success() {
-        List<qsyd_FE__FileExplorerFile__c> canonicalFiles;
+        List<FileExplorerFile__c> canonicalFiles;
 
         setupTestData();
 
@@ -129,7 +129,7 @@ global with sharing class qsydFileExplorerTest {
 
     @IsTest
     private static void given_newFolderItemList_when_convertedToCanonical_success() {
-        List<qsyd_FE__FileExplorerFolder__c> canonicalFolders;
+        List<FileExplorerFolder__c> canonicalFolders;
 
         setupTestData();
 
@@ -140,9 +140,9 @@ global with sharing class qsydFileExplorerTest {
         });
 
         canonicalFolders = folderItemList
-        .retrieve(a.Id)
-        .convertToCanonical()
-        .getCanonicalList();
+                .retrieve(a.Id)
+                .convertToCanonical()
+                .getCanonicalList();
 
         Test.stopTest();
 

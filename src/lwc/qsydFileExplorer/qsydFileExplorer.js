@@ -119,6 +119,7 @@ export default class QsydFileExplorerCmp extends LightningElement {
 	}
 
 	errorCallback(error, stack) {
+
 		showToast(
 			this,
 			CONSTANTS.TOAST_MESSAGE_TYPES.ERROR,
