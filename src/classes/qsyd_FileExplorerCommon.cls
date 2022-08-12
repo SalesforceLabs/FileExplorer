@@ -8,7 +8,7 @@
  */
 
 global without sharing class qsyd_FileExplorerCommon {
-    private static String FILE_EXPLORER_PERMISSION = 'File_Explorer';
+    private static String FILE_EXPLORER_PERMISSION = 'qsyd_FE__File_Explorer';
     private static String FILE_EXPLORER_SETTINGS_QUALIFIEDAPINAME = 'qsyd_FE__Settings';
     private static String DEFAULT_ACTION_MESSAGES_FILE_EXPLORER_IS_NOT_ENABLED = 'In order to access the File Explorer, please ask your Administrator to enable the Lightning File Explorer in the Custom Metadata Settings record.';
     private static String DEFAULT_ACTION_MESSAGES_NO_PERMISSION_SET = 'In order to access the File Explorer, please ask your Administrator to assign the &lt;a href=&quot;/lightning/setup/PermSets/home&quot;&gt;File Explorer Permission Set&lt;/a&gt; to your user.';

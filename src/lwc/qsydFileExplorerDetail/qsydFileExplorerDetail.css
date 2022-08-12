@@ -10,6 +10,10 @@
     bottom: 5px;
 }
 
+.details-container .image-preview-title {
+    cursor: pointer;
+}
+
 .details-container .no-content {
     position: relative;
     top: 50%;
@@ -32,6 +36,7 @@
 .details-content .previewImgContainer {
     margin: auto;
     width: 100%;
+    cursor: pointer;
 }
 
 .details-content .previewImgBackground {

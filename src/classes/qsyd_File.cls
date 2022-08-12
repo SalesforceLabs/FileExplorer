@@ -83,11 +83,11 @@ global virtual inherited sharing class qsyd_File extends qsyd_Item implements qs
      * @return an instance of qsyd_File
      */
     global qsyd_File load(qsyd_Item item) {
-        this.id = item.id;
+        this.id = (Id) item.id;
         this.text = item.text;
-        this.folder = item.folder;
-        this.documentId = item.documentId;
-        this.entityId = item.entityId;
+        this.folder = (Id) item.folder;
+        this.documentId = (Id) item.documentId;
+        this.entityId = (Id) item.entityId;
         this.type = item.type;
         this.ext = item.ext;
         this.owner = item.owner;
