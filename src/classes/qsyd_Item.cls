@@ -77,10 +77,10 @@ global virtual class qsyd_Item {
      * @param children
      */
     global qsyd_Item(Id id, Id folder, String label, String entityId, List<qsyd_Item> children) {
-        this.id = id;
+        this.id = (Id) id;
         this.text = label;
         this.folder = folder;
-        this.entityId = entityId;
+        this.entityId = (Id) entityId;
 
         if (children != null && children.size() > 0) {
             this.children = children;

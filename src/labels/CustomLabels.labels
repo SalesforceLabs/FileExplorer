@@ -553,6 +553,14 @@
         <value>File preview</value>
     </labels>
     <labels>
+        <fullName>Detail_Messages_Version</fullName>
+        <categories>Detail Messages</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Detail Messages - Version</shortDescription>
+        <value>Summer 22 - v2.1</value>
+    </labels>
+    <labels>
         <fullName>Search_Category_Files</fullName>
         <categories>Search Category</categories>
         <language>en_US</language>

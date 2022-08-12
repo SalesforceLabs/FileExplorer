@@ -160,6 +160,13 @@ import {ShowToastEvent} from 'lightning/platformShowToastEvent';
  * Enumerations
  */
 const CONSTANTS = {
+	SYSTEM_ERRORS: {
+		NO_ACCESS_TO_APEX_CLASS: "You do not have access to the Apex class named 'qsyd_FileExplorerCommon'.",
+	},
+
+	USER_ERRORS: {
+		NO_ACCESS_TO_APEX_CLASS: ACTION_MESSAGES__NO_PERMISSION_SET,
+	},
 
 	FILE_EXPLORER_OBJECT_API_NAMES: {
 		FILE: 'qsyd_FE__FileExplorerFile__c',
@@ -565,27 +572,25 @@ const clone = (o) => {
  * @param {errorResponse|errorResponse[]} errors
  * @return {String[]} Error messages
  */
-const reduceErrors = (errors) => {
+const reduceErrors = (errors, translate = true) => {
 	if (!Array.isArray(errors)) {
 		errors = [errors];
 	}
 
-	return errors.filter(Boolean).
-		map((error) => {
-			if (Array.isArray(error.body)) {
-				return error.body.map((b) => b.message);
-			} else if (error.body && isString(error.body.message)) {
-				return error.body.message;
-			} else if (isString(error.message)) {
-				return error.message;
-			}
+	// TODO: Cycle through SYSTEM_ERRORS and find corresponding USER_ERRORS
+	return errors.filter(Boolean).map((error) => {
+		if (Array.isArray(error.body)) {
+			return error.body.map((b) => b.message.replace(CONSTANTS.SYSTEM_ERRORS.NO_ACCESS_TO_APEX_CLASS, CONSTANTS.USER_ERRORS.NO_ACCESS_TO_APEX_CLASS));
+		} else if (error.body && isString(error.body.message)) {
+			return error.body.message.replace(CONSTANTS.SYSTEM_ERRORS.NO_ACCESS_TO_APEX_CLASS, CONSTANTS.USER_ERRORS.NO_ACCESS_TO_APEX_CLASS);
+		} else if (isString(error.message)) {
+			return error.message.replace(CONSTANTS.SYSTEM_ERRORS.NO_ACCESS_TO_APEX_CLASS, CONSTANTS.USER_ERRORS.NO_ACCESS_TO_APEX_CLASS);
+		}
 
-			// Default to statusText property
-			return error.statusText;
-		}).
-		reduce((prev, curr) => prev.concat(curr.replace(/(<([^>]+)>)/gi, '')),
-			[]).
-		filter(Boolean);
+		// Default to statusText property
+		return error.statusText;
+	}).reduce((prev, curr) => prev.concat(curr.replace(/(<([^>]+)>)/gi, '')),
+		[]).filter(Boolean);
 };
 
 /**

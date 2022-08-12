@@ -129,6 +129,10 @@ global with sharing class qsydFileExplorerController {
             countDocumentLink = database.countQuery('SELECT count() From ContentDocumentLink WHERE IsDeleted = FALSE AND LinkedEntityId = \'' + recordId + '\'');
             countFile = database.countQuery('SELECT count() From qsyd_FE__FileExplorerFile__c WHERE qsyd_FE__LinkedEntityId__c = \'' + recordId + '\'');
 
+
+            System.debug('>>>>> qsydFileExplorerController.checkSyncStatus.countDocumentLink: ' + countDocumentLink);
+            System.debug('>>>>> qsydFileExplorerController.checkSyncStatus.countFile: ' + countFile);
+
             return (countFile == countDocumentLink);
 
         } catch (Exception e) {
@@ -310,14 +314,15 @@ global with sharing class qsydFileExplorerController {
      */
     @AuraEnabled
     public static String retrieveItemMap(String recordId) {
+        Id caseInsensitiveRecordId = recordId;
         qsyd_FileList files = new qsyd_FileList();
         qsyd_FolderList folders = new qsyd_FolderList();
 
-        itemMap.put(qsyd_File.FILES_KEY, files.retrieve(recordId)
+        itemMap.put(qsyd_File.FILES_KEY, files.retrieve(caseInsensitiveRecordId)
                 .convertToLogical()
                 .getLogicalList());
 
-        itemMap.put(qsyd_Folder.FOLDERS_KEY, folders.retrieve(recordId)
+        itemMap.put(qsyd_Folder.FOLDERS_KEY, folders.retrieve(caseInsensitiveRecordId)
                 .convertToLogical()
                 .getLogicalList());
 

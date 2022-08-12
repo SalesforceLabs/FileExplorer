@@ -30,7 +30,7 @@ public with sharing class qsyd_ContentDocumentTriggerHandler extends TriggerHand
     }
     public override void afterUpdate() {
         // If Lightning File Explorer has not been enabled or the user has not been assigned the file explorer permissionset, return
-        if (!qsyd_FileExplorerCommon.isFileExplorerEnabled() && !qsyd_FileExplorerCommon.checkForPermission()) {
+        if (!qsyd_FileExplorerCommon.isFileExplorerEnabled() || !qsyd_FileExplorerCommon.checkForPermission()) {
             return;
         }
 
@@ -128,7 +128,7 @@ public with sharing class qsyd_ContentDocumentTriggerHandler extends TriggerHand
         Set<Id> contentDocumentIds = (new Map<Id, SObject>(this.contentDocumentOldList)).keySet();
 
         // If Lightning File Explorer has not been enabled or the user has not been assigned the file explorer permissionset, return
-        if (!qsyd_FileExplorerCommon.isFileExplorerEnabled() && !qsyd_FileExplorerCommon.checkForPermission()) {
+        if (!qsyd_FileExplorerCommon.isFileExplorerEnabled() || !qsyd_FileExplorerCommon.checkForPermission()) {
             return;
         }
 
