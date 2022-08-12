@@ -1,11 +1,3 @@
-/*
- * Copyright (c) 2020, salesforce.com, inc.
- * All rights reserved.
- * SPDX-License-Identifier: BSD-3-Clause
- * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
- */
-
-
 import {LightningElement, api, track, wire} from 'lwc';
 import {NavigationMixin} from 'lightning/navigation';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
@@ -32,13 +24,14 @@ export default class QsydFileExplorerDetail extends NavigationMixin(
 	_tagInput;
 	_tags;
 	_modalTags;
-	_newtags;
+	_newTags;
 
 	CONSTANTS = CONSTANTS;
 	currentPagePrefix = '';
 	redraw = false;
 	showModal = false;
 	showPreview = true;
+	version = '';
 
 	constructor() {
 		super();
@@ -65,11 +58,11 @@ export default class QsydFileExplorerDetail extends NavigationMixin(
 
 	}
 
-	get _modalTags() {
+	get modalTags() {
 		return this._modalTags;
 	}
 
-	set _modalTags(value) {
+	set modalTags(value) {
 		this._modalTags = value;
 	}
 
@@ -148,7 +141,7 @@ export default class QsydFileExplorerDetail extends NavigationMixin(
 	}
 
 	get modalTagsJson() {
-		return JSON.stringify(this._modalTags);
+		return JSON.stringify(this.modalTags);
 	}
 
 	get previewImageClass() {
@@ -213,7 +206,7 @@ export default class QsydFileExplorerDetail extends NavigationMixin(
 
 	initModalTags() {
 		if (this._tags) {
-			this._modalTags = (this._tags.map(tag => ({
+			this.modalTags = (this._tags.map(tag => ({
 				name: tag,
 				label: tag,
 			})));
@@ -253,13 +246,13 @@ export default class QsydFileExplorerDetail extends NavigationMixin(
 			return;
 		}
 		this.redraw = false;
-		if (!this._modalTags) {
+		if (!this.modalTags) {
 			this.initModalTags();
 		}
 		this._tagInput = this._tagInput.replace(/;/g, '');
-		if ((this._modalTags.some(
+		if ((this.modalTags.some(
 			modalTag => modalTag.name === this._tagInput)) == false) {
-			this._modalTags.push({
+			this.modalTags.push({
 				name: this._tagInput,
 				label: this._tagInput,
 			});
@@ -273,7 +266,7 @@ export default class QsydFileExplorerDetail extends NavigationMixin(
 	handleTagRemove(event) {
 		this.redraw = false;
 		const name = event.detail.item.name;
-		this._modalTags = this._modalTags.filter(function (value, index, arr) {
+		this.modalTags = this.modalTags.filter(function (value, index, arr) {
 			return (value.name != name);
 		});
 		setTimeout(() => {
@@ -282,9 +275,9 @@ export default class QsydFileExplorerDetail extends NavigationMixin(
 	}
 
 	handleTagsSave() {
-		this._newtags = this._modalTags.map(x => x.name);
+		this._newTags = this.modalTags.map(x => x.name);
 		let fileId = this._item.id;
-		let tags = this._newtags.sort().join(';') || '';
+		let tags = this._newTags.sort().join(';') || '';
 		let oldTags = this._tags.sort().join(';') || '';
 		if (tags == oldTags) {
 			this.handleTagsCancel();
@@ -300,7 +293,7 @@ export default class QsydFileExplorerDetail extends NavigationMixin(
 		}).then(result => {
 			let res = JSON.parse(result);
 			if (res) {
-				this._tags = [...this._newtags];
+				this._tags = [...this._newTags];
 
 				showToast(
 					this,
@@ -342,7 +335,7 @@ export default class QsydFileExplorerDetail extends NavigationMixin(
 	handleTagsCancel() {
 
 		this._tagInput = '';
-		this._newtags = [];
+		this._newTags = [];
 		this.hide();
 		this.initModalTags();
 	}
@@ -368,5 +361,13 @@ export default class QsydFileExplorerDetail extends NavigationMixin(
 				actionName: this.CONSTANTS.NAVIGATION_ACTIONS.VIEW,
 			},
 		});
+	}
+
+	previewImageClick(event) {
+		this.navigateToFilePreviewPage();
+	}
+
+	previewImageTitleClick(event) {
+		this.navigateToFileRecordPage();
 	}
 }

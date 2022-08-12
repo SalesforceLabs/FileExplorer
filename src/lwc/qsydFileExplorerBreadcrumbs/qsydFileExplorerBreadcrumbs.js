@@ -1,15 +1,5 @@
-/*
- * Copyright (c) 2020, salesforce.com, inc.
- * All rights reserved.
- * SPDX-License-Identifier: BSD-3-Clause
- * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
- */
-
-
 import {LightningElement, api} from 'lwc';
-import {
-	CONSTANTS
-} from 'c/qsydFileExplorerCommon';
+import {CONSTANTS, item} from 'c/qsydFileExplorerCommon';
 
 export default class QsydFileExplorerBreadcrumbs extends LightningElement {
 	/**
@@ -29,9 +19,7 @@ export default class QsydFileExplorerBreadcrumbs extends LightningElement {
 	get breadcrumbsLength() {
 		if (this.breadcrumbs) {
 			return this.breadcrumbs.reduce(
-				function (sum, item) {
-					return sum + item.text.length;
-				}, 0);
+				function(sum, item) { return sum + item.text.length; }, 0);
 		}
 		return 0;
 	}

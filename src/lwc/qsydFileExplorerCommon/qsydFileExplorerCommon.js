@@ -1,11 +1,3 @@
-/*
- * Copyright (c) 2020, salesforce.com, inc.
- * All rights reserved.
- * SPDX-License-Identifier: BSD-3-Clause
- * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
- */
-
-
 /**
      Author:         Paul Lucas
      Company:        Salesforce
@@ -159,6 +151,8 @@ import DETAIL_LABELS__TYPE from '@salesforce/label/c.Detail_Labels_Type';
 
 import DETAIL_MESSAGES__SELECT_FILE
 	from '@salesforce/label/c.Detail_Messages_Select_File';
+import DETAIL_MESSAGES__VERSION
+	from '@salesforce/label/c.Detail_Messages_Version';
 
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 
@@ -166,6 +160,13 @@ import {ShowToastEvent} from 'lightning/platformShowToastEvent';
  * Enumerations
  */
 const CONSTANTS = {
+	SYSTEM_ERRORS: {
+		NO_ACCESS_TO_APEX_CLASS: "You do not have access to the Apex class named 'qsyd_FileExplorerCommon'.",
+	},
+
+	USER_ERRORS: {
+		NO_ACCESS_TO_APEX_CLASS: ACTION_MESSAGES__NO_PERMISSION_SET,
+	},
 
 	FILE_EXPLORER_OBJECT_API_NAMES: {
 		FILE: 'FileExplorerFile__c',
@@ -355,6 +356,7 @@ const CONSTANTS = {
 
 	DETAIL_MESSAGES: {
 		SELECT_FILE: DETAIL_MESSAGES__SELECT_FILE,
+		VERSION: DETAIL_MESSAGES__VERSION,
 	},
 
 	SEARCH: {
@@ -570,18 +572,19 @@ const clone = (o) => {
  * @param {errorResponse|errorResponse[]} errors
  * @return {String[]} Error messages
  */
-const reduceErrors = (errors) => {
+const reduceErrors = (errors, translate = true) => {
 	if (!Array.isArray(errors)) {
 		errors = [errors];
 	}
 
+	// TODO: Cycle through SYSTEM_ERRORS and find corresponding USER_ERRORS
 	return errors.filter(Boolean).map((error) => {
 		if (Array.isArray(error.body)) {
-			return error.body.map((b) => b.message);
+			return error.body.map((b) => b.message.replace(CONSTANTS.SYSTEM_ERRORS.NO_ACCESS_TO_APEX_CLASS, CONSTANTS.USER_ERRORS.NO_ACCESS_TO_APEX_CLASS));
 		} else if (error.body && isString(error.body.message)) {
-			return error.body.message;
+			return error.body.message.replace(CONSTANTS.SYSTEM_ERRORS.NO_ACCESS_TO_APEX_CLASS, CONSTANTS.USER_ERRORS.NO_ACCESS_TO_APEX_CLASS);
 		} else if (isString(error.message)) {
-			return error.message;
+			return error.message.replace(CONSTANTS.SYSTEM_ERRORS.NO_ACCESS_TO_APEX_CLASS, CONSTANTS.USER_ERRORS.NO_ACCESS_TO_APEX_CLASS);
 		}
 
 		// Default to statusText property

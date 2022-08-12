@@ -1,14 +1,17 @@
-/*
- * Copyright (c) 2020, salesforce.com, inc.
- * All rights reserved.
- * SPDX-License-Identifier: BSD-3-Clause
- * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
- */
-
-
 .details-container .slds-button_icon-container-more,
 .details-container .slds-button--icon-container-more {
     line-height: normal !important;
+}
+
+.details-container .version {
+    font-size: smaller;
+    position: absolute;
+    right: 10px;
+    bottom: 5px;
+}
+
+.details-container .image-preview-title {
+    cursor: pointer;
 }
 
 .details-container .no-content {
@@ -33,6 +36,7 @@
 .details-content .previewImgContainer {
     margin: auto;
     width: 100%;
+    cursor: pointer;
 }
 
 .details-content .previewImgBackground {

@@ -45,7 +45,7 @@
         <categories>Action Error Messages</categories>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Action Error Messages - Move folder descendant</shortDescription>
+        <shortDescription>Action Error Messages -	Move folder descendant</shortDescription>
         <value>You cannot move a folder that is part of its descendant path</value>
     </labels>
     <labels>
@@ -329,6 +329,14 @@
         <value>Deleting this folder will move all child items to its parent folder. Are you sure you want to do this?</value>
     </labels>
     <labels>
+        <fullName>Action_Messages_File_Explorer_is_not_enabled</fullName>
+        <categories>Action Messages</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Messages - File Explorer is not enabled</shortDescription>
+        <value>In order to access the File Explorer, please ask your Administrator to enable the Lightning File Explorer in the Custom Metadata Settings record.</value>
+    </labels>
+    <labels>
         <fullName>Action_Messages_No_permission_set</fullName>
         <categories>Action Messages</categories>
         <language>en_US</language>
@@ -535,6 +543,14 @@
         <protected>true</protected>
         <shortDescription>Detail Messages - Select File</shortDescription>
         <value>File preview</value>
+    </labels>
+    <labels>
+        <fullName>Detail_Messages_Version</fullName>
+        <categories>Detail Messages</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Detail Messages - Version</shortDescription>
+        <value>Summer 22 - v2.1</value>
     </labels>
     <labels>
         <fullName>Search_Category_Files</fullName>

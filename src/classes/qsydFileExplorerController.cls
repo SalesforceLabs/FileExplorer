@@ -12,27 +12,11 @@
 * @author              Paul Lucas, Jiun Ryu, Elly Zhu, Derrick Vuong
 **/
 global with sharing class qsydFileExplorerController {
-
-    private static String FILE_EXPLORER_PERMISSION = 'File_Explorer';
-
-    // Items for a specified linked entity
     static Map<String, List<qsyd_Item>> itemMap = new Map<String, List<qsyd_Item>>();
     static SObjectAccessDecision accessDecision;
 
     /**
-     * @description Check if the contextual caller has the "File_Explorer" permission set
-     *
-     * @return True if the contextual caller has the "File_Explorer" permission set, otherwise return false
-     */
-    @AuraEnabled
-    public static Boolean checkForPermission() {
-        Boolean hasLightningFileExplorerPermission = FeatureManagement.checkPermission(FILE_EXPLORER_PERMISSION);
-
-        return hasLightningFileExplorerPermission;
-    }
-
-    /**
-     * @description Return the latest content version for a given content document
+     * Return the latest content version for a given content document
      *
      * @param contentDocumentId
      *
@@ -106,7 +90,7 @@ global with sharing class qsydFileExplorerController {
      * @param fileId A file explorer file id
      * @param tags A comma delimited list of descriptor tags
      *
-     * @return The updated list of tags
+     * @return the updated tags
      */
     @AuraEnabled
     public static String updateTags(String fileId, String tags) {
@@ -143,7 +127,7 @@ global with sharing class qsydFileExplorerController {
      *
      * @param recordId The id of the contextual record associated to the files
      *
-     * @return True if synchronisation is required, otherwise return false
+     * @return true if synchronisation is required, otherwise return false
      */
     @AuraEnabled
     public static Boolean checkSyncStatus(String recordId) {
@@ -167,7 +151,7 @@ global with sharing class qsydFileExplorerController {
      *
      * @param recordId A content document link id
      *
-     * @return A summary of synchronised file explorer files
+     * @return a summary of synchronised file explorer files
      */
     @AuraEnabled
     public static String syncFiles(String recordId) {
@@ -217,6 +201,7 @@ global with sharing class qsydFileExplorerController {
 
                 for (ContentDocumentLink cdl : contentDocumentLinks) {
                     currentContentDocumentMap.put(cdl.ContentDocumentId, cdl);
+
                     if (!currentFileMap.containsKey(cdl.ContentDocumentId)) {
                         FileExplorerFile__c fe = new FileExplorerFile__c();
                         fe.ContentDocumentId__c = cdl.ContentDocumentId;
@@ -241,8 +226,9 @@ global with sharing class qsydFileExplorerController {
 
             if (Schema.SObjectType.FileExplorerFile__c.isDeletable()) {
                 accessDecision = Security.stripInaccessible(AccessType.CREATABLE, insertFileList);
-                INSERT accessDecision.getRecords();
+
                 DELETE deleteFileList;
+                INSERT accessDecision.getRecords();
             }
 
             return 'insertFileList: ' + JSON.serialize(insertFileList) + 'deleteFileList: ' + JSON.serialize(deleteFileList);
@@ -257,7 +243,7 @@ global with sharing class qsydFileExplorerController {
     /**
      * @description True if called from a community context
      *
-     * @return True if called from a community context, otherwise return false
+     * @return true if called from a community context, otherwise return false
      */
     @AuraEnabled
     public static Boolean isCommunity() {
@@ -271,7 +257,7 @@ global with sharing class qsydFileExplorerController {
     /**
      * @description Get the community prefix, if available
      *
-     * @return A community prefix, if available
+     * @return a community prefix, if available
      */
     @AuraEnabled
     public static String getCommunityPrefix() {
@@ -283,7 +269,7 @@ global with sharing class qsydFileExplorerController {
      *
      * @param serializedItem Either a file explorer file or folder instance
      *
-     * @return The file explorer item
+     * @return the file explorer item
      */
     @AuraEnabled
     public static String postItem(String serializedItem) {
@@ -331,14 +317,15 @@ global with sharing class qsydFileExplorerController {
      */
     @AuraEnabled
     public static String retrieveItemMap(String recordId) {
+        Id caseInsensitiveRecordId = recordId;
         qsyd_FileList files = new qsyd_FileList();
         qsyd_FolderList folders = new qsyd_FolderList();
 
-        itemMap.put(qsyd_File.FILES_KEY, files.retrieve(recordId)
+        itemMap.put(qsyd_File.FILES_KEY, files.retrieve(caseInsensitiveRecordId)
                 .convertToLogical()
                 .getLogicalList());
 
-        itemMap.put(qsyd_Folder.FOLDERS_KEY, folders.retrieve(recordId)
+        itemMap.put(qsyd_Folder.FOLDERS_KEY, folders.retrieve(caseInsensitiveRecordId)
                 .convertToLogical()
                 .getLogicalList());
 

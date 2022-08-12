@@ -7,6 +7,7 @@
         <members>TriggerHandler_Test</members>
         <members>qsydFileExplorerController</members>
         <members>qsydFileExplorerControllerTest</members>
+        <members>qsydFileExplorerTest</members>
         <members>qsyd_ContentDocumentTriggerHandler</members>
         <members>qsyd_ContentDocumentTriggerHandlerTest</members>
         <members>qsyd_File</members>
@@ -166,6 +167,7 @@
         <name>Layout</name>
     </types>
     <types>
+        <members>qsydAlert</members>
         <members>qsydFileExplorer</members>
         <members>qsydFileExplorerActions</members>
         <members>qsydFileExplorerBreadcrumbs</members>
@@ -178,6 +180,7 @@
         <members>qsydFileExplorerSearch</members>
         <members>qsydFileExplorerTemplateList</members>
         <members>qsydFileExplorerTree</members>
+        <members>qsydModal</members>
         <members>qsydMessagePanel</members>
         <name>LightningComponentBundle</name>
     </types>
@@ -196,7 +199,10 @@
         <members>jquery_350</members>
         <members>jstree339</members>
         <members>jstree_339</members>
+        <members>jstree_339_min</members>
+        <members>pdf_icon</members>
         <members>qsyd_Common</members>
+        <members>qsyd_Mockups</members>
         <name>StaticResource</name>
     </types>
     <version>51.0</version>

@@ -5,15 +5,14 @@
  * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-
 /**
-   @author         Paul Lucas
-   @company        Salesforce
-   @description    qsyd_FolderTemplate
-   @date           26-Aug-2020
-
-   TODO:
-*/
+ * Author:         Paul Lucas
+ * Company:        Salesforce
+ * Description:    qsyd_FolderTemplate
+ * Date:           01-Aug-2020
+ * <p/>
+ * TODO:
+ */
 
 global inherited sharing class qsyd_FolderTemplate {
     private List<FileExplorerFolderTemplate__c> template = new List<FileExplorerFolderTemplate__c>();
@@ -22,42 +21,42 @@ global inherited sharing class qsyd_FolderTemplate {
     private Map<String, String> templateFolderIdMap = new Map<String, String>();
 
     /**
-     * @description The qsyd_FolderTemplate templateId property
+     * The qsyd_FolderTemplate templateId property
      */
     public String templateId {
         get {
             return templateId;
         }
         set {
-            templateId = String.isBlank(value) || !(value.trim() instanceof Id)
+            templateId = String.isBlank(value) || !(value.trim() instanceOf Id)
                     ? null
                     : String.escapeSingleQuotes(value.trim());
         }
     }
 
     /**
-     * @description The qsyd_FolderTemplate entityId property
+     * The qsyd_FolderTemplate entityId property
      */
     public String entityId {
         get {
             return entityId;
         }
         set {
-            entityId = String.isBlank(value) || !(value.trim() instanceof Id)
+            entityId = String.isBlank(value) || !(value.trim() instanceOf Id)
                     ? null
                     : String.escapeSingleQuotes(value.trim());
         }
     }
 
     /**
-     * @description The qsyd_FolderTemplate folderId property
+     * The qsyd_FolderTemplate folderId property
      */
     public String folderId {
         get {
             return folderId;
         }
         set {
-            folderId = String.isBlank(value) || !(value.trim() instanceof Id)
+            folderId = String.isBlank(value) || !(value.trim() instanceOf Id)
                     ? null
                     : String.escapeSingleQuotes(value.trim());
         }
@@ -67,7 +66,7 @@ global inherited sharing class qsyd_FolderTemplate {
     }
 
     /**
-     * @description Constructor
+     * Constructor
      *
      * @param templateId
      * @param entityId
@@ -80,9 +79,9 @@ global inherited sharing class qsyd_FolderTemplate {
     }
 
     /**
-     * @description Checks that the File Explorer Folder Template id is valid
+     * Checks that the File Explorer Folder Template id is valid
      *
-     * @return A qsyd_FolderTemplate instance
+     * @return an instance of qsyd_FolderTemplate
      */
     global qsyd_FolderTemplate isValid() {
 
@@ -105,9 +104,9 @@ global inherited sharing class qsyd_FolderTemplate {
     }
 
     /**
-     * @description Checks that duplicate (same label) File Explorer Folder records do not exist
+     * Checks that duplicate (same label) File Explorer Folder records do not exist
      *
-     * @return A qsyd_FolderTemplate instance
+     * @return an instance of qsyd_FolderTemplate
      */
     global qsyd_FolderTemplate rootFoldersDoNotExist() {
 
@@ -135,9 +134,9 @@ global inherited sharing class qsyd_FolderTemplate {
     }
 
     /**
-     * @description Generates a shallow clone of a folder template for a given entityId
+     * Generates a shallow clone of a folder template for a given entityId
      *
-     * @return A qsyd_FolderTemplate instance
+     * @return an instance of qsyd_FolderTemplate
      */
     global qsyd_FolderTemplate generate() {
 
@@ -165,10 +164,10 @@ global inherited sharing class qsyd_FolderTemplate {
             this.templateFolders = Security.stripInaccessible(AccessType.CREATABLE, this.templateFolders).getRecords();
             INSERT this.templateFolders;
         } catch (Exception e) {
-            System.debug(LoggingLevel.INFO, '>>>>> Error in cloneFolders, insert template folders: ');
+            System.debug('>>>>> Error in cloneFolders, insert template folders: ');
             System.debug(LoggingLevel.ERROR, e.getMessage());
             System.debug(LoggingLevel.ERROR, e.getStackTraceString());
-            System.debug(LoggingLevel.DEBUG, JSON.serializePretty(this.templateFolders));
+            System.debug(JSON.serializePretty(this.templateFolders));
             throw new AuraHandledException(e.getMessage());
         }
 
@@ -188,10 +187,10 @@ global inherited sharing class qsyd_FolderTemplate {
         try {
             UPDATE Security.stripInaccessible(AccessType.UPDATABLE, this.templateFolders).getRecords();
         } catch (Exception e) {
-            System.debug(LoggingLevel.INFO, '>>>>> Error in cloneFolders, updating template folders: ');
+            System.debug('>>>>> Error in cloneFolders, updating template folders: ');
             System.debug(LoggingLevel.ERROR, e.getMessage());
             System.debug(LoggingLevel.ERROR, e.getStackTraceString());
-            System.debug(LoggingLevel.DEBUG, JSON.serializePretty(this.templateFolders));
+            System.debug(JSON.serializePretty(this.templateFolders));
             throw new AuraHandledException(e.getMessage());
         }
 
@@ -199,14 +198,14 @@ global inherited sharing class qsyd_FolderTemplate {
     }
 
     /**
-     * @description Returns a page of File Explorer Folder Template records based on an offset, filter and sort conditions. Also returns the next expected offset
+     * Returns a page of File Explorer Folder Template records based on an offset, filter and sort conditions. Also returns the next expected offset
      *
      * @param filter
      * @param sortBy
      * @param pageSize
      * @param pageOffset
      *
-     * @return A qsyd_PaginatedFolderTemplates instance
+     * @return an instance of qsyd_PaginatedFolderTemplates
      */
     global qsyd_PaginatedFolderTemplates retrieveList(String filter, String sortBy, Integer pageSize, Integer pageOffset) {
         Integer nextPageOffset = pageOffset + pageSize;
@@ -238,10 +237,10 @@ global inherited sharing class qsyd_FolderTemplate {
         });
 
         try {
-            paginatedTemplates.records = (List<FileExplorerFolderTemplate__c>) Security.stripInaccessible(AccessType.READABLE, Database.query(qRecords)).getRecords();
+            paginatedTemplates.records = (List<FileExplorerFolderTemplate__c>) Security.stripInaccessible(AccessType.READABLE, Database.Query(qRecords)).getRecords();
         } catch (Exception e) {
-            System.debug(LoggingLevel.INFO, '>>>>>> Error in retrieveList, executing query:');
-            System.debug(LoggingLevel.DEBUG, qRecords);
+            System.debug('>>>>>> Error in retrieveList, executing query:');
+            System.debug(qRecords);
             System.debug(LoggingLevel.ERROR, e.getMessage());
             System.debug(LoggingLevel.ERROR, e.getStackTraceString());
             throw new AuraHandledException('Error executing: ' + qRecords);
@@ -253,8 +252,8 @@ global inherited sharing class qsyd_FolderTemplate {
                     ? nextPageOffset
                     : -1;
         } catch (Exception e) {
-            System.debug(LoggingLevel.INFO, '>>>>>> Error in retrieveList, executing query:');
-            System.debug(LoggingLevel.DEBUG, qCount);
+            System.debug('>>>>>> Error in retrieveList, executing query:');
+            System.debug(qCount);
             System.debug(LoggingLevel.ERROR, e.getMessage());
             System.debug(LoggingLevel.ERROR, e.getStackTraceString());
             throw new AuraHandledException('Error executing: ' + qCount);
