@@ -5,18 +5,18 @@
  * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-
 /**
-    @author         Paul Lucas
-    @company        Salesforce
-    @description    qsyd_File
-    @date           20-Apr-2020
+    Author:         Paul Lucas
+    Company:        Salesforce
+    Description:    qsyd_File
+    Date:           20-Apr-2020
 
-    History
+    History:
     When           Who                 What
 
     TODO:
  */
+
 global virtual inherited sharing class qsyd_File extends qsyd_Item implements qsyd_IItem {
     public static final String FILES_KEY = 'files';
     public static final String SITE_PATH_PREFIX = !String.isBlank(Site.getPathPrefix()) ? Site.getPathPrefix() : '';
@@ -92,11 +92,11 @@ global virtual inherited sharing class qsyd_File extends qsyd_Item implements qs
      * @return A qsyd_File instance
      */
     global qsyd_File load(qsyd_Item item) {
-        this.id = item.id;
+        this.id = (Id) item.id;
         this.text = item.text;
-        this.folder = item.folder;
-        this.documentId = item.documentId;
-        this.entityId = item.entityId;
+        this.folder = (Id) item.folder;
+        this.documentId = (Id) item.documentId;
+        this.entityId = (Id) item.entityId;
         this.type = item.type;
         this.ext = item.ext;
         this.owner = item.owner;

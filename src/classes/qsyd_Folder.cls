@@ -1,16 +1,8 @@
-/*
- * Copyright (c) 2020, salesforce.com, inc.
- * All rights reserved.
- * SPDX-License-Identifier: BSD-3-Clause
- * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
- */
-
-
- /**
-    @author         Paul Lucas
-    @company        Salesforce
-    @description    qsyd_Folder
-    @date           20-Apr-2020
+/**      
+    Author:         Paul Lucas
+    Company:        Salesforce
+    Description:    qsyd_Folder
+    Date:           21-Apr-2020
 
     History:
     When           Who                 What
@@ -19,18 +11,19 @@
  */
 
 global virtual inherited sharing class qsyd_Folder extends qsyd_Item implements qsyd_IItem {
+
     public static final String FOLDERS_KEY = 'folders';
 
     private FileExplorerFolder__c fileExplorerFolder;
 
     /**
-     * @description Constructor
+     * Constructor
      */
     global qsyd_Folder() {
     }
 
     /**
-     * @description Constructor
+     * Constructor
      *
      * @param id
      * @param folder
@@ -42,7 +35,7 @@ global virtual inherited sharing class qsyd_Folder extends qsyd_Item implements 
     }
 
     /**
-     * @description Constructor
+     * Constructor
      *
      * @param id
      * @param folder
@@ -55,25 +48,25 @@ global virtual inherited sharing class qsyd_Folder extends qsyd_Item implements 
     }
 
     /**
-     * @description Populates an instance of qsyd_Folder
+     * Populates an instance of qsyd_Folder
      *
      * @param item
      *
      * @return an instance of qsyd_Folder
      */
     global qsyd_Folder load(qsyd_Item item) {
-        this.id = item.id;
+        this.id = (Id) item.id;
         this.text = item.text.trim();
         this.folder = item.folder;
-        this.entityId = item.entityId;
+        this.entityId = (Id) item.entityId;
 
         return this;
     }
 
     /**
-     * @description Converts from qsyd_Folder to File Explorer Folder
+     * Converts from qsyd_Folder to File Explorer Folder
      *
-     * @return A qsyd_Folder instance
+     * @return an instance of qsyd_Folder
      */
     global qsyd_Folder convertToCanonical() {
         this.fileExplorerFolder = new FileExplorerFolder__c(Id = this.id, Label__c = this.text, Folder__c = this.folder, LinkedEntityId__c = this.entityId);
@@ -82,9 +75,9 @@ global virtual inherited sharing class qsyd_Folder extends qsyd_Item implements 
     }
 
     /**
-     * @description Saves a File Explorer Folder record
+     * Saves a File Explorer Folder record
      *
-     * @return A qsyd_Folder instance
+     * @return an instance of qsyd_Folder
      */
     global qsyd_Folder save() {
 
@@ -120,9 +113,9 @@ global virtual inherited sharing class qsyd_Folder extends qsyd_Item implements 
     }
 
     /**
-     * @description Deletes a File Explorer Folder record. Re-references any child items
+     * Deletes a File Explorer Folder record. Re-references any child items
      *
-     * @return A qsyd_Folder instance
+     * @return an instance of qsyd_Folder
      */
     global qsyd_Folder remove() {
         List<FileExplorerFolder__c> childFolders;

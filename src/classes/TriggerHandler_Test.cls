@@ -1,8 +1,8 @@
 /**      
-    @author         Paul Lucas
-    @company        Salesforce
-    @description    TriggerHandler_Test - https://github.com/kevinohara80/sfdc-trigger-framework
-    @date           26-Apr-2020
+    Author:         Paul Lucas
+    Company:        Salesforce
+    Description:    TriggerHandler_Test
+    Date:           04-May-2020
         
     TODO:
  */

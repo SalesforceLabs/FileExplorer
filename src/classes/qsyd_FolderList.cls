@@ -1,16 +1,8 @@
-/*
- * Copyright (c) 2020, salesforce.com, inc.
- * All rights reserved.
- * SPDX-License-Identifier: BSD-3-Clause
- * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
- */
-
-
- /**
-    @author         Paul Lucas
-    @company        Salesforce
-    @description    qsyd_Folder
-    @date           26-Apr-2020
+/**      
+    Author:         Paul Lucas
+    Company:        Salesforce
+    Description:    qsyd_FolderList
+    Date:           26-Apr-2020
         
     TODO:
  */
@@ -21,7 +13,7 @@ global inherited sharing class qsyd_FolderList implements qsyd_IItemList {
     private List<qsyd_Item> folders;
 
     /**
-     * @description Constructor
+     * Constructor
      */
     global qsyd_FolderList() {
         this.fileExplorerFoldersMap = new Map<Id, FileExplorerFolder__c>();
@@ -29,7 +21,7 @@ global inherited sharing class qsyd_FolderList implements qsyd_IItemList {
     }
 
     /**
-     * @description Constructor
+     * Constructor
      *
      * @param items
      */
@@ -39,11 +31,11 @@ global inherited sharing class qsyd_FolderList implements qsyd_IItemList {
     }
 
     /**
-     * @description Populate a list of qsyd_Item
+     * Populate a list of qsyd_Item
      *
      * @param items
      *
-     * @return A qsyd_FolderList instance
+     * @return a qsyd_FolderList
      */
     global qsyd_FolderList load(List<qsyd_Item> items) {
         this.folders = items;
@@ -52,11 +44,11 @@ global inherited sharing class qsyd_FolderList implements qsyd_IItemList {
     }
 
     /**
-     * @description Retrieve file explorer folder records
+     * Retrieve file explorer folder records
      *
      * @param recordId
      *
-     * @return A qsyd_FolderList instance
+     * @return a qsyd_FolderList
      */
     global qsyd_FolderList retrieve(String recordId) {
 
@@ -76,9 +68,9 @@ global inherited sharing class qsyd_FolderList implements qsyd_IItemList {
     }
 
     /**
-     * @description Converts from file explorer folders to a list of qsyd_Folders
+     * Converts from file explorer folders to a list of qsyd_Folders
      *
-     * @return A qsyd_FolderList instance
+     * @return a qsyd_FolderList
      */
     global qsyd_FolderList convertToLogical() {
 
@@ -90,9 +82,9 @@ global inherited sharing class qsyd_FolderList implements qsyd_IItemList {
     }
 
     /**
-     * @description Converts from qsyd_Item to file explorer folders
+     * Converts from qsyd_Item to file explorer folders
      *
-     * @return A qsyd_FolderList instance
+     * @return a qsyd_FolderList
      */
     global qsyd_FolderList convertToCanonical() {
 
@@ -104,18 +96,18 @@ global inherited sharing class qsyd_FolderList implements qsyd_IItemList {
     }
 
     /**
-     * @description Get a list of qsyd_Items
+     * Get a list of qsyd_Items
      *
-     * @return A list of qsyd_Items
+     * @return a list of qsyd_Items
      */
     global List<qsyd_Item> getLogicalList() {
         return this.folders;
     }
 
     /**
-     * @description Get a list of file explorer folders
+     * Get a list of file explorer folders
      *
-     * @return A list of file explorer folders
+     * @return a list of file explorer folders
      */
     global List<FileExplorerFolder__c> getCanonicalList() {
         return this.fileExplorerFoldersMap.values();

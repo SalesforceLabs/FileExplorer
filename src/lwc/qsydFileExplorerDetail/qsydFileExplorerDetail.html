@@ -11,14 +11,14 @@
  @Author             : Elly Yijun Zhu
 -->
 <template>
-    <div class="details-container">
+    <div class="details-container slds-has-flexi-truncate">
         <template if:true={isFile}>
             <div class="slds-p-around_x-small">
                 <div class="details-header">
-                    <div>
-                        <span class="slds-text-body_regular"
-                              style="font-size: 0.925rem; overflow-wrap: break-word;"><b>{filename}</b></span>
-                        <span style="margin-left:2px" class="slds-float_right">
+                    <span class="slds-text-body_regular image-preview-title"
+                          style="font-size: 0.925rem; overflow-wrap: break-word;"
+                          onclick={previewImageTitleClick}><b>{filename}</b></span>
+                    <span style="margin-left:2px" class="slds-float_right">
                             <lightning-button-menu icon-name="utility:down" menu-alignment="right" icon-size="x-small"
                                                    alternative-text="Settings" variant="border-filled">
                                 <template if:true={showPreview}>
@@ -37,15 +37,13 @@
                                 </lightning-menu-item>
                             </lightning-button-menu>
                         </span>
-                    </div>
                 </div>
                 <div class="details-content">
-                    <div
-                            class="slds-grid slds-wrap slds-grid_align-spread slds-grid_vertical-align-center slds-gutters">
+                    <div class="slds-grid slds-wrap slds-grid_align-spread slds-grid_vertical-align-center slds-gutters">
                         <div class="slds-col slds-size_1-of-1">
                             <div title="preview" class="slds-p-vertical_x-small slds-text-align_center">
-                                <div class={previewImageClass}>
-                                    <img src={previewImageSrc} onerror={handleImgError}/>
+                                <div class={previewImageClass} onclick={previewImageClick}>
+                                    <img src={previewImageSrc} onerror={handleImgError} />
                                 </div>
                             </div>
                         </div>
@@ -144,7 +142,7 @@
 
                             <div class="slds-p-around_x-small pillcontainer">
                                 <div if:true={redraw}>
-                                    <lightning-pill-container items={_modalTags} onitemremove={handleTagRemove}>
+                                    <lightning-pill-container items={modalTags} onitemremove={handleTagRemove}>
                                     </lightning-pill-container>
                                 </div>
                             </div>
@@ -173,5 +171,7 @@
                                       message={CONSTANTS.DETAIL_MESSAGES.SELECT_FILE}></c-qsyd-message-panel>
             </div>
         </template>
+
+        <span class="version">{CONSTANTS.DETAIL_MESSAGES.VERSION}</span>
     </div>
 </template>
