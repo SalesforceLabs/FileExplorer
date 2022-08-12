@@ -1,4 +1,11 @@
-/**      
+/*
+ * Copyright (c) 2020, salesforce.com, inc.
+ * All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause
+ * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ */
+
+/**
     Author:         Paul Lucas
     Company:        Salesforce
     Description:    qsyd_ContentDocumentTriggerHandler
@@ -22,12 +29,19 @@ public with sharing class qsyd_ContentDocumentTriggerHandler extends TriggerHand
 
     private SObjectAccessDecision accessDecision;
 
+    /**
+     * @description Constructor
+     */
     public qsyd_ContentDocumentTriggerHandler() {
         this.contentDocumentOldList = (List<ContentDocument>) Trigger.old;
         this.contentDocumentOldMap = (Map<Id, ContentDocument>) Trigger.oldMap;
         this.contentDocumentNewList = (List<ContentDocument>) Trigger.new;
         this.contentDocumentNewMap = (Map<Id, ContentDocument>) Trigger.newMap;
     }
+
+    /**
+     * @description After update, associate content document to file explorer
+     */
     public override void afterUpdate() {
         // If Lightning File Explorer has not been enabled or the user has not been assigned the file explorer permissionset, return
         if (!qsyd_FileExplorerCommon.isFileExplorerEnabled() || !qsyd_FileExplorerCommon.checkForPermission()) {
@@ -36,7 +50,7 @@ public with sharing class qsyd_ContentDocumentTriggerHandler extends TriggerHand
 
         Id linkedEntityId;
         ContentDocument cd = this.contentDocumentNewList.get(0);
-        qsyd_FE__FileExplorerFile__c file = new qsyd_FE__FileExplorerFile__c();
+        FileExplorerFile__c file = new FileExplorerFile__c();
 
         List<ContentDocumentLink> cdlList = [
                 SELECT LinkedEntityId
@@ -83,36 +97,36 @@ public with sharing class qsyd_ContentDocumentTriggerHandler extends TriggerHand
         }
 
         // Check if a file explorer file exists
-        List<qsyd_FE__FileExplorerFile__c> fileList = [
-                SELECT qsyd_FE__ContentDocumentId__c,
-                        qsyd_FE__LinkedEntityId__c,
-                        qsyd_FE__Label__c,
-                        qsyd_FE__FileType__c,
-                        qsyd_FE__FileExtension__c,
-                        qsyd_FE__FileOwner__c,
-                        qsyd_FE__ContentSize__c
-                FROM qsyd_FE__FileExplorerFile__c
-                WHERE qsyd_FE__ContentDocumentId__c = :cd.Id
+        List<FileExplorerFile__c> fileList = [
+                SELECT ContentDocumentId__c,
+                        LinkedEntityId__c,
+                        Label__c,
+                        FileType__c,
+                        FileExtension__c,
+                        FileOwner__c,
+                        ContentSize__c
+                FROM FileExplorerFile__c
+                WHERE ContentDocumentId__c = :cd.Id
                 WITH SECURITY_ENFORCED
         ];
 
         this.accessDecision = Security.stripInaccessible(AccessType.READABLE, fileList);
 
         if (!fileList.isEmpty()) {
-            file = (qsyd_FE__FileExplorerFile__c) this.accessDecision.getRecords().get(0);
+            file = (FileExplorerFile__c) this.accessDecision.getRecords().get(0);
         }
 
         // TODO: Check for changes before updating
-        file.qsyd_FE__ContentDocumentId__c = cd.Id;
-        file.qsyd_FE__linkedEntityId__c = linkedEntityId;
-        file.qsyd_FE__Label__c = cd.Title;
-        file.qsyd_FE__FileType__c = cd.FileType;
-        file.qsyd_FE__FileExtension__c = cd.FileExtension;
-        file.qsyd_FE__FileOwner__c = cd.OwnerId;
-        file.qsyd_FE__ContentSize__c = cd.ContentSize;
+        file.ContentDocumentId__c = cd.Id;
+        file.LinkedEntityId__c = linkedEntityId;
+        file.Label__c = cd.Title;
+        file.FileType__c = cd.FileType;
+        file.FileExtension__c = cd.FileExtension;
+        file.FileOwner__c = cd.OwnerId;
+        file.ContentSize__c = cd.ContentSize;
 
         this.accessDecision = Security.stripInaccessible(AccessType.UPSERTABLE,
-                new List<qsyd_FE__FileExplorerFile__c>{
+                new List<FileExplorerFile__c>{
                         file
                 });
 
@@ -124,6 +138,9 @@ public with sharing class qsyd_ContentDocumentTriggerHandler extends TriggerHand
         }
     }
 
+    /**
+     * @description After delete, remove any associated file explorer files
+     */
     public override void afterDelete() {
         Set<Id> contentDocumentIds = (new Map<Id, SObject>(this.contentDocumentOldList)).keySet();
 
@@ -132,17 +149,18 @@ public with sharing class qsyd_ContentDocumentTriggerHandler extends TriggerHand
             return;
         }
 
-        List<qsyd_FE__FileExplorerFile__c> files = [
+        List<FileExplorerFile__c> files = [
                 SELECT Id
-                FROM qsyd_FE__FileExplorerFile__c
-                WHERE qsyd_FE__ContentDocumentId__c IN :contentDocumentIds
+                FROM FileExplorerFile__c
+                WHERE ContentDocumentId__c IN :contentDocumentIds
                 WITH SECURITY_ENFORCED
         ];
 
         this.accessDecision = Security.stripInaccessible(AccessType.READABLE, files);
 
         try {
-            if (Schema.sObjectType.qsyd_FE__FileExplorerFile__c.isDeletable()) {
+
+            if (Schema.SObjectType.FileExplorerFile__c.isDeletable()) {
                 DELETE files;
             }
         } catch (Exception e) {
@@ -151,6 +169,9 @@ public with sharing class qsyd_ContentDocumentTriggerHandler extends TriggerHand
         }
     }
 
+    /**
+     * @description Share a file with another entity
+     */
     private void shareFile(String contentDocumentId, String linkedEntityId, String shareType, String visibility) {
         ContentDocumentLink cdl = new ContentDocumentLink(ContentDocumentId = contentDocumentId, LinkedEntityId = linkedEntityId, ShareType = shareType, Visibility = visibility);
 

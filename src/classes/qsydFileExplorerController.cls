@@ -1,8 +1,16 @@
+/*
+ * Copyright (c) 2020, salesforce.com, inc.
+ * All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause
+ * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ */
+
+
 /**
- * : File Explorer controller class
- *
- * @author : Paul Lucas, Jiun Ryu, Elly Zhu, Derrick Vuong
- **/
+* @file Name           qsydFileExplorerController.cls
+* @description         File Explorer controller class
+* @author              Paul Lucas, Jiun Ryu, Elly Zhu, Derrick Vuong
+**/
 global with sharing class qsydFileExplorerController {
     static Map<String, List<qsyd_Item>> itemMap = new Map<String, List<qsyd_Item>>();
     static SObjectAccessDecision accessDecision;
@@ -46,25 +54,25 @@ global with sharing class qsydFileExplorerController {
     }
 
     /**
-     * Associates a content document with a file explorer folder
+     * @description Associates content documents with a file explorer folder
      *
-     * @param contentDocumentIds
-     * @param folderId
+     * @param contentDocumentIds A list of content document ids
+     * @param folderId A file explorer folder id
      */
     @AuraEnabled
     public static void setFolder(List<Id> contentDocumentIds, String folderId) {
         try {
-            List<qsyd_FE__FileExplorerFile__c> files = [
-                    SELECT Id, qsyd_FE__Folder__c
-                    FROM qsyd_FE__FileExplorerFile__c
-                    WHERE qsyd_FE__ContentDocumentId__c IN :contentDocumentIds
+            List<FileExplorerFile__c> files = [
+                    SELECT Id, Folder__c
+                    FROM FileExplorerFile__c
+                    WHERE ContentDocumentId__c IN :contentDocumentIds
             ];
 
             accessDecision = Security.stripInaccessible(AccessType.READABLE, files);
-            files = (List<qsyd_FE__FileExplorerFile__c>) accessDecision.getRecords();
+            files = (List<FileExplorerFile__c>) accessDecision.getRecords();
 
-            for (qsyd_FE__FileExplorerFile__c file : files) {
-                file.qsyd_FE__Folder__c = folderId;
+            for (FileExplorerFile__c file : files) {
+                file.Folder__c = folderId;
             }
 
             accessDecision = Security.stripInaccessible(AccessType.UPDATABLE, files);
@@ -77,28 +85,28 @@ global with sharing class qsydFileExplorerController {
     }
 
     /**
-     * Update a file explorer file's tags
+     * @description Update a file explorer file's tags
      *
-     * @param fileId
-     * @param tags
+     * @param fileId A file explorer file id
+     * @param tags A comma delimited list of descriptor tags
      *
      * @return the updated tags
      */
     @AuraEnabled
     public static String updateTags(String fileId, String tags) {
         try {
-            List<qsyd_FE__FileExplorerFile__c> files = [
-                    SELECT Id, qsyd_FE__Tags__c
-                    FROM qsyd_FE__FileExplorerFile__c
+            List<FileExplorerFile__c> files = [
+                    SELECT Id, Tags__c
+                    FROM FileExplorerFile__c
                     WHERE Id = :fileId
                     WITH SECURITY_ENFORCED
             ];
 
             accessDecision = Security.stripInaccessible(AccessType.READABLE, files);
-            files = (List<qsyd_FE__FileExplorerFile__c>) accessDecision.getRecords();
+            files = (List<FileExplorerFile__c>) accessDecision.getRecords();
 
             if (files.size() > 0) {
-                files[0].qsyd_FE__Tags__c = tags;
+                files[0].Tags__c = tags;
 
                 accessDecision = Security.stripInaccessible(AccessType.UPDATABLE, files);
                 UPDATE accessDecision.getRecords();
@@ -115,23 +123,19 @@ global with sharing class qsydFileExplorerController {
     }
 
     /**
-     * Determine if synchronisation is required
+     * @description Determine if synchronisation is required
      *
-     * @param recordId
+     * @param recordId The id of the contextual record associated to the files
      *
      * @return true if synchronisation is required, otherwise return false
      */
     @AuraEnabled
     public static Boolean checkSyncStatus(String recordId) {
-
         Integer countDocumentLink = 0, countFile = 0;
+
         try {
-            countDocumentLink = database.countQuery('SELECT count() From ContentDocumentLink WHERE IsDeleted = FALSE AND LinkedEntityId = \'' + recordId + '\'');
-            countFile = database.countQuery('SELECT count() From qsyd_FE__FileExplorerFile__c WHERE qsyd_FE__LinkedEntityId__c = \'' + recordId + '\'');
-
-
-            System.debug('>>>>> qsydFileExplorerController.checkSyncStatus.countDocumentLink: ' + countDocumentLink);
-            System.debug('>>>>> qsydFileExplorerController.checkSyncStatus.countFile: ' + countFile);
+            countDocumentLink = Database.countQuery('SELECT count() From ContentDocumentLink WHERE IsDeleted = FALSE AND LinkedEntityId = \'' + recordId + '\'');
+            countFile = Database.countQuery('SELECT count() From FileExplorerFile__c WHERE LinkedEntityId__c = \'' + recordId + '\'');
 
             return (countFile == countDocumentLink);
 
@@ -143,18 +147,18 @@ global with sharing class qsydFileExplorerController {
     }
 
     /**
-     * Synchronises a records existing content documents with file explorer files
+     * @description Synchronises a records existing content documents with file explorer files
      *
-     * @param recordId
+     * @param recordId A content document link id
      *
      * @return a summary of synchronised file explorer files
      */
     @AuraEnabled
     public static String syncFiles(String recordId) {
-        List<qsyd_FE__FileExplorerFile__c> insertFileList = new List<qsyd_FE__FileExplorerFile__c> ();
-        List<qsyd_FE__FileExplorerFile__c> deleteFileList = new List<qsyd_FE__FileExplorerFile__c> ();
-        List<qsyd_FE__FileExplorerFile__c> currentFileList = new List<qsyd_FE__FileExplorerFile__c> ();
-        Map<String, qsyd_FE__FileExplorerFile__c> currentFileMap = new Map<String, qsyd_FE__FileExplorerFile__c>();
+        List<FileExplorerFile__c> insertFileList = new List<FileExplorerFile__c> ();
+        List<FileExplorerFile__c> deleteFileList = new List<FileExplorerFile__c> ();
+        List<FileExplorerFile__c> currentFileList = new List<FileExplorerFile__c> ();
+        Map<String, FileExplorerFile__c> currentFileMap = new Map<String, FileExplorerFile__c>();
         List<ContentDocumentLink> contentDocumentLinks = new List<ContentDocumentLink>();
         Map<String, ContentDocumentLink> currentContentDocumentMap = new Map<String, ContentDocumentLink>();
 
@@ -179,16 +183,16 @@ global with sharing class qsydFileExplorerController {
             ]);
 
             currentFileList = [
-                    SELECT qsyd_FE__ContentDocumentId__c
-                    FROM qsyd_FE__FileExplorerFile__c
-                    WHERE qsyd_FE__LinkedEntityId__c = :recordId
+                    SELECT ContentDocumentId__c
+                    FROM FileExplorerFile__c
+                    WHERE LinkedEntityId__c = :recordId
             ];
 
             accessDecision = Security.stripInaccessible(AccessType.READABLE, currentFileList);
-            currentFileList = (List<qsyd_FE__FileExplorerFile__c>) accessDecision.getRecords();
+            currentFileList = (List<FileExplorerFile__c>) accessDecision.getRecords();
 
             for (Integer cfi = 0; cfi < currentFileList.size(); cfi++) {
-                currentFileMap.put(currentFileList[cfi].qsyd_FE__ContentDocumentId__c, currentFileList[cfi]);
+                currentFileMap.put(currentFileList[cfi].ContentDocumentId__c, currentFileList[cfi]);
             }
 
             if (!contentDocumentLinks.isEmpty()) {
@@ -199,15 +203,14 @@ global with sharing class qsydFileExplorerController {
                     currentContentDocumentMap.put(cdl.ContentDocumentId, cdl);
 
                     if (!currentFileMap.containsKey(cdl.ContentDocumentId)) {
-                        qsyd_FE__FileExplorerFile__c fe = new qsyd_FE__FileExplorerFile__c();
-                        fe.qsyd_FE__ContentDocumentId__c = cdl.ContentDocumentId;
-                        fe.qsyd_FE__LinkedEntityId__c = recordId;
-                        fe.qsyd_FE__Label__c = cdl.ContentDocument.Title;
-                        fe.qsyd_FE__FileType__c = cdl.ContentDocument.FileType;
-                        fe.qsyd_FE__FileExtension__c = cdl.ContentDocument.FileExtension;
-                        fe.qsyd_FE__FileOwner__c = cdl.ContentDocument.OwnerId;
-                        fe.qsyd_FE__ContentSize__c = cdl.ContentDocument.ContentSize;
-
+                        FileExplorerFile__c fe = new FileExplorerFile__c();
+                        fe.ContentDocumentId__c = cdl.ContentDocumentId;
+                        fe.LinkedEntityId__c = recordId;
+                        fe.Label__c = cdl.ContentDocument.Title;
+                        fe.FileType__c = cdl.ContentDocument.FileType;
+                        fe.FileExtension__c = cdl.ContentDocument.FileExtension;
+                        fe.FileOwner__c = cdl.ContentDocument.OwnerId;
+                        fe.ContentSize__c = cdl.ContentDocument.ContentSize;
                         insertFileList.add(fe);
                     }
                 }
@@ -221,7 +224,7 @@ global with sharing class qsydFileExplorerController {
                 }
             }
 
-            if (Schema.sObjectType.qsyd_FE__FileExplorerFile__c.isDeletable()) {
+            if (Schema.SObjectType.FileExplorerFile__c.isDeletable()) {
                 accessDecision = Security.stripInaccessible(AccessType.CREATABLE, insertFileList);
 
                 DELETE deleteFileList;
@@ -238,7 +241,7 @@ global with sharing class qsydFileExplorerController {
     }
 
     /**
-     * True if called from a community context
+     * @description True if called from a community context
      *
      * @return true if called from a community context, otherwise return false
      */
@@ -252,19 +255,19 @@ global with sharing class qsydFileExplorerController {
     }
 
     /**
-     * Get the community prefix, if available
+     * @description Get the community prefix, if available
      *
      * @return a community prefix, if available
      */
     @AuraEnabled
     public static String getCommunityPrefix() {
-        return !String.IsBlank(Site.getPathPrefix()) ? Site.getPathPrefix().removeEndIgnoreCase('/s') : '';
+        return !String.isBlank(Site.getPathPrefix()) ? Site.getPathPrefix().removeEndIgnoreCase('/s') : '';
     }
 
     /**
-     * Save either a file explorer file or folder
+     * @description Save either a file explorer file or folder
      *
-     * @param serializedItem
+     * @param serializedItem Either a file explorer file or folder instance
      *
      * @return the file explorer item
      */
@@ -286,9 +289,9 @@ global with sharing class qsydFileExplorerController {
     }
 
     /**
-     * Delete either a file explorer file or folder
+     * @description Delete either a file explorer file or folder
      *
-     * @param serializedItem
+     * @param serializedItem Either a file explorer file or folder instance
      */
     @AuraEnabled
     public static void deleteItem(String serializedItem) {
@@ -306,9 +309,9 @@ global with sharing class qsydFileExplorerController {
     }
 
     /**
-     * Retrieve the file explorer files and folder records for a given record
+     * @description Retrieve the file explorer files and folder records for a given record
      *
-     * @param recordId
+     * @param recordId The record id to retrieve any associated file explorer items
      *
      * @return File explorer files and folders
      */
@@ -330,7 +333,7 @@ global with sharing class qsydFileExplorerController {
     }
 
     /**
-     * Get a page of folder templates
+     * @description Get a page of folder templates
      *
      * @param filter
      * @param sortBy
@@ -346,7 +349,7 @@ global with sharing class qsydFileExplorerController {
     }
 
     /**
-     * Clone a folder template
+     * @description Clone a folder template
      *
      * @param templateId
      * @param entityId

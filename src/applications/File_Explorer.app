@@ -10,8 +10,6 @@
     </actionOverrides>
     <brand>
         <headerColor>#7BC4B9</headerColor>
-        <logo>Q_Sydney_Logo</logo>
-        <logoVersion>1</logoVersion>
         <shouldOverrideOrgTheme>false</shouldOverrideOrgTheme>
     </brand>
     <formFactors>Small</formFactors>
@@ -21,6 +19,7 @@
     <label>File Explorer</label>
     <navType>Standard</navType>
     <tabs>standard-home</tabs>
+    <tabs>FileExplorerFolderTemplate__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>File_Explorer_UtilityBar</utilityBar>
 </CustomApplication>
