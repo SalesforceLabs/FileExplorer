@@ -44,6 +44,12 @@
                             <div title="preview" class="slds-p-vertical_x-small slds-text-align_center">
                                 <div class={previewImageClass} onclick={previewImageClick}>
                                     <img src={previewImageSrc} onerror={handleImgError} />
+                                    <a href="#">
+                                        <lightning-icon if:true={canDelete} icon-name="utility:delete"
+                                                        alternative-text="Delete"
+                                                        size="xx-small" title="Delete" onclick={handleFileDelete}>
+                                        </lightning-icon>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -172,6 +178,8 @@
             </div>
         </template>
 
-        <span class="version">{CONSTANTS.DETAIL_MESSAGES.VERSION}</span>
+        <span class="version">
+            <lightning-formatted-rich-text value={CONSTANTS.DETAIL_MESSAGES.VERSION}></lightning-formatted-rich-text>
+        </span>
     </div>
 </template>

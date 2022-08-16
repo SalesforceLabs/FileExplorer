@@ -93,6 +93,10 @@ export default class QSydFileExplorerManagement extends LightningElement {
 		return this._action === CONSTANTS.ACTION_TYPES.RENAME_FOLDER;
 	}
 
+	get deleteFile() {
+		return this._action === CONSTANTS.ACTION_TYPES.DELETE_FILE;
+	}
+
 	get deleteFolder() {
 		return this._action === CONSTANTS.ACTION_TYPES.DELETE_FOLDER;
 	}
@@ -320,6 +324,7 @@ export default class QSydFileExplorerManagement extends LightningElement {
 	}
 
 	handleDialogClose(data) {
+		debugger;
 		this.dispatchEvent(
 			new CustomEvent(
 				CONSTANTS.CUSTOM_DOM_EVENT_TYPES.EXPLORER_MANAGEMENT_CLOSE, {
@@ -371,6 +376,11 @@ export default class QSydFileExplorerManagement extends LightningElement {
 					deltaItem.folder = this.targetItem.id;
 					this.saveItem(deltaItem);
 				}
+				break;
+
+			case CONSTANTS.ACTION_TYPES.DELETE_FILE:
+				deltaItem = Object.assign({}, this.selectedItem);
+				this.removeItem(deltaItem);
 				break;
 
 			case CONSTANTS.ACTION_TYPES.ADD_FOLDER:
@@ -498,13 +508,12 @@ export default class QSydFileExplorerManagement extends LightningElement {
 			});
 	}
 
-	removeItem(deltaItem) {
+	 removeItem(deltaItem) {
 		remove(
 			{
 				serializedItem: JSON.stringify(deltaItem),
 			}).
 			then(result => {
-
 				showToast(
 					this,
 					CONSTANTS.TOAST_MESSAGE_TYPES.SUCCESS,

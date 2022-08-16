@@ -9,6 +9,14 @@
         <value>A folder with the same name already exists in this location</value>
     </labels>
     <labels>
+        <fullName>Action_Error_Messages_Failed_to_insert_template</fullName>
+        <categories>Action Error Messages</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Error Messages -	Failed to insert template</shortDescription>
+        <value>Failed to insert template</value>
+    </labels>
+    <labels>
         <fullName>Action_Error_Messages_Failed_to_retrieve_templates</fullName>
         <categories>Action Error Messages</categories>
         <language>en_US</language>
@@ -73,6 +81,14 @@
         <value>Add folder to &lt;strong&gt;${hostFolderLabel}&lt;/strong&gt; folder</value>
     </labels>
     <labels>
+        <fullName>Action_Headers_Delete_file</fullName>
+        <categories>Action Headers</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Headers - Delete file</shortDescription>
+        <value>Delete &lt;strong&gt;${text}&lt;/strong&gt; file</value>
+    </labels>
+    <labels>
         <fullName>Action_Headers_Delete_folder</fullName>
         <categories>Action Headers</categories>
         <language>en_US</language>
@@ -94,7 +110,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Action Headers - Move file</shortDescription>
-        <value>Move file</value>
+        <value>Move &lt;strong&gt;${text}&lt;/strong&gt; file</value>
     </labels>
     <labels>
         <fullName>Action_Headers_Move_folder</fullName>
@@ -175,6 +191,14 @@
         <protected>true</protected>
         <shortDescription>Action Labels - Confirm</shortDescription>
         <value>Confirm</value>
+    </labels>
+    <labels>
+        <fullName>Action_Labels_Delete_file</fullName>
+        <categories>Action Labels</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Labels - Delete file</shortDescription>
+        <value>Delete</value>
     </labels>
     <labels>
         <fullName>Action_Labels_Delete_folder</fullName>
@@ -321,6 +345,14 @@
         <value>Name</value>
     </labels>
     <labels>
+        <fullName>Action_Messages_Delete_file</fullName>
+        <categories>Action Messages</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Messages - Delete file</shortDescription>
+        <value>Are you sure you want to remove this file? Access to this file will also be removed for everyone who this file has been shared with.</value>
+    </labels>
+    <labels>
         <fullName>Action_Messages_Delete_folder</fullName>
         <categories>Action Messages</categories>
         <language>en_US</language>
@@ -383,6 +415,14 @@
         <protected>true</protected>
         <shortDescription>Action Success Messages - Add folder</shortDescription>
         <value>A new folder has been added</value>
+    </labels>
+    <labels>
+        <fullName>Action_Success_Messages_Delete_file</fullName>
+        <categories>Action Success Messages</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Success Messages - Delete file</shortDescription>
+        <value>The file has been deleted along with any previously shared access to it.</value>
     </labels>
     <labels>
         <fullName>Action_Success_Messages_Delete_folder</fullName>
