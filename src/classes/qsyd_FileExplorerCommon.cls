@@ -49,9 +49,9 @@ global without sharing class qsyd_FileExplorerCommon {
     }
 
     /**
-     * Check if the contextual caller has the "File_Explorer" permission set
+     * Check if the contextual caller has the "File_Explorer" permission set or is of type AutomatedProcess
      *
-     * @return true if the contextual caller has the "File_Explorer" permission set, otherwise return false
+     * @return true if the contextual caller has the "File_Explorer" permission set or is of type AutomatedProcess, otherwise return false
      */
     @AuraEnabled
     public static Boolean checkForPermission() {
