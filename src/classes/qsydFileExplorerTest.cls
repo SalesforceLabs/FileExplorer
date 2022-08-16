@@ -59,6 +59,8 @@ global with sharing class qsydFileExplorerTest {
                 'jpg',
                 'jpg',
                 UserInfo.getUserId(),
+                UserInfo.getUserName(),
+                UserInfo.getUserType(),
                 'tags',
                 contentDocumentList[0].ContentSize,
                 null);

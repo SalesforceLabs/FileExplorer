@@ -252,6 +252,7 @@ export default class QSydFileExplorerTree extends LightningElement {
 		this.template.querySelector('div.tree-home').
 			classList.
 			remove('item-selected');
+
 		this.propagateEvent(data.action);
 	}
 

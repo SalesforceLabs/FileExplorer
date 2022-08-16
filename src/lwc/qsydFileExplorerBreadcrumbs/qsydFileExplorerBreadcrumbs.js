@@ -34,6 +34,7 @@ export default class QsydFileExplorerBreadcrumbs extends LightningElement {
 		} else {
 			item = this.breadcrumbs.find(({id}) => id == clicked);
 		}
+
 		this.dispatchEvent(
 			new CustomEvent('itemclick', {
 				detail: item,

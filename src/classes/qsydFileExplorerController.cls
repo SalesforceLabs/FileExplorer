@@ -7,10 +7,10 @@
 
 
 /**
-* @file Name           qsydFileExplorerController.cls
-* @description         File Explorer controller class
-* @author              Paul Lucas, Jiun Ryu, Elly Zhu, Derrick Vuong
-**/
+ * File Explorer controller class
+ *
+ * @author Paul Lucas, Jiun Ryu, Elly Zhu, Derrick Vuong
+ **/
 global with sharing class qsydFileExplorerController {
     static Map<String, List<qsyd_Item>> itemMap = new Map<String, List<qsyd_Item>>();
     static SObjectAccessDecision accessDecision;
@@ -54,7 +54,7 @@ global with sharing class qsydFileExplorerController {
     }
 
     /**
-     * @description Associates content documents with a file explorer folder
+     * Associates content documents with a file explorer folder
      *
      * @param contentDocumentIds A list of content document ids
      * @param folderId A file explorer folder id
@@ -85,7 +85,7 @@ global with sharing class qsydFileExplorerController {
     }
 
     /**
-     * @description Update a file explorer file's tags
+     * Update a file explorer file's tags
      *
      * @param fileId A file explorer file id
      * @param tags A comma delimited list of descriptor tags
@@ -123,7 +123,7 @@ global with sharing class qsydFileExplorerController {
     }
 
     /**
-     * @description Determine if synchronisation is required
+     * Determine if synchronisation is required
      *
      * @param recordId The id of the contextual record associated to the files
      *
@@ -147,7 +147,7 @@ global with sharing class qsydFileExplorerController {
     }
 
     /**
-     * @description Synchronises a records existing content documents with file explorer files
+     * Synchronises a records existing content documents with file explorer files
      *
      * @param recordId A content document link id
      *
@@ -241,7 +241,7 @@ global with sharing class qsydFileExplorerController {
     }
 
     /**
-     * @description True if called from a community context
+     * True if called from a community context
      *
      * @return true if called from a community context, otherwise return false
      */
@@ -255,7 +255,7 @@ global with sharing class qsydFileExplorerController {
     }
 
     /**
-     * @description Get the community prefix, if available
+     * Get the community prefix, if available
      *
      * @return a community prefix, if available
      */
@@ -265,7 +265,7 @@ global with sharing class qsydFileExplorerController {
     }
 
     /**
-     * @description Save either a file explorer file or folder
+     * Save either a file explorer file or folder
      *
      * @param serializedItem Either a file explorer file or folder instance
      *
@@ -289,7 +289,7 @@ global with sharing class qsydFileExplorerController {
     }
 
     /**
-     * @description Delete either a file explorer file or folder
+     * Delete either a file explorer file or folder
      *
      * @param serializedItem Either a file explorer file or folder instance
      */
@@ -309,7 +309,7 @@ global with sharing class qsydFileExplorerController {
     }
 
     /**
-     * @description Retrieve the file explorer files and folder records for a given record
+     * Retrieve the file explorer files and folder records for a given record
      *
      * @param recordId The record id to retrieve any associated file explorer items
      *
@@ -333,7 +333,7 @@ global with sharing class qsydFileExplorerController {
     }
 
     /**
-     * @description Get a page of folder templates
+     * Get a page of folder templates
      *
      * @param filter
      * @param sortBy
@@ -349,7 +349,7 @@ global with sharing class qsydFileExplorerController {
     }
 
     /**
-     * @description Clone a folder template
+     * Clone a folder template
      *
      * @param templateId
      * @param entityId
