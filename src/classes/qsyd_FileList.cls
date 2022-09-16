@@ -60,6 +60,7 @@ global inherited sharing class qsyd_FileList implements qsyd_IItemList {
                         FileExtension__c,
                         FileOwner__c,
                         FileOwner__r.Name,
+                        FileOwner__r.UserType,
                         Tags__c,
                         ContentSize__c
                 FROM FileExplorerFile__c
@@ -81,7 +82,7 @@ global inherited sharing class qsyd_FileList implements qsyd_IItemList {
     global qsyd_FileList convertToLogical() {
 
         for (FileExplorerFile__c f : this.fileExplorerFilesMap.values()) {
-            this.files.add(new qsyd_File(f.Id, f.Folder__c, f.Label__c, f.ContentDocumentId__c, f.LinkedEntityId__c, f.FileType__c, f.FileExtension__c, f.FileOwner__r.Name, f.Tags__c, f.ContentSize__c, null));
+            this.files.add(new qsyd_File(f.Id, f.Folder__c, f.Label__c, f.ContentDocumentId__c, f.LinkedEntityId__c, f.FileType__c, f.FileExtension__c, f.FileOwner__c, f.FileOwner__r.Name, f.FileOwner__r.UserType, f.Tags__c, f.ContentSize__c, null));
         }
 
         return this;

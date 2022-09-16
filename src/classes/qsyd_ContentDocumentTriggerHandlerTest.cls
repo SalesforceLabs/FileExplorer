@@ -1,10 +1,10 @@
-/**      
-    Author:         Paul Lucas
-    Company:        Salesforce
-    Description:    qsyd_ContentDocumentTriggerHandlerTest
-    Date:           05-May-2020
-        
-    TODO:
+/**
+ * Author:         Paul Lucas
+ * Company:        Salesforce
+ * Description:    qsyd_ContentDocumentTriggerHandlerTest
+ * Date:           05-May-2020
+ * <p/>
+ * TODO:
  */
 @IsTest
 public with sharing class qsyd_ContentDocumentTriggerHandlerTest {

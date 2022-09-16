@@ -179,21 +179,21 @@ global with sharing class qsydFileExplorerControllerTest {
         qsyd_File file;
 
         Test.startTest();
-        file = new qsyd_File('a000a0000000000000', 'a000a0000000000001', 'label', 'a000a0000000000002', 'a000a0000000000004', 'doc', '.doc', 'owner', 'tags', 10, null);
+        file = new qsyd_File('a000a0000000000000', 'a000a0000000000001', 'label', 'a000a0000000000002', 'a000a0000000000004', 'doc', '.doc', null, 'owner', 'Standard', 'tags', 10, null);
         System.assertEquals(true, file.icon.contains('word.png'));
-        file = new qsyd_File('a000a0000000000000', 'a000a0000000000001', 'label', 'a000a0000000000002', 'a000a0000000000004', 'xls', '.xls', 'owner', 'tags', 10, null);
+        file = new qsyd_File('a000a0000000000000', 'a000a0000000000001', 'label', 'a000a0000000000002', 'a000a0000000000004', 'xls', '.xls', null,'owner', 'Standard', 'tags', 10, null);
         System.assertEquals(true, file.icon.contains('excel.png'));
-        file = new qsyd_File('a000a0000000000000', 'a000a0000000000001', 'label', 'a000a0000000000002', 'a000a0000000000004', 'ai', '.ai', 'owner', 'tags', 10, null);
+        file = new qsyd_File('a000a0000000000000', 'a000a0000000000001', 'label', 'a000a0000000000002', 'a000a0000000000004', 'ai', '.ai', null,'owner', 'Standard', 'tags', 10, null);
         System.assertEquals(true, file.icon.contains('illustrator.png'));
-        file = new qsyd_File('a000a0000000000000', 'a000a0000000000001', 'label', 'a000a0000000000002', 'a000a0000000000004', 'jpg', '.jpg', 'owner', 'tags', 10, null);
+        file = new qsyd_File('a000a0000000000000', 'a000a0000000000001', 'label', 'a000a0000000000002', 'a000a0000000000004', 'jpg', '.jpg', null,'owner', 'Standard', 'tags', 10, null);
         System.assertEquals(true, file.icon.contains('image.png'));
-        file = new qsyd_File('a000a0000000000000', 'a000a0000000000001', 'label', 'a000a0000000000002', 'a000a0000000000004', 'pdf', '.pdf', 'owner', 'tags', 10, null);
+        file = new qsyd_File('a000a0000000000000', 'a000a0000000000001', 'label', 'a000a0000000000002', 'a000a0000000000004', 'pdf', '.pdf', null,'owner', 'Standard', 'tags', 10, null);
         System.assertEquals(true, file.icon.contains('pdf.png'));
-        file = new qsyd_File('a000a0000000000000', 'a000a0000000000001', 'label', 'a000a0000000000002', 'a000a0000000000004', 'ps', '.ps', 'owner', 'tags', 10, null);
+        file = new qsyd_File('a000a0000000000000', 'a000a0000000000001', 'label', 'a000a0000000000002', 'a000a0000000000004', 'ps', '.ps', null,'owner', 'Standard', 'tags', 10, null);
         System.assertEquals(true, file.icon.contains('photoshop.png'));
-        file = new qsyd_File('a000a0000000000000', 'a000a0000000000001', 'label', 'a000a0000000000002', 'a000a0000000000004', 'ppt', '.ppt', 'owner', 'tags', 10, null);
+        file = new qsyd_File('a000a0000000000000', 'a000a0000000000001', 'label', 'a000a0000000000002', 'a000a0000000000004', 'ppt', '.ppt', null,'owner', 'Standard', 'tags', 10, null);
         System.assertEquals(true, file.icon.contains('ppt.png'));
-        file = new qsyd_File('a000a0000000000000', 'a000a0000000000001', 'label', 'a000a0000000000002', 'a000a0000000000004', 'other', '.other', 'owner', 'tags', 10, null);
+        file = new qsyd_File('a000a0000000000000', 'a000a0000000000001', 'label', 'a000a0000000000002', 'a000a0000000000004', 'other', '.other', null,'owner', 'Standard', 'tags', 10, null);
         System.assertEquals(true, file.icon.contains('doc.png'));
         Test.stopTest();
 
@@ -258,7 +258,7 @@ global with sharing class qsydFileExplorerControllerTest {
                 LIMIT 1
         ];
 
-        json = '{"documentId":"' + cd.Id + '","entityId":"' + a.Id + '","text":"new_file","folder":null,"icon":null,"id":null,"owner":null,"size":0,"tags":null,"type":null}';
+        json = '{"documentId":"' + cd.Id + '","entityId":"' + a.Id + '","text":"new_file","folder":null,"icon":null,"id":null,"ownerId":null,"owner":null,"userType":"Standard","size":0,"tags":null,"type":null}';
         String item = qsydFileExplorerController.postItem(json);
 
         List<FileExplorerFile__c> files = [

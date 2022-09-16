@@ -119,7 +119,6 @@ export default class QsydFileExplorerCmp extends LightningElement {
 	}
 
 	errorCallback(error, stack) {
-
 		showToast(
 			this,
 			CONSTANTS.TOAST_MESSAGE_TYPES.ERROR,
@@ -223,6 +222,7 @@ export default class QsydFileExplorerCmp extends LightningElement {
 	}
 
 	handleDataLoaded(e) {
+
 		switch (this.action) {
 			case CONSTANTS.ACTION_TYPES.ADD_FILE:
 				this.results = this.findTreeItem(this.dataDictionary,
@@ -231,23 +231,36 @@ export default class QsydFileExplorerCmp extends LightningElement {
 				break;
 
 			case CONSTANTS.ACTION_TYPES.UPDATE_FILE:
-				this.item = this.findItemInSet(this.shadowItem) || new item();
-				break;
-
+			case CONSTANTS.ACTION_TYPES.DELETE_FILE:
 			case CONSTANTS.ACTION_TYPES.ADD_FOLDER:
-				this.item = this.findItemInSet(this.shadowItem) || new item();
-				break;
-
 			case CONSTANTS.ACTION_TYPES.MOVE_FOLDER:
-				this.item = this.findItemInSet(this.shadowItem) || new item();
-				break;
-
 			case CONSTANTS.ACTION_TYPES.RENAME_FOLDER:
-				this.item = this.findItemInSet(this.shadowItem) || new item();
-				break;
-
 			case CONSTANTS.ACTION_TYPES.DELETE_FOLDER:
 				this.item = this.findItemInSet(this.shadowItem) || new item();
+				break;
+			// case CONSTANTS.ACTION_TYPES.UPDATE_FILE:
+			// 	this.item = this.findItemInSet(this.shadowItem) || new item();
+			// 	break;
+			//
+			// case CONSTANTS.ACTION_TYPES.DELETE_FILE:
+			// 	this.item = this.findItemInSet(this.shadowItem) || new item();
+			// 	break;
+			//
+			// case CONSTANTS.ACTION_TYPES.ADD_FOLDER:
+			// 	this.item = this.findItemInSet(this.shadowItem) || new item();
+			// 	break;
+			//
+			// case CONSTANTS.ACTION_TYPES.MOVE_FOLDER:
+			// 	this.item = this.findItemInSet(this.shadowItem) || new item();
+			// 	break;
+			//
+			// case CONSTANTS.ACTION_TYPES.RENAME_FOLDER:
+			// 	this.item = this.findItemInSet(this.shadowItem) || new item();
+			// 	break;
+			//
+			// case CONSTANTS.ACTION_TYPES.DELETE_FOLDER:
+			// 	this.item = this.findItemInSet(this.shadowItem) || new item();
+
 			default:
 				break;
 		}
@@ -264,7 +277,7 @@ export default class QsydFileExplorerCmp extends LightningElement {
 				code.length - 1).toLowerCase()]}_${itemType}`;
 
 		let explorerActions = this.template.querySelector(
-			'c-qsyd-file-explorer-actions'),
+				'c-qsyd-file-explorer-actions'),
 			explorerManagement = this.template.querySelector(
 				'c-qsyd-file-explorer-management');
 

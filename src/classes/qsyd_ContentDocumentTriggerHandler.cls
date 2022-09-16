@@ -14,7 +14,7 @@
     TODO:
  */
 
-public with sharing class qsyd_ContentDocumentTriggerHandler extends TriggerHandler {
+public without sharing class qsyd_ContentDocumentTriggerHandler extends TriggerHandler {
     public final String SHARE_TYPE_VIEWER = 'V';
     public final String SHARE_TYPE_COLLABORATOR = 'C';
     public final String SHARE_TYPE_INFERRED = 'I';
@@ -159,7 +159,6 @@ public with sharing class qsyd_ContentDocumentTriggerHandler extends TriggerHand
         this.accessDecision = Security.stripInaccessible(AccessType.READABLE, files);
 
         try {
-
             if (Schema.SObjectType.FileExplorerFile__c.isDeletable()) {
                 DELETE files;
             }
@@ -174,7 +173,6 @@ public with sharing class qsyd_ContentDocumentTriggerHandler extends TriggerHand
      */
     private void shareFile(String contentDocumentId, String linkedEntityId, String shareType, String visibility) {
         ContentDocumentLink cdl = new ContentDocumentLink(ContentDocumentId = contentDocumentId, LinkedEntityId = linkedEntityId, ShareType = shareType, Visibility = visibility);
-
         this.accessDecision = Security.stripInaccessible(AccessType.CREATABLE, new list<ContentDocumentLink>{
                 cdl
         });

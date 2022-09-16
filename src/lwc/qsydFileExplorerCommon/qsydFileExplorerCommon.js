@@ -23,6 +23,8 @@ import ACTION_HEADERS__ADD_FILE
 	from '@salesforce/label/c.Action_Headers_Add_file';
 import ACTION_HEADERS__ADD_FOLDER
 	from '@salesforce/label/c.Action_Headers_Add_folder';
+import ACTION_HEADERS__DELETE_FILE
+	from '@salesforce/label/c.Action_Headers_Delete_file';
 import ACTION_HEADERS__DELETE_FOLDER
 	from '@salesforce/label/c.Action_Headers_Delete_folder';
 import ACTION_HEADERS__MOVE_FILE
@@ -51,6 +53,8 @@ import ACTION_LABELS__ADD_FILE
 	from '@salesforce/label/c.Action_Labels_Add_file';
 import ACTION_LABELS__ADD_FOLDER
 	from '@salesforce/label/c.Action_Labels_Add_folder';
+import ACTION_LABELS__DELETE_FILE
+	from '@salesforce/label/c.Action_Labels_Delete_file';
 import ACTION_LABELS__DELETE_FOLDER
 	from '@salesforce/label/c.Action_Labels_Delete_folder';
 import ACTION_LABELS__MOVE_FILE
@@ -92,6 +96,8 @@ import ACTION_VALIDATIONS__FOLDER_NAME_VALIDATION
 import ACTION_VALIDATIONS__TAG_NAME_VALIDATION
 	from '@salesforce/label/c.Action_Validations_Tag_name_validation';
 
+import ACTION_MESSAGES__DELETE_FILE
+	from '@salesforce/label/c.Action_Messages_Delete_file';
 import ACTION_MESSAGES__DELETE_FOLDER
 	from '@salesforce/label/c.Action_Messages_Delete_folder';
 import ACTION_MESSAGES__NO_PERMISSION_SET
@@ -107,6 +113,8 @@ import ACTION_SUCCESS_MESSAGES__ADD_FILE
 	from '@salesforce/label/c.Action_Success_Messages_Add_file';
 import ACTION_SUCCESS_MESSAGES__ADD_FOLDER
 	from '@salesforce/label/c.Action_Success_Messages_Add_folder';
+import ACTION_SUCCESS_MESSAGES__DELETE_FILE
+	from '@salesforce/label/c.Action_Success_Messages_Delete_file';
 import ACTION_SUCCESS_MESSAGES__DELETE_FOLDER
 	from '@salesforce/label/c.Action_Success_Messages_Delete_folder';
 import ACTION_SUCCESS_MESSAGES__MOVE_FILE
@@ -160,6 +168,10 @@ import {ShowToastEvent} from 'lightning/platformShowToastEvent';
  * Enumerations
  */
 const CONSTANTS = {
+	USERTYPES: {
+		AUTOMATEDPROCESS: 'AutomatedProcess'
+	},
+
 	SYSTEM_ERRORS: {
 		NO_ACCESS_TO_APEX_CLASS: "You do not have access to the Apex class named 'qsyd_FileExplorerCommon'.",
 	},
@@ -250,6 +262,7 @@ const CONSTANTS = {
 		ADD_FILE: 'add_file',
 		MOVE_FILE: 'move_file',
 		UPDATE_FILE: 'update_file',
+		DELETE_FILE: 'delete_file',
 		ADD_FOLDER: 'add_folder',
 		MOVE_FOLDER: 'move_folder',
 		RENAME_FOLDER: 'rename_folder',
@@ -273,6 +286,7 @@ const CONSTANTS = {
 		FILE_HEADER: ACTION_LABELS__FILE_HEADER,
 		ADD_FILE: ACTION_LABELS__ADD_FILE,
 		MOVE_FILE: ACTION_LABELS__MOVE_FILE,
+		DELETE_FILE: ACTION_LABELS__DELETE_FILE,
 		FOLDER_HEADER: ACTION_LABELS__FOLDER_HEADER,
 		ADD_FOLDER: ACTION_LABELS__ADD_FOLDER,
 		MOVE_FOLDER: ACTION_LABELS__MOVE_FOLDER,
@@ -299,6 +313,7 @@ const CONSTANTS = {
 	ACTION_HEADERS: {
 		ADD_FILE: ACTION_HEADERS__ADD_FILE,
 		MOVE_FILE: ACTION_HEADERS__MOVE_FILE,
+		DELETE_FILE: ACTION_HEADERS__DELETE_FILE,
 		ADD_FOLDER: ACTION_HEADERS__ADD_FOLDER,
 		MOVE_FOLDER: ACTION_HEADERS__MOVE_FOLDER,
 		RENAME_FOLDER: ACTION_HEADERS__RENAME_FOLDER,
@@ -311,6 +326,7 @@ const CONSTANTS = {
 	ACTION_SUCCESS_MESSAGES: {
 		ADD_FILE: ACTION_SUCCESS_MESSAGES__ADD_FILE,
 		MOVE_FILE: ACTION_SUCCESS_MESSAGES__MOVE_FILE,
+		DELETE_FILE: ACTION_SUCCESS_MESSAGES__DELETE_FILE,
 		ADD_FOLDER: ACTION_SUCCESS_MESSAGES__ADD_FOLDER,
 		MOVE_FOLDER: ACTION_SUCCESS_MESSAGES__MOVE_FOLDER,
 		RENAME_FOLDER: ACTION_SUCCESS_MESSAGES__RENAME_FOLDER,
@@ -330,6 +346,7 @@ const CONSTANTS = {
 	},
 
 	ACTION_MESSAGES: {
+		DELETE_FILE: ACTION_MESSAGES__DELETE_FILE,
 		DELETE_FOLDER: ACTION_MESSAGES__DELETE_FOLDER,
 		NO_PERMISSION_SET: ACTION_MESSAGES__NO_PERMISSION_SET,
 		SYNCHRONISATION_REQUIRED: ACTION_MESSAGES__SYNCHRONISATION_REQUIRED,
@@ -356,7 +373,7 @@ const CONSTANTS = {
 
 	DETAIL_MESSAGES: {
 		SELECT_FILE: DETAIL_MESSAGES__SELECT_FILE,
-		VERSION: DETAIL_MESSAGES__VERSION,
+		VERSION: `<a href='https://salesforce.quip.com/M45zATwr2795' target="_blank">${DETAIL_MESSAGES__VERSION}</a>`,
 	},
 
 	SEARCH: {
@@ -393,7 +410,9 @@ const itemDefaults = {
 	folder: null,
 	icon: null,
 	id: null,
+	ownerId: null,
 	owner: null,
+	userType: null,
 	objectApiName: null,
 	size: 0,
 	tags: null,
@@ -438,6 +457,13 @@ class item {
 	isTemplate() {
 		return (this.objectApiName ===
 			CONSTANTS.FILE_EXPLORER_OBJECT_API_NAMES.FOLDER_TEMPLATE);
+	}
+
+	isOwnedByAnAutomatedProcessUser(){
+		return this.userType === CONSTANTS.USERTYPES.AUTOMATEDPROCESS;
+	}
+	canDelete(userId) {
+		return userId === this.ownerId || this.isOwnedByAnAutomatedProcessUser();
 	}
 
 	setHostFolderLabel(folders) {

@@ -38,7 +38,13 @@ global virtual class qsyd_Item {
     global String ext { get; set; }
 
     @AuraEnabled
+    global String ownerId { get; set; }
+
+    @AuraEnabled
     global String owner { get; set; }
+
+    @AuraEnabled
+    global String userType { get; set; }
 
     @AuraEnabled
     global String tags { get; set; }
