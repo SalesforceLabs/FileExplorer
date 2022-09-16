@@ -106,6 +106,7 @@ global virtual inherited sharing class qsyd_Folder extends qsyd_Item implements 
         } catch (Exception e) {
             System.debug(LoggingLevel.ERROR, e.getMessage());
             System.debug(LoggingLevel.ERROR, e.getStackTraceString());
+
             throw new AuraHandledException(e.getMessage());
         }
 
@@ -179,6 +180,7 @@ global virtual inherited sharing class qsyd_Folder extends qsyd_Item implements 
             }
             System.debug(LoggingLevel.ERROR, e.getMessage());
             System.debug(LoggingLevel.ERROR, e.getStackTraceString());
+
             throw new AuraHandledException(e.getMessage());
         }
 

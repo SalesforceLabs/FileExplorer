@@ -54,6 +54,10 @@
                         </div>
                     </template>
 
+                    <template if:true={deleteFile}>
+                        {CONSTANTS.ACTION_MESSAGES.DELETE_FILE}
+                    </template>
+
                     <template if:true={moveItem}>
                         <div class="tree-home" onclick={handleHomeClick}>
                             <img class="slds-m-left_xx-small"

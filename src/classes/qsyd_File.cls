@@ -6,15 +6,15 @@
  */
 
 /**
-    Author:         Paul Lucas
-    Company:        Salesforce
-    Description:    qsyd_File
-    Date:           20-Apr-2020
-
-    History:
-    When           Who                 What
-
-    TODO:
+ * Author:         Paul Lucas
+ * Company:        Salesforce
+ * Description:    qsyd_File
+ * Date:           20-Apr-2020
+ * <p/>
+ * History:
+ * When           Who                 What
+ * <p/>
+ * TODO:
  */
 
 global virtual inherited sharing class qsyd_File extends qsyd_Item implements qsyd_IItem {
@@ -25,13 +25,13 @@ global virtual inherited sharing class qsyd_File extends qsyd_Item implements qs
     private FileExplorerFile__c fileExplorerFile;
 
     /**
-     * @description Constructor
+     * Constructor
      */
     global qsyd_File() {
     }
 
     /**
-     * @description Constructor
+     * Constructor
      *
      * @param id
      * @param folder
@@ -40,19 +40,23 @@ global virtual inherited sharing class qsyd_File extends qsyd_Item implements qs
      * @param entityId
      * @param type
      * @param ext
+     * @param ownerId
      * @param owner
+     * @param userType
      * @param tags
      * @param size
      * @param items
      */
-    global qsyd_File(Id id, Id folder, String label, String documentId, String entityId, String type, String ext, String owner, String tags, Decimal size, List<qsyd_Item> items) {
+    global qsyd_File(Id id, Id folder, String label, String documentId, String entityId, String type, String ext, Id ownerId, String owner, String userType, String tags, Decimal size, List<qsyd_Item> items) {
         super(id, folder, label, entityId, items);
 
         this.documentId = documentId;
         this.entityId = entityId;
         this.type = type;
         this.ext = ext;
+        this.ownerId = ownerId;
         this.owner = owner;
+        this.userType = userType;
         this.tags = tags;
         this.size = size;
 
@@ -85,7 +89,26 @@ global virtual inherited sharing class qsyd_File extends qsyd_Item implements qs
     }
 
     /**
-     * @description Populates an instance of qsyd_File
+     * Constructor
+     *
+     * @param id
+     * @param folder
+     * @param label
+     * @param documentId
+     * @param entityId
+     * @param type
+     * @param ext
+     * @param owner
+     * @param tags
+     * @param size
+     * @param items
+     */
+    global qsyd_File(Id id, Id folder, String label, String documentId, String entityId, String type, String ext, String owner, String tags, Decimal size, List<qsyd_Item> items) {
+        this(id, folder, label, documentId, entityId, type, ext, '', owner, '', tags, size, items);
+    }
+
+    /**
+     * Populates an instance of qsyd_File
      *
      * @param item A qsyd_Item instance
      *
@@ -107,7 +130,7 @@ global virtual inherited sharing class qsyd_File extends qsyd_Item implements qs
     }
 
     /**
-     * @description Converts from qsyd_File to File Explorer File
+     * Converts from qsyd_File to File Explorer File
      *
      * @return A qsyd_File instance
      */
@@ -118,7 +141,7 @@ global virtual inherited sharing class qsyd_File extends qsyd_Item implements qs
     }
 
     /**
-     * @description Saves a File Explorer File record
+     * Saves a File Explorer File record
      *
      * @return A qsyd_File instance
      */
@@ -133,17 +156,36 @@ global virtual inherited sharing class qsyd_File extends qsyd_Item implements qs
         } catch (Exception e) {
             System.debug(LoggingLevel.ERROR, e.getMessage());
             System.debug(LoggingLevel.ERROR, e.getStackTraceString());
+
+            throw new AuraHandledException(e.getMessage());
         }
 
         return this;
     }
 
     /**
-     * @description No action
+     * No action
      *
      * @return A qsyd_File instance
      */
     global qsyd_File remove() {
+
+        this.accessDecision = Security.stripInaccessible(AccessType.READABLE,
+                new List<ContentDocument>{
+                        new ContentDocument(Id = this.documentId)
+                });
+
+        try {
+
+            if (Schema.SObjectType.ContentDocument.isDeletable()) {
+                DELETE this.accessDecision.getRecords();
+            }
+        } catch (Exception e) {
+            System.debug(LoggingLevel.ERROR, e.getMessage());
+            System.debug(LoggingLevel.ERROR, e.getStackTraceString());
+
+            throw new AuraHandledException(e.getMessage());
+        }
 
         return this;
     }

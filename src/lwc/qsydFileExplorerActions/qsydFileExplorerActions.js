@@ -1,4 +1,6 @@
 import {LightningElement, api} from 'lwc';
+import userId from '@salesforce/user/Id';
+
 import {
 	CONSTANTS,
 	item,
@@ -28,7 +30,17 @@ export default class QsydFileExplorerActions extends LightningElement {
 				disabled: false,
 				prefixIconName: 'utility:move',
 				isDisabled: function(item, context) {
-					return (!context.isFile());
+					return !context.isFile();
+				},
+			},
+			{
+				id: CONSTANTS.ACTION_TYPES.DELETE_FILE,
+				label: CONSTANTS.ACTION_LABELS.DELETE_FILE,
+				value: CONSTANTS.ACTION_TYPES.DELETE_FILE,
+				disabled: false,
+				prefixIconName: 'utility:delete',
+				isDisabled: function(item, context) {
+					return !context.isFile() || !context.canDelete(userId);
 				},
 			},
 		],
@@ -40,7 +52,7 @@ export default class QsydFileExplorerActions extends LightningElement {
 				disabled: false,
 				prefixIconName: 'utility:add',
 				isDisabled: function(item, context) {
-					return (context.isFile());
+					return context.isFile();
 				},
 			},
 			{
@@ -50,7 +62,7 @@ export default class QsydFileExplorerActions extends LightningElement {
 				disabled: false,
 				prefixIconName: 'utility:move',
 				isDisabled: function(item, context) {
-					return (context.isFile() || context.isRoot());
+					return context.isFile() || context.isRoot();
 				},
 			},
 			{
@@ -60,7 +72,7 @@ export default class QsydFileExplorerActions extends LightningElement {
 				disabled: false,
 				prefixIconName: 'utility:edit',
 				isDisabled: function(item, context) {
-					return (context.isFile() || context.isRoot());
+					return context.isFile() || context.isRoot();
 				},
 			},
 			{
@@ -70,7 +82,7 @@ export default class QsydFileExplorerActions extends LightningElement {
 				disabled: false,
 				prefixIconName: 'utility:delete',
 				isDisabled: function(item, context) {
-					return (context.isFile() || context.isRoot());
+					return context.isFile() || context.isRoot();
 				},
 			},
 			{
@@ -80,7 +92,7 @@ export default class QsydFileExplorerActions extends LightningElement {
 				disabled: false,
 				prefixIconName: 'utility:layers',
 				isDisabled: function(item, context) {
-					return (context.isFile());
+					return context.isFile();
 				},
 			},
 		],

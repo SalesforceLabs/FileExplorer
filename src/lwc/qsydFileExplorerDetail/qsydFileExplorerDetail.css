@@ -37,6 +37,19 @@
     margin: auto;
     width: 100%;
     cursor: pointer;
+    position: relative;
+}
+
+.previewImgContainer a {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    display: none;
+}
+
+.previewImgContainer:hover a {
+    display: block;
+    animation: fade_in_show 0.5s
 }
 
 .details-content .previewImgBackground {
@@ -73,10 +86,22 @@
     display: inline;
 }
 
+/**
+    Animations
+ */
+
+@keyframes fade_in_show {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
 
 @media only screen and (max-width: 1024px) {
 }
-
 
 /*
 * Tablets
