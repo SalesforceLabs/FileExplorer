@@ -51,6 +51,33 @@ global inherited sharing class qsyd_FileList implements qsyd_IItemList {
      */
     global qsyd_FileList retrieve(String recordId) {
 
+        List<ContentDocumentLink> cdlList = [
+            SELECT 
+                ContentDocumentId
+            FROM ContentDocumentLink
+            WHERE ContentDocument.IsDeleted = FALSE
+            AND IsDeleted = FALSE
+            AND LinkedEntityId = :recordId
+        ];
+
+        List<Id> contentDocumentIds = new List<Id>();
+        for (ContentDocumentLink cdl : (List<ContentDocumentLink>)Security.stripInaccessible(AccessType.READABLE, cdlList).getRecords()) {
+            contentDocumentIds.add(cdl.ContentDocumentId);
+        }
+
+        List<ContentVersion> contentVersionList = [ 
+            SELECT 
+                Id, 
+                ContentDocumentId 
+            FROM ContentVersion 
+            WHERE ContentDocumentId IN :contentDocumentIds
+        ];
+        contentDocumentIds.clear();
+        for (ContentVersion contentVersion : (List<ContentVersion>)Security.stripInaccessible(AccessType.READABLE, contentVersionList).getRecords()) {
+            contentDocumentIds.add(contentVersion.ContentDocumentId);
+        }
+
+
         this.fileExplorerFilesMap = new Map<Id, FileExplorerFile__c>([
                 SELECT Folder__c,
                         Label__c,
@@ -64,7 +91,9 @@ global inherited sharing class qsyd_FileList implements qsyd_IItemList {
                         Tags__c,
                         ContentSize__c
                 FROM FileExplorerFile__c
-                WHERE LinkedEntityId__c = :recordId
+                WHERE 
+                    ContentDocumentId__c IN :contentDocumentIds AND
+                    LinkedEntityId__c = :recordId
                 WITH SECURITY_ENFORCED
                 ORDER BY Label__c
         ]);
