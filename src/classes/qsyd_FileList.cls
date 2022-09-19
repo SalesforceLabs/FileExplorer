@@ -77,10 +77,7 @@ global inherited sharing class qsyd_FileList implements qsyd_IItemList {
             contentDocumentIds.add(contentVersion.ContentDocumentId);
         }
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 7c004bc7a4a757bf3e8726161b1cbdd9b3fb1a59
         this.fileExplorerFilesMap = new Map<Id, FileExplorerFile__c>([
                 SELECT Folder__c,
                         Label__c,
@@ -94,13 +91,9 @@ global inherited sharing class qsyd_FileList implements qsyd_IItemList {
                         Tags__c,
                         ContentSize__c
                 FROM FileExplorerFile__c
-<<<<<<< HEAD
                 WHERE 
                     ContentDocumentId__c IN :contentDocumentIds AND
                     LinkedEntityId__c = :recordId
-=======
-                WHERE ContentDocumentId__c IN :contentDocumentIds
->>>>>>> 7c004bc7a4a757bf3e8726161b1cbdd9b3fb1a59
                 WITH SECURITY_ENFORCED
                 ORDER BY Label__c
         ]);
