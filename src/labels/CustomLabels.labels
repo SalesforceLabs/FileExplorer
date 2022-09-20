@@ -590,7 +590,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Detail Messages - Version</shortDescription>
-        <value>Summer 22 - v2.1</value>
+        <value>Summer 22 - v2.1.1</value>
     </labels>
     <labels>
         <fullName>Search_Category_Files</fullName>
