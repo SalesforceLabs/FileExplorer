@@ -12,6 +12,7 @@ global with sharing class qsydFileExplorerTest {
     private static qsyd_FileList fileItemList;
     private static qsyd_Folder folderItem;
     private static qsyd_FolderList folderItemList;
+    private static User standardUser;
 
     @TestSetup
     private static void setupTestData() {
@@ -27,7 +28,8 @@ global with sharing class qsydFileExplorerTest {
                 Title = 'Penguins',
                 PathOnClient = 'Penguins.jpg',
                 VersionData = Blob.valueOf(SIG_B64),
-                IsMajorVersion = true
+                IsMajorVersion = true,
+                SharingPrivacy = 'P' // set it to private on records
         );
         insert contentVersion;
         List<ContentDocument> contentDocumentList = [
@@ -64,6 +66,44 @@ global with sharing class qsydFileExplorerTest {
                 'tags',
                 contentDocumentList[0].ContentSize,
                 null);
+
+        
+        createStandardUser();
+        
+    }
+
+    @future
+    private static void createStandardUser() {
+        String uniqueUserName = 'standarduser' + DateTime.now().getTime() + '@file-explorer.dev';
+        
+        Profile p = [
+                SELECT Id 
+                FROM Profile 
+                WHERE Name = 'Standard User'
+        ];
+
+        standardUser = new User(
+                Alias = 'stduser', 
+                Email='standarduser@file-explorer.dev',
+                EmailEncodingKey='UTF-8', 
+                LastName='Test', 
+                LanguageLocaleKey='en_US',
+                LocaleSidKey='en_US', 
+                ProfileId = p.Id,
+                TimeZoneSidKey='Australia/Sydney',
+                UserName = uniqueUserName
+        );
+        insert standardUser;
+
+        PermissionSet ps = [
+                SELECT Id 
+                FROM PermissionSet 
+                WHERE Name = 'File_Explorer_Permission_Set'];
+
+        insert new PermissionSetAssignment(
+                AssigneeId = standardUser.id, 
+                PermissionSetId = ps.Id
+        );
     }
 
     @IsTest
@@ -149,5 +189,24 @@ global with sharing class qsydFileExplorerTest {
         Test.stopTest();
 
         System.assertEquals(2, canonicalFolders.size());
+    }
+
+    @IsTest
+    private static void given_fileSetToPrivateOnRecords_when_fileRetreieved_success() {
+        List<FileExplorerFile__c> fileExplorerFileList;
+
+        setupTestData();
+
+        System.runAs(standardUser) {
+                fileExplorerFileList = fileItemList
+                        .retrieve(a.Id)
+                        .convertToCanonical()
+                        .getCanonicalList();
+
+                // does not return any file
+                // as only the owner can see this file
+                // https://help.salesforce.com/s/articleView?id=sf.collab_files_make_private_on_record.htm&type=5
+                System.assertEquals(0, fileExplorerFileList.size());
+        }
     }
 }
