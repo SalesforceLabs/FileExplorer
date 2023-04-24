@@ -150,7 +150,7 @@
         <members>FileExplorerFile__c</members>
         <members>FileExplorerFolderTemplate__c</members>
         <members>FileExplorerFolder__c</members>
-        <members>Lightning_File_Explorer__md</members>
+        <members>Lightning_File_Explorer__mdt</members>
         <name>CustomObject</name>
     </types>
     <types>
