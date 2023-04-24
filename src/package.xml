@@ -139,6 +139,7 @@
         <members>Action_Labels_Delete_file</members>
         <members>Action_Headers_Delete_file</members>
         <members>Detail_Messages_Version</members>
+        <members>Tree_Labels_Home</members>
         <name>CustomLabel</name>
     </types>
     <types>
