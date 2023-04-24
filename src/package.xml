@@ -131,7 +131,13 @@
         <members>Search_No_results_for_category</members>
         <members>Search_Placeholder</members>
         <members>Search_Results</members>
-        <members>Tree_Labels_Home</members>
+        <members>Action_Success_Messages_Delete_file</members>
+        <members>Action_Messages_File_Explorer_is_not_enabled</members>
+        <members>Action_Messages_Delete_file</members>
+        <members>Action_Error_Messages_Failed_to_insert_template</members>
+        <members>Action_Labels_Delete_file</members>
+        <members>Action_Headers_Delete_file</members>
+        <members>Detail_Messages_Version</members>
         <name>CustomLabel</name>
     </types>
     <types>
