@@ -56,6 +56,7 @@
         <members>FileExplorerFolder__c.Label__c</members>
         <members>FileExplorerFolder__c.LinkedEntityId__c</members>
         <members>FileExplorerFolder__c.TemplateFolderId__c</members>
+        <members>Lightning_File_Explorer__mdt.Enable__c</members>
         <name>CustomField</name>
     </types>
     <types>
@@ -197,6 +198,7 @@
         <members>FileExplorerFile__c.All</members>
         <members>FileExplorerFolderTemplate__c.All</members>
         <members>FileExplorerFolder__c.All</members>
+        <members>Lightning_File_Explorer__mdt.All_Fields</members>
         <name>ListView</name>
     </types>
     <types>
