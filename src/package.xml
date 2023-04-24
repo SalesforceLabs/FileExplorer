@@ -215,7 +215,7 @@
         <name>StaticResource</name>
     </types>
     <types>
-        <members>*</members>
+        <members>Lightning_File_Explorer.Enable__c</members>
         <name>CustomMetadata</name>
     </types>
     <version>51.0</version>
