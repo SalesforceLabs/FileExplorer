@@ -213,7 +213,7 @@
         <name>StaticResource</name>
     </types>
     <types>
-        <members>Lightning_File_Explorer__mdt</members>
+        <members>*</members>
         <name>CustomMetadata</name>
     </types>
     <version>51.0</version>
