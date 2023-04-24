@@ -6,6 +6,7 @@
         <members>TriggerHandler</members>
         <members>TriggerHandler_Test</members>
         <members>qsydFileExplorerController</members>
+        <members>qsyd_FileExplorerCommon</members>
         <members>qsydFileExplorerControllerTest</members>
         <members>qsydFileExplorerTest</members>
         <members>qsyd_ContentDocumentTriggerHandler</members>
