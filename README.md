@@ -1,7 +1,7 @@
 # Lightning File Explorer
 
 <div>
-    <a href="https://githubsfdeploy.herokuapp.com?owner=SalesforceLabs&repo=FileExplorer">
+    <a href="https://githubsfdeploy.herokuapp.com?owner=mordechaif&repo=FileExplorer">
         <img alt="Deploy to Salesforce"
         src="https://raw.githubusercontent.com/afawcett/githubsfdeploy/master/deploy.png">
     </a>
