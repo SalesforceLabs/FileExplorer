@@ -147,7 +147,7 @@
         <name>CustomLabels</name>
     </types>
     <types>
-        <members>*</members>
+        <members>Lightning_File_Explorer.Enable__c</members>
         <name>CustomMetadata</name>
     </types>
     <types>
