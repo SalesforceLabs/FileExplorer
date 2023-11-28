@@ -148,6 +148,7 @@
     </types>
     <types>
         <members>Lightning_File_Explorer.Enable__c</members>
+        <members>Lightning_File_Explorer.All_Fields</members>
         <name>CustomMetadata</name>
     </types>
     <types>
