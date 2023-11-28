@@ -60,6 +60,7 @@
     <types>
         <members>Action_Error_Messages_Duplicate_folder</members>
         <members>Action_Error_Messages_Failed_to_retrieve_templates</members>
+        <members>Action_Error_Messages_Failed_to_insert_template</members>
         <members>Action_Error_Messages_Invalid_template</members>
         <members>Action_Error_Messages_Move_file_same_source_and_target</members>
         <members>Action_Error_Messages_Move_folder_circular_dependency</members>
@@ -68,6 +69,7 @@
         <members>Action_Headers_Add_file</members>
         <members>Action_Headers_Add_folder</members>
         <members>Action_Headers_Delete_folder</members>
+        <members>Action_Headers_Delete_file</members>
         <members>Action_Headers_Edit_tags</members>
         <members>Action_Headers_Move_file</members>
         <members>Action_Headers_Move_folder</members>
@@ -81,6 +83,7 @@
         <members>Action_Labels_Collapse</members>
         <members>Action_Labels_Confirm</members>
         <members>Action_Labels_Delete_folder</members>
+        <members>Action_Labels_Delete_file</members>
         <members>Action_Labels_Edit_template</members>
         <members>Action_Labels_Expand</members>
         <members>Action_Labels_File_header</members>
@@ -99,6 +102,8 @@
         <members>Action_Labels_Template_modified_date_header</members>
         <members>Action_Labels_Template_name_header</members>
         <members>Action_Messages_Delete_folder</members>
+        <members>Action_Messages_Delete_file</members>
+        <members>Action_Messages_File_Explorer_is_not_enabled</members>
         <members>Action_Messages_No_permission_set</members>
         <members>Action_Messages_No_templates</members>
         <members>Action_Messages_Select_template_folder</members>
@@ -106,6 +111,7 @@
         <members>Action_Success_Messages_Add_file</members>
         <members>Action_Success_Messages_Add_folder</members>
         <members>Action_Success_Messages_Delete_folder</members>
+        <members>Action_Success_Messages_Delete_file</members>
         <members>Action_Success_Messages_Edit_tags</members>
         <members>Action_Success_Messages_Move_file</members>
         <members>Action_Success_Messages_Move_folder</members>
@@ -125,6 +131,7 @@
         <members>Detail_Labels_Tags</members>
         <members>Detail_Labels_Type</members>
         <members>Detail_Messages_Select_File</members>
+        <members>Detail_Messages_Version</members>
         <members>Search_Category_Files</members>
         <members>Search_Category_Folders</members>
         <members>Search_Category_Tagged</members>
@@ -137,6 +144,10 @@
     <types>
         <members>CustomLabels</members>
         <name>CustomLabels</name>
+    </types>
+    <types>
+        <members>Enable__c</members>
+        <name>CustomMetadata</name>
     </types>
     <types>
         <members>FileExplorerFile__c</members>
