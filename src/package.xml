@@ -146,7 +146,7 @@
         <name>CustomLabels</name>
     </types>
     <types>
-        <members>Enable__c</members>
+        <members>*</members>
         <name>CustomMetadata</name>
     </types>
     <types>
