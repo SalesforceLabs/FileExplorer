@@ -130,8 +130,7 @@ export default class QsydFileExplorerCmp extends LightningElement {
 
 	initialise() {
 		showFileExplorer().then(result => {
-			console.log('>>>>> initialise.result');
-			console.log(result);
+			console.log('>>>>> initialise.result : ' + result);
 
 			this.showFileExplorer = (result === '');
 			this.reasonWhyFileExplorerNotShown = result;
