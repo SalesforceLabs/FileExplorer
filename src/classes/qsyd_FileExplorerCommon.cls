@@ -41,7 +41,7 @@ global without sharing class qsyd_FileExplorerCommon {
     public static Boolean isFileExplorerEnabled() {
         Boolean isFileExplorerEnabled = [
                 SELECT Enable__c
-                FROM qsyd_FE__Lightning_File_Explorer__mdt
+                FROM Lightning_File_Explorer__mdt
                 WHERE QualifiedApiName = :FILE_EXPLORER_SETTINGS_QUALIFIEDAPINAME
         ]?.Enable__c;
 
