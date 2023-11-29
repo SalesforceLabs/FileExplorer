@@ -224,8 +224,7 @@ export default class QsydFileExplorerCmp extends LightningElement {
 	}
 
 	handleDataLoaded(e) {
-		console.log('event : ' + e);
-		console.log('action : ' + this.action);
+		console.log('event : ' + JSON.stringify(e));
 
 		switch (this.action) {
 			case undefined:
