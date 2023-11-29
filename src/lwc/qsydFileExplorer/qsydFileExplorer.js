@@ -228,6 +228,8 @@ export default class QsydFileExplorerCmp extends LightningElement {
 		console.log('action : ' + this.action);
 
 		switch (this.action) {
+			case undefined:
+				break;
 			case CONSTANTS.ACTION_TYPES.ADD_FILE:
 				this.results = this.findTreeItem(this.dataDictionary,
 					'Contents',
