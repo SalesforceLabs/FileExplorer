@@ -130,8 +130,8 @@ export default class QsydFileExplorerCmp extends LightningElement {
 
 	initialise() {
 		showFileExplorer().then(result => {
-			// console.log('>>>>> initialise.result');
-			// console.log(result);
+			console.log('>>>>> initialise.result');
+			console.log(result);
 
 			this.showFileExplorer = (result === '');
 			this.reasonWhyFileExplorerNotShown = result;
@@ -161,6 +161,8 @@ export default class QsydFileExplorerCmp extends LightningElement {
 		this.showSpinner = true;
 		retrieveItemMap({recordId: this.recordId}).then(result => {
 			this.dataDictionary = JSON.parse(result);
+			console.log('dataDictionary : ', this.dataDictionary);
+
 			this.dataSet = dictionaryToList(clone(this.dataDictionary));
 			this.dataTree = listToTree(this.dataSet);
 			this.results = this.findTreeItem(this.dataDictionary, 'Contents',
@@ -222,6 +224,8 @@ export default class QsydFileExplorerCmp extends LightningElement {
 	}
 
 	handleDataLoaded(e) {
+		console.log('event : ' + e);
+		console.log('action : ' + this.action);
 
 		switch (this.action) {
 			case CONSTANTS.ACTION_TYPES.ADD_FILE:
