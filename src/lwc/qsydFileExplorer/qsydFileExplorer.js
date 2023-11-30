@@ -130,8 +130,7 @@ export default class QsydFileExplorerCmp extends LightningElement {
 
 	initialise() {
 		showFileExplorer().then(result => {
-			// console.log('>>>>> initialise.result');
-			// console.log(result);
+			console.log('>>>>> initialise.result : ' + result);
 
 			this.showFileExplorer = (result === '');
 			this.reasonWhyFileExplorerNotShown = result;
@@ -222,47 +221,55 @@ export default class QsydFileExplorerCmp extends LightningElement {
 	}
 
 	handleDataLoaded(e) {
+		console.log('handleDataLoaded called');
 
-		switch (this.action) {
-			case CONSTANTS.ACTION_TYPES.ADD_FILE:
-				this.results = this.findTreeItem(this.dataDictionary,
-					'Contents',
-					this.folderId);
-				break;
-
-			case CONSTANTS.ACTION_TYPES.UPDATE_FILE:
-			case CONSTANTS.ACTION_TYPES.DELETE_FILE:
-			case CONSTANTS.ACTION_TYPES.ADD_FOLDER:
-			case CONSTANTS.ACTION_TYPES.MOVE_FOLDER:
-			case CONSTANTS.ACTION_TYPES.RENAME_FOLDER:
-			case CONSTANTS.ACTION_TYPES.DELETE_FOLDER:
-				this.item = this.findItemInSet(this.shadowItem) || new item();
-				break;
-			// case CONSTANTS.ACTION_TYPES.UPDATE_FILE:
-			// 	this.item = this.findItemInSet(this.shadowItem) || new item();
-			// 	break;
-			//
-			// case CONSTANTS.ACTION_TYPES.DELETE_FILE:
-			// 	this.item = this.findItemInSet(this.shadowItem) || new item();
-			// 	break;
-			//
-			// case CONSTANTS.ACTION_TYPES.ADD_FOLDER:
-			// 	this.item = this.findItemInSet(this.shadowItem) || new item();
-			// 	break;
-			//
-			// case CONSTANTS.ACTION_TYPES.MOVE_FOLDER:
-			// 	this.item = this.findItemInSet(this.shadowItem) || new item();
-			// 	break;
-			//
-			// case CONSTANTS.ACTION_TYPES.RENAME_FOLDER:
-			// 	this.item = this.findItemInSet(this.shadowItem) || new item();
-			// 	break;
-			//
-			// case CONSTANTS.ACTION_TYPES.DELETE_FOLDER:
-			// 	this.item = this.findItemInSet(this.shadowItem) || new item();
-
-			default:
-				break;
+		try {
+			if(this.action === undefined) {
+				throw new error();
+			}
+			switch (this.action) {
+				case CONSTANTS.ACTION_TYPES.ADD_FILE:
+					this.results = this.findTreeItem(this.dataDictionary,
+						'Contents',
+						this.folderId);
+					break;
+	
+				case CONSTANTS.ACTION_TYPES.UPDATE_FILE:
+				case CONSTANTS.ACTION_TYPES.DELETE_FILE:
+				case CONSTANTS.ACTION_TYPES.ADD_FOLDER:
+				case CONSTANTS.ACTION_TYPES.MOVE_FOLDER:
+				case CONSTANTS.ACTION_TYPES.RENAME_FOLDER:
+				case CONSTANTS.ACTION_TYPES.DELETE_FOLDER:
+					this.item = this.findItemInSet(this.shadowItem) || new item();
+					break;
+				// case CONSTANTS.ACTION_TYPES.UPDATE_FILE:
+				// 	this.item = this.findItemInSet(this.shadowItem) || new item();
+				// 	break;
+				//
+				// case CONSTANTS.ACTION_TYPES.DELETE_FILE:
+				// 	this.item = this.findItemInSet(this.shadowItem) || new item();
+				// 	break;
+				//
+				// case CONSTANTS.ACTION_TYPES.ADD_FOLDER:
+				// 	this.item = this.findItemInSet(this.shadowItem) || new item();
+				// 	break;
+				//
+				// case CONSTANTS.ACTION_TYPES.MOVE_FOLDER:
+				// 	this.item = this.findItemInSet(this.shadowItem) || new item();
+				// 	break;
+				//
+				// case CONSTANTS.ACTION_TYPES.RENAME_FOLDER:
+				// 	this.item = this.findItemInSet(this.shadowItem) || new item();
+				// 	break;
+				//
+				// case CONSTANTS.ACTION_TYPES.DELETE_FOLDER:
+				// 	this.item = this.findItemInSet(this.shadowItem) || new item();
+	
+				default:
+					break;
+			}
+		} catch(e) {
+			console.log('this.action is undefined');
 		}
 	}
 

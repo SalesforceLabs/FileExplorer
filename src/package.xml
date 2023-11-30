@@ -1,4 +1,4 @@
-git add<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Lightning File Explorer</fullName>
     <apiAccessLevel>Unrestricted</apiAccessLevel>
@@ -12,6 +12,7 @@ git add<?xml version="1.0" encoding="UTF-8"?>
         <members>qsyd_ContentDocumentTriggerHandlerTest</members>
         <members>qsyd_File</members>
         <members>qsyd_FileList</members>
+        <members>qsyd_FileExplorerCommon</members>
         <members>qsyd_Folder</members>
         <members>qsyd_FolderList</members>
         <members>qsyd_FolderTemplate</members>
@@ -55,11 +56,13 @@ git add<?xml version="1.0" encoding="UTF-8"?>
         <members>FileExplorerFolder__c.Label__c</members>
         <members>FileExplorerFolder__c.LinkedEntityId__c</members>
         <members>FileExplorerFolder__c.TemplateFolderId__c</members>
+        <members>Lightning_File_Explorer__mdt.Enable__c</members>
         <name>CustomField</name>
     </types>
     <types>
         <members>Action_Error_Messages_Duplicate_folder</members>
         <members>Action_Error_Messages_Failed_to_retrieve_templates</members>
+        <members>Action_Error_Messages_Failed_to_insert_template</members>
         <members>Action_Error_Messages_Invalid_template</members>
         <members>Action_Error_Messages_Move_file_same_source_and_target</members>
         <members>Action_Error_Messages_Move_folder_circular_dependency</members>
@@ -68,6 +71,7 @@ git add<?xml version="1.0" encoding="UTF-8"?>
         <members>Action_Headers_Add_file</members>
         <members>Action_Headers_Add_folder</members>
         <members>Action_Headers_Delete_folder</members>
+        <members>Action_Headers_Delete_file</members>
         <members>Action_Headers_Edit_tags</members>
         <members>Action_Headers_Move_file</members>
         <members>Action_Headers_Move_folder</members>
@@ -81,6 +85,7 @@ git add<?xml version="1.0" encoding="UTF-8"?>
         <members>Action_Labels_Collapse</members>
         <members>Action_Labels_Confirm</members>
         <members>Action_Labels_Delete_folder</members>
+        <members>Action_Labels_Delete_file</members>
         <members>Action_Labels_Edit_template</members>
         <members>Action_Labels_Expand</members>
         <members>Action_Labels_File_header</members>
@@ -99,6 +104,8 @@ git add<?xml version="1.0" encoding="UTF-8"?>
         <members>Action_Labels_Template_modified_date_header</members>
         <members>Action_Labels_Template_name_header</members>
         <members>Action_Messages_Delete_folder</members>
+        <members>Action_Messages_Delete_file</members>
+        <members>Action_Messages_File_Explorer_is_not_enabled</members>
         <members>Action_Messages_No_permission_set</members>
         <members>Action_Messages_No_templates</members>
         <members>Action_Messages_Select_template_folder</members>
@@ -106,6 +113,7 @@ git add<?xml version="1.0" encoding="UTF-8"?>
         <members>Action_Success_Messages_Add_file</members>
         <members>Action_Success_Messages_Add_folder</members>
         <members>Action_Success_Messages_Delete_folder</members>
+        <members>Action_Success_Messages_Delete_file</members>
         <members>Action_Success_Messages_Edit_tags</members>
         <members>Action_Success_Messages_Move_file</members>
         <members>Action_Success_Messages_Move_folder</members>
@@ -125,6 +133,7 @@ git add<?xml version="1.0" encoding="UTF-8"?>
         <members>Detail_Labels_Tags</members>
         <members>Detail_Labels_Type</members>
         <members>Detail_Messages_Select_File</members>
+        <members>Detail_Messages_Version</members>
         <members>Search_Category_Files</members>
         <members>Search_Category_Folders</members>
         <members>Search_Category_Tagged</members>
@@ -139,9 +148,14 @@ git add<?xml version="1.0" encoding="UTF-8"?>
         <name>CustomLabels</name>
     </types>
     <types>
+        <members>*</members>
+        <name>CustomMetadata</name>
+    </types>
+    <types>
         <members>FileExplorerFile__c</members>
         <members>FileExplorerFolderTemplate__c</members>
         <members>FileExplorerFolder__c</members>
+        <members>Lightning_File_Explorer__mdt</members>
         <name>CustomObject</name>
     </types>
     <types>
@@ -188,6 +202,7 @@ git add<?xml version="1.0" encoding="UTF-8"?>
         <members>FileExplorerFile__c.All</members>
         <members>FileExplorerFolderTemplate__c.All</members>
         <members>FileExplorerFolder__c.All</members>
+        <members>Lightning_File_Explorer__mdt.All_Fields</members>
         <name>ListView</name>
     </types>
     <types>
